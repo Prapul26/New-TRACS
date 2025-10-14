@@ -11,7 +11,7 @@ const App = () => {
       <Routes>
         <Route path="/replyMessage" element={<ReplyMessage />} />
         <Route path='/makeIntroduction' element={<MakeIntroduction />}/>
-    
+        <Route path='/' element={<NewMessage />}/>
       </Routes>
      </Router>
     </div>
