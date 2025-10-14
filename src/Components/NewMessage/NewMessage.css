@@ -1,0 +1,372 @@
+.newMessageContainer{
+    width: 80%;
+  padding-top: 20px;
+    margin-left: 10%;
+}
+.nmheading{
+    display: flex;
+    justify-content: space-between;
+   
+}
+.nmheading2 button{
+    display: flex;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    padding-left: 25px;
+    padding-right: 25px;
+    gap: 10px;
+        background-color: #007bff;
+    margin-top: 40px;
+}
+.nmheading1 p{
+margin-top: -15px;
+font-size: 14px !important;
+}
+.filter{
+    display: flex;
+    border-radius: 20px;
+    margin-top: 30px;
+    justify-content: space-between;
+    background-color: white;
+    padding: 25px;
+}
+.status{
+    display: flex;
+
+}
+.shortby{
+     display: flex;
+
+}
+.status1{
+    display: flex;
+    background-color: white;
+    padding-top: 7px;
+    padding-left: 10px;
+    border-radius: 7px;
+    padding-right: 10px;
+    justify-content: space-between;
+    border: 1px solid black;
+    height: 35px;
+     margin-top: -0px;
+    width: 150px;
+}
+.shortby1{
+     display: flex;
+     height: 35px;
+         border-radius: 7px;
+
+     margin-top: 0px;
+    background-color: white;
+    padding-top: 7px;
+    padding-left: 10px;
+    padding-right: 10px;
+    justify-content: space-between;
+    border: 1px solid black;
+     width: 100px;
+}
+.filterSearch input{
+    width: 650px;
+    height: 40px;
+}
+.status label{
+ margin-top: 12px;
+    margin-right: 7px;
+}
+.shortby label{
+    margin-top: 12px;
+    margin-right: 7px;
+}
+.showShortBy{
+    position: absolute;
+width: 120px;
+border: 1px solid rgb(156, 156, 156);
+background-color: white;
+}
+
+.showShortBy1{
+    padding: 7px;
+
+}
+.showShortBy1:hover{
+    background-color: blue;
+    color: white;
+}
+.showFolloup{
+    position: absolute;
+width: 170px;
+border: 1px solid rgb(156, 156, 156);
+background-color: white;
+}
+.showFolloup1{
+  padding: 7px;
+
+}
+.showFolloup1:hover{
+ background-color: blue;
+ color: white;
+}
+.cardHolderDetails{
+    display: flex;
+    justify-content: space-between;
+}
+.cardContainer1{
+ border-left: 3px solid #ffc107;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+    padding: 10px;
+    border-radius: 10px;
+    margin-top: 20px;
+    background-color: white;
+}
+.cardContainer2{
+ border-left: 3px solid #ffffff;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+    padding: 10px;
+    border-radius: 10px;
+    margin-top: 20px;
+    background-color: white;
+}
+.cardContainer4{
+ border-left: 3px solid #ffffff;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 40px;
+    margin-top: 20px;
+    background-color: white;
+}
+.cardContainer3{
+ border-left: 3px solid #28a745;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+    padding: 10px;
+    border-radius: 10px;
+    margin-top: 20px;
+    background-color: white;
+}
+.cardmembersbuttons button{
+    display: flex;
+    gap:7px;
+    width: 100px;
+}
+.cardmemberDetails1{
+    display: flex;
+}
+.cardmemberDetails4{
+    display: flex;
+}
+
+.cardmemberDetails2{
+    display: flex;
+}
+.cardmemberDetails3{
+    display: flex;
+}
+.cardmemberDetails1 img{
+       width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #ccc;
+    background-size: cover;
+    background-position: center;
+    display: block;
+    margin-right: 10px;
+    flex-shrink: 0;
+}
+.cardmemberDetails4 img{
+       width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #ccc;
+    background-size: cover;
+    background-position: center;
+    display: block;
+    margin-right: 10px;
+    flex-shrink: 0;
+}
+.cardmemberDetails5 p{
+        color: #555 !important;
+    font-size: 0.9em !important;
+    white-space: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+ 
+}
+.cardmemberDetails5 img{
+    border-radius: 50% !important;
+}
+.cardmemberDetails1 h3{
+    font-size: 17.6px  !important;
+    margin-top: 8px;
+}
+.cardmemberDetails1 strong{
+    font-size: 0.85em;
+    color: #777;
+        margin-top: 8px !important;
+
+    margin-left: 10px;
+    font-weight: 500;
+}
+.cardmemberDetails4 h3{
+    font-size: 14.6px  !important;
+    margin-top: 0px;
+    color: #007bff;
+}
+.cardmemberDetails4 strong{
+    font-size: 0.85em;
+    color: #777;
+        margin-top: 8px !important;
+
+    margin-left: 10px;
+    font-weight: 500;
+}
+.cardmemberDetails2 h2{
+    font-size: 20.6px !important;
+}
+.statusFF{
+        background-color: #fff3cd;
+    color: #856404 ;
+    margin-left: 10px;
+    height: 25px;
+
+    padding-right: 8px;
+}
+.statusFF3{
+     background-color: #e2f0e7 !important;
+    color: #1e7e34 !important;
+    margin-left: 10px;
+    height: 25px;
+
+    padding-right: 8px;
+}
+.statusFF4{
+   background-color: #e7e6e7 !important;
+   
+    margin-left: 10px;
+    height: 25px;
+
+    padding-right: 8px;
+}
+.statusFF2{
+      margin-left: 10px;
+    height: 25px;
+
+    padding-right: 8px;
+}
+.statusFF strong{
+        color: #856404 !important;
+
+}
+.cardmemberDetails3 img{
+        width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background-color: #ccc;
+    background-size: cover;
+    background-position: center;
+    display: block;
+    margin-right: 8px;
+    flex-shrink: 0;
+        border: 2px solid #dc3545;
+}
+.cardmemberDetails3 p{
+    font-size: 16px !important;
+    margin-top: -0px;
+    margin-right:30px ;
+}
+.cardmemberDetails3 strong{
+    font-size: 14px !important;
+    margin-top: 30px !important;
+        color: #007bff;
+}
+.ojnhgtr h3{
+font-size: 0.9rem !important;
+margin-bottom: 10px;
+margin-top: 10px;
+}
+.repppps{
+      margin-top: 30px !important;
+}
+@media(max-width: 1024px){
+    .newMessageContainer{
+    width: 92%;
+    margin-left: 4%;
+
+ 
+
+
+}
+.nmheading{
+    display: flex;
+    flex-direction: column;
+   
+}
+.nmheading2 button{
+    width: 100%;
+    text-align: center !important;
+    margin-top: 10px;
+}
+.filter{
+    display: flex;
+    flex-direction: column;
+    border-radius: 20px;
+    margin-top: 10px;
+    justify-content: space-between;
+    background-color: white;
+    padding: 25px;
+}
+.status{
+    margin-bottom: 14px;
+}
+.shortby{
+    margin-bottom: 14px;
+}
+.filter input{
+    width: 100%;
+}
+.cardHolderDetails{
+    flex-direction: column;
+}
+.cardmembersbuttons{
+    display: flex;
+    justify-content: space-between;
+}
+.cardmemberDetails3{
+    flex-direction: column;
+}
+.statusFF3{
+   
+    margin-left: 45px;
+    margin-top: 35px !important;
+    position: absolute;
+ 
+}
+.statusFF4{
+   
+    margin-left: 45px;
+    margin-top: 35px !important;
+    position: absolute;
+ 
+}
+.statusFF2{
+   
+    margin-left: 45px;
+    margin-top: 35px !important;
+    position: absolute;
+ 
+}
+.statusFF{
+   
+    margin-left: 45px;
+    margin-top: 35px !important;
+    position: absolute;
+ 
+}
+.cardmemberDetails2{
+    margin-top: 10px;
+}
+}
