@@ -26,7 +26,7 @@ const NewMessage = () => {
                         <div><h1>Messages</h1></div>
                         <div><p>Your conversations with members</p></div>
                     </div>
-                    <div className='nmheading2'><button><Link to="/makeIntroduction"  style={{textDecoration:"nnoe",color:"inherit"}}> <div><FaPlus /></div>Make A Introduction</Link> </button></div>
+                    <div className='nmheading2'><button><Link to="/makeIntroduction" style={{textDecoration:"nnoe",color:"inherit"}}> <div><FaPlus /></div>Make A Introduction</Link> </button></div>
                 </div>
                 <div className='filter'>
                     <div className='status'><label>Status :</label><div><div className='status1' onClick={HandleFollowUp}><strong>Need Follow-Up</strong> <div style={{marginTop:"3px"}}><IoIosArrowDown /></div></div>
