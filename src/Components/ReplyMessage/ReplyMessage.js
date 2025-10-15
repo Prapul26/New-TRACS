@@ -176,24 +176,51 @@ const ReplyMessage = () => {
                     </div>
 
                     {/* 6. Previous Messages List */}
-                    <div className="bg-white p-6 rounded-xl message-box-shadow">
+                    <div className="bg-white p-6 rounded-xl message-box-shadow" style={{overflowY:"auto",height:"500px"}}>
                         <h2 className="text-xl font-semibold text-gray-700 mb-4">Previous Messages</h2>
-                        <div
-                            id="message-history"
-                            className="space-y-4 overflow-y-auto max-h-96 pr-2"
-                        >
-                            {previousMessages.map(message => (
-                                <div key={message.id} className="border-b pb-4 last:border-b-0 last:pb-0">
-                                    <div className="flex justify-between items-start">
-                                        <div>
-                                            <p className="font-medium text-gray-800">{message.sender}</p>
-                                            <p className="text-sm text-gray-500">{message.date}</p>
-                                        </div>
-                                        <span className="text-sm bg-gray-100 px-2 py-1 rounded">{message.subject}</span>
-                                    </div>
-                                    <p className="mt-2 text-gray-700 whitespace-pre-line">{message.content}</p>
-                                </div>
-                            ))}
+                        <div id="MessagesContainer">
+                            <div id="MessagesContainer1">
+                                <div className="w-8 h-8 flex-shrink-0 flex items-center justify-center bg-gray-400 text-white rounded-full text-xs font-bold">AJ</div>
+                                <div className='ml-2'><strong>Alex Johnson</strong>
+                                    <p>2 hours ago</p></div>
+                                <div className='ml-2'><p>{"("}Manager{")"}</p></div>
+                            </div>
+                            <div id="MessagesContainer2">
+                                <p>         Hi Sarah and Alex, happy to make this connection! John is a fantastic lead engineer. I'll let you two take it from here.</p>
+                            </div>
+                        </div>
+                        <div id="MessagesContainer">
+                            <div id="MessagesContainer1">
+                                <div className="w-8 h-8 flex-shrink-0 flex items-center justify-center bg-gray-400 text-white rounded-full text-xs font-bold">AJ</div>
+                                <div className='ml-2'><strong>Alex Johnson</strong>
+                                    <p>2 hours ago</p></div>
+                                <div className='ml-2'><p>{"("}Manager{")"}</p></div>
+                            </div>
+                            <div id="MessagesContainer2">
+                                <p>         Hi Sarah and Alex, happy to make this connection! John is a fantastic lead engineer. I'll let you two take it from here.</p>
+                            </div>
+                        </div>
+                        <div id="MessagesContainer">
+                            <div id="MessagesContainer1">
+                                <div className="w-8 h-8 flex-shrink-0 flex items-center justify-center bg-gray-400 text-white rounded-full text-xs font-bold">AJ</div>
+                                <div className='ml-2'><strong>Alex Johnson</strong>
+                                    <p>2 hours ago</p></div>
+                                <div className='ml-2'><p>{"("}Manager{")"}</p></div>
+                            </div>
+                            <div id="MessagesContainer2">
+                                <p>         Hi Sarah and Alex, happy to make this connection! John is a fantastic lead engineer. I'll let you two take it from here.</p>
+                            </div>
+                        </div>
+                        <div id="MessagesContainer">
+                            <div id="MessagesContainer1">
+                                <div className="w-8 h-8 flex-shrink-0 flex items-center justify-center bg-gray-400 text-white rounded-full text-xs font-bold">AJ</div>
+                                <div className='ml-2'><strong>Alex Johnson</strong>
+                                    <p>2 hours ago</p></div>
+                                <div className='ml-2'><p>{"("}Manager{")"}</p></div>
+                            </div>
+                            <div id="MessagesContainer2">
+                                <p>         Hi Sarah and Alex, happy to make this connection! John is a fantastic lead engineer. I'll let you two take it from here.</p>
+                            </div>
                         </div>
                     </div>
                 </div>

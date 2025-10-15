@@ -1,6 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
 import '../../App.css';
+import "./MakeIntroduction.css"
 const MakeIntroduction = () => {
 
 
@@ -34,6 +35,12 @@ const MakeIntroduction = () => {
     { id: '2', name: 'Business Collaboration' },
     { id: '3', name: 'Networking Request' }
   ];
+  const details=[
+    {id:'1',name:"Jane Doe",img:'https://placehold.co/40x40/4f46e5/ffffff?text=JD',company:"Doe Consulting",type:"H7",email:"jane@gmail.com"},
+     {id:'2',name:"Robert Smith",img:'https://placehold.co/40x40/green/ffffff?text=RS',company:"Web Solutions Co.",type:"Tracs",email:"robert@gmail.com"},
+      {id:'3',name:"Emily Clark",img:'https://placehold.co/40x40/red/ffffff?text=EC',company:"Clark Law Firm",type:"Contacts",email:"emily@gmail.com"},
+       {id:'4',name:"David Lee",img:'https://placehold.co/40x40/yellow/black?text=DL',company:"Lee Financial",type:"H7",email:"david@gmail.com"}
+  ]
 
   // Filter members based on directory and search query
   const filterMembers = () => {
@@ -174,18 +181,26 @@ const MakeIntroduction = () => {
                 id="memberSearchResults"
                 className="scrollable-list border border-gray-200 rounded-lg divide-y divide-gray-100 bg-surface p-2 max-h-64 overflow-y-auto"
               >
-                {memberResults.length > 0 ? (
-                  memberResults.map((member) => (
+                {details.length > 0 ? (
+                  details.map((member) => (
                     <div
                       key={member.id}
-                      className="p-2 hover:bg-gray-50 cursor-pointer rounded"
+                      className="flex p-2 hover:bg-gray-50 cursor-pointer rounded "
+                      style={{justifyContent:"space-between"}}
                       onClick={() => handleMemberSelect(member)}
                     >
-                      <div className="font-medium">{member.name}</div>
+
+                     
+                     <div className='flex'> <div><img src={member.img} style={{borderRadius:"50%",marginRight:"15px",marginTop:"10px"}} /></div>
+                    <div>
+                      <div><div className="flex  font-medium">{member.name}<div className='ml-2'>{"( "}{member.type}{" )"}</div></div>
                       <div className="text-sm text-gray-500">{member.email}</div>
-                      {member.business && (
-                        <div className="text-xs text-gray-400">{member.business}</div>
-                      )}
+                      {member.company && (
+                        <div className="text-xs text-gray-400">{member.company}</div>
+                      )}</div></div>
+                      </div>
+                      <div><button style={{background:"#4f46e5",padding:'4px 8px',borderRadius:"12px",color:"white"}}>select</button></div>
+                      
                     </div>
                   ))
                 ) : (
@@ -286,8 +301,9 @@ const MakeIntroduction = () => {
                 </select>
               </div>
               <button
-                className="w-full sm:w-auto p-2 bg-secondary text-white font-medium rounded-lg hover:bg-green-600 transition"
+                className="w-full sm:w-auto p-2  text-white font-medium rounded-lg hover:bg-green-600 transition"
                 onClick={toggleTemplateModal}
+                style={{background:"green"}}
               >
                 + Create New Template
               </button>
@@ -313,6 +329,20 @@ const MakeIntroduction = () => {
                 </div>
               </div>
             )}
+            <div><label className='br'>Subject</label></div>
+            <div ><input className='mt-1 bg-green-50 border-1 border-black pr-2 pl-2 pt-2 pb-2 w-full' placeholder='subject will populate automatically'/></div>
+            <div><p className='text-[13px] mt-2 '>**Subject structure:** [Introducer Name] connecting [Receiver 1 Name] & [Receiver 2 Name]</p></div>
+            <div className='mt-[20px]'><label>Message Body</label></div>
+            <div><textarea  className='w-full h-[200px] border-black border-[1px] mt-2 rounded-4'/></div>
+           <div><p className='text-[13px] mt-2 '>*Available Tokens: **[INT_NAME]**, **[R1_NAME]**, **[R1_EMAIL]**, **[R2_NAME]**, **[R2_EMAIL]**.</p></div>
+           <div className='dicvd'>
+            <div className='replaceButton'><button>Replace Tokens</button></div>
+            <div><input type='checkbox' checked/><lable>Signature</lable></div>
+           </div>
+           <div className='dicvd2'>  <div><button id="but2">Cancle</button></div>
+            <div><button id="but1">Send Introduction</button></div>
+          
+           </div>
           </div>
         </div>
       </div>

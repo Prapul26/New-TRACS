@@ -1,25 +1,40 @@
 .newMessageContainer{
-    width: 80%;
+    width: 75%;
   padding-top: 20px;
-    margin-left: 10%;
+    margin-left: 12.5%;
 }
 .nmheading{
     display: flex;
     justify-content: space-between;
    
 }
+.newMessageContainer strong{
+    margin-top: 10px !important;
+}
+.cardmembersbuttons button{
+margin-bottom: 10px;
+padding: 8px 10px;
+
+}
 .nmheading2 button{
     display: flex;
     padding-top: 12px;
     padding-bottom: 12px;
+    justify-content: center;
     padding-left: 25px;
     padding-right: 25px;
+    color: white !important;
+    border-radius: 10px;
     gap: 10px;
         background-color: #007bff;
     margin-top: 40px;
 }
+.nmheading1 h1{
+    font-size: 1.8rem;
+    font-weight: 600;
+}
 .nmheading1 p{
-margin-top: -15px;
+margin-top: 10px;
 font-size: 14px !important;
 }
 .filter{
@@ -38,6 +53,17 @@ font-size: 14px !important;
      display: flex;
 
 }
+.status1 strong{
+    margin-top: -2.5px !important;
+}
+.shortby1 strong{
+    margin-top: -2px !important;
+}
+.filterSearch input{
+    border: 1px solid rgb(196, 196, 182);
+    border-radius: 5px  !important;
+    padding-left: 4px;
+}
 .status1{
     display: flex;
     background-color: white;
@@ -49,7 +75,7 @@ font-size: 14px !important;
     border: 1px solid black;
     height: 35px;
      margin-top: -0px;
-    width: 150px;
+    width: 175px;
 }
 .shortby1{
      display: flex;
@@ -149,8 +175,10 @@ background-color: white;
 }
 .cardmembersbuttons button{
     display: flex;
-    gap:7px;
+    gap:5px;
+    justify-content: center;
     width: 100px;
+    border-radius: 10px;
 }
 .cardmemberDetails1{
     display: flex;
@@ -161,10 +189,13 @@ background-color: white;
 
 .cardmemberDetails2{
     display: flex;
+    margin-top: 10px;
 }
 .cardmemberDetails3{
     display: flex;
+    margin-top: 10px;
 }
+
 .cardmemberDetails1 img{
        width: 40px;
     height: 40px;
@@ -269,6 +300,7 @@ background-color: white;
     background-size: cover;
     background-position: center;
     display: block;
+    margin-top: 3px;
     margin-right: 8px;
     flex-shrink: 0;
         border: 2px solid #dc3545;
@@ -367,6 +399,12 @@ margin-top: 10px;
  
 }
 .cardmemberDetails2{
-    margin-top: 10px;
+    margin-top: 15px;
+}
+.cardmembersbuttons{
+    margin-top: 15px;
+}
+.cardmemberDetails1 img{ 
+margin-top: 4px !important;
 }
 }

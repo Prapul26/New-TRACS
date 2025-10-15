@@ -26,10 +26,10 @@ const NewMessage = () => {
                         <div><h1>Messages</h1></div>
                         <div><p>Your conversations with members</p></div>
                     </div>
-                    <div className='nmheading2'><button><Link to="/makeIntroduction" style={{textDecoration:"nnoe",color:"inherit"}}> <div><FaPlus /></div>Make A Introduction</Link> </button></div>
+                    <div className='nmheading2'><Link to="/makeIntroduction" style={{textDecoration:"nnoe",color:"inherit"}}> <button><div style={{marginTop:"3px"}}><FaPlus /></div>Make A Introduction</button></Link> </div>
                 </div>
                 <div className='filter'>
-                    <div className='status'><label>Status :</label><div><div className='status1' onClick={HandleFollowUp}><strong>Need Follow-Up</strong> <div style={{marginTop:"3px"}}><IoIosArrowDown /></div></div>
+                    <div className='status'><label>Status :</label><div><div className='status1' onClick={HandleFollowUp}><strong>All Introductions</strong> <div style={{marginTop:"3px"}}><IoIosArrowDown /></div></div>
                         {showFolloup && <div className='showFolloup'>
                             <div className='showFolloup1'>All Introductions</div>
                             <div className='showFolloup1'>Need Follow-Up</div>
@@ -44,7 +44,7 @@ const NewMessage = () => {
                     <div className='filterSearch'><input placeholder='Search introductions or members.....' /></div>
                 </div>
                 <div className='cardContainer1'>
-                    <div className='cardHolderDetails'>
+                    <Link to="/replyMessage"><div className='cardHolderDetails'>
                         <div className='cardmemberDetails'>
                             <div className='cardmemberDetails1'>
                                 <div><img src='https://i.pravatar.cc/40?img=1' /></div>
@@ -59,13 +59,13 @@ const NewMessage = () => {
                               <div style={{display:"flex"}}>
                                 <div><img src="https://i.pravatar.cc/35?img=15" /></div>
                                 <div><div><p>Shankar Vanga</p></div>
-                                    <div style={{ marginTop: "-15px" }}><strong>0 Replies</strong></div>
+                                    <div style={{ marginTop: "-5px" }}><strong>0 Replies</strong></div>
                                 </div>
                                 </div>
 
                               <div style={{display:"flex"}}> <div><img src="https://i.pravatar.cc/35?img=22" /></div>
                                 <div><div><p>Tracs Member</p></div>
-                                    <div style={{ marginTop: "-15px" }}><strong>0 Replies</strong></div>
+                                    <div style={{ marginTop: "-5px" }}><strong>0 Replies</strong></div>
                                 </div></div> 
 
                             </div>
@@ -81,15 +81,15 @@ const NewMessage = () => {
                             </div>
                         </div>
                         <div className='cardmembersbuttons'>
-                            <div><button style={{ background: "#007bff" }}> <div><TiArrowBack size={19} /></div>Reply</button></div>
+                            <div><button style={{ background: "#007bff",color:"white" }}> <div><TiArrowBack size={19} /></div>Reply</button></div>
                             <div><button style={{ background: "#e9f5ff", border: "1px solid #007bff", color: "#007bff" }}><div><GrFormView size={20} /></div>View</button></div>
-                            <div><button style={{ background: "#f8d7da", color: "#721c24", border: "1px solid #f5c6cb" }}><div><FaArchive size={15} /></div>Archive</button></div>
+                            <div><button style={{ background: "#f8d7da", color: "#721c24", border: "1px solid #f5c6cb" }}><div style={{marginTop:"3.2px"}}><FaArchive size={15} /></div>Archive</button></div>
                         </div>
-                    </div>
+                    </div></Link>
 
                 </div>
                 <div className='cardContainer2'>
-                    <div className='cardHolderDetails'>
+                    <Link to="/replyMessage"><div className='cardHolderDetails'>
                         <div className='cardmemberDetails'>
                             <div className='cardmemberDetails1'>
                                 <div><img src='https://i.pravatar.cc/40?img=5' /></div>
@@ -104,13 +104,13 @@ const NewMessage = () => {
                               <div style={{display:"flex"}}>
                                 <div><img src="https://i.pravatar.cc/35?img=33" /></div>
                                 <div><div><p>Kenji T.</p></div>
-                                    <div style={{ marginTop: "-15px" }}><strong>2 Replies</strong></div>
+                                    <div style={{ marginTop: "-5px" }}><strong>2 Replies</strong></div>
                                 </div>
                                 </div>
 
                               <div style={{display:"flex"}}> <div><img src="https://i.pravatar.cc/20?img=49" /></div>
                                 <div><div><p>Priya S.</p></div>
-                                    <div style={{ marginTop: "-15px" }}><strong>0 Replies</strong></div>
+                                    <div style={{ marginTop: "-5px" }}><strong>0 Replies</strong></div>
                                 </div></div> 
 
                             </div>
@@ -126,14 +126,14 @@ const NewMessage = () => {
                             </div>
                         </div>
                         <div className='cardmembersbuttons'>
-                            <div><button style={{ background: "#007bff" }}> <div><TiArrowBack size={19} /></div>Reply</button></div>
+                            <div><button style={{ background: "#007bff",color:"white" }}> <div><TiArrowBack size={19} /></div>Reply</button></div>
                             <div><button style={{ background: "#e9f5ff", border: "1px solid #007bff", color: "#007bff" }}><div><GrFormView size={20} /></div>View</button></div>
                         </div>
-                    </div>
+                    </div></Link>
 
                 </div>
                 <div className='cardContainer3'>
-                    <div className='cardHolderDetails'>
+                    <Link to="/replyMessage"><div className='cardHolderDetails'>
                         <div className='cardmemberDetails'>
                             <div className='cardmemberDetails1'>
                                 <div><img src='https://i.pravatar.cc/40?img=12' /></div>
@@ -148,13 +148,13 @@ const NewMessage = () => {
                               <div style={{display:"flex"}}>
                                 <div><img src="https://i.pravatar.cc/35?img=10" /></div>
                                 <div><div><p>Sarah M.</p></div>
-                                    <div style={{ marginTop: "-15px" }}><strong>5 Replies</strong></div>
+                                    <div style={{ marginTop: "-5px" }}><strong>5 Replies</strong></div>
                                 </div>
                                 </div>
 
                               <div style={{display:"flex"}}> <div><img src="https://i.pravatar.cc/35?img=19" /></div>
                                 <div><div><p>Ben C.</p></div>
-                                    <div style={{ marginTop: "-15px" }}><strong>3 Replies</strong></div>
+                                    <div style={{ marginTop: "-5px" }}><strong>3 Replies</strong></div>
                                 </div></div> 
 
                             </div>
@@ -172,13 +172,13 @@ const NewMessage = () => {
                         <div className='cardmembersbuttons'>
                             <div><button style={{ background: "#e9f5ff", border: "1px solid #007bff", color: "#007bff" }}><div><GrFormView size={20} /></div>View</button></div>
          
-                            <div><button style={{ background: "#f8d7da", color: "#721c24", border: "1px solid #f5c6cb",width:"130px" }}><div><FaArchive size={15} /></div>Re-Archive</button></div>
+                            <div><button style={{ background: "#f8d7da", color: "#721c24", border: "1px solid #f5c6cb",width:"130px" }}><div  style={{marginTop:"3.2px"}}><FaArchive size={15} /></div>Re-Archive</button></div>
                         </div>
-                    </div>
+                    </div></Link>
 
                 </div>
                 <div className='cardContainer4'>
-                    <div className='cardHolderDetails'>
+                   <Link to="/replyMessage"> <div className='cardHolderDetails'>
                         <div className='cardmemberDetails'>
                             <div className='cardmemberDetails1'>
                                 <div><img src='https://i.pravatar.cc/40?img=61' /></div>
@@ -193,13 +193,13 @@ const NewMessage = () => {
                               <div style={{display:"flex"}}>
                                 <div><img src="https://i.pravatar.cc/35?img=65" /></div>
                                 <div><div><p>Jenna K. </p></div>
-                                    <div style={{ marginTop: "-15px" }}><strong>0 Replies</strong></div>
+                                    <div style={{ marginTop: "-5px" }}><strong>0 Replies</strong></div>
                                 </div>
                                 </div>
 
                               <div style={{display:"flex"}}> <div><img src="https://i.pravatar.cc/35?img=66" /></div>
                                 <div><div><p>Market Analyst</p></div>
-                                    <div style={{ marginTop: "-15px" }}><strong>0 Replies</strong></div>
+                                    <div style={{ marginTop: "-5px" }}><strong>0 Replies</strong></div>
                                 </div></div> 
 
                             </div>
@@ -215,10 +215,10 @@ const NewMessage = () => {
                             </div>
                         </div>
                         <div className='cardmembersbuttons'>
-                            <div><button style={{ background: "#007bff" }}> <div><TiArrowBack size={19} /></div>Reply</button></div>
+                            <div><button style={{ background: "#007bff",color:"white" }}> <div><TiArrowBack size={19} /></div>Reply</button></div>
                             <div><button style={{ background: "#e9f5ff", border: "1px solid #007bff", color: "#007bff" }}><div><GrFormView size={20} /></div>View</button></div>
                         </div>
-                    </div>
+                    </div></Link>
 
                 </div>
                 </div>

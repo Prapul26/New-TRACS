@@ -1,0 +1,57 @@
+.inputnew{
+background-color: aqua !important;
+border: 2px solid black !important;
+}
+.dicvd{
+    display: flex;
+    margin-top: 20px;
+    justify-content: space-between;
+}
+.replaceButton button{
+    background-color: #4f46e5;
+    padding: 8px 16px;
+    font-size: 16px;
+    color: white;
+    border-radius: 10px;
+}
+.dicvd2{
+    display: flex;
+    margin-top: 20px;
+    justify-content: end;
+    padding-top: 20px;
+    border-top: 1px solid rgb(117, 113, 113);
+}
+#but1{
+background-color: #10b981;
+padding: 12px 24px;
+font-size: 16px;
+color: white;
+border-radius: 20px;}
+#but2{
+color: #374151;
+font-size: 16px;
+margin-right: 50px;
+border: 1px solid rgb(164, 158, 158);
+padding: 12px 24px;
+border-radius: 20px;
+}
+@media(max-width:1024px){
+    .dicvd{
+        flex-direction: column;
+    }
+    .dicvd button{
+        width: 100%;
+        margin-bottom: 20px;
+    }
+    .dicvd2{
+        flex-direction: column;
+
+    }
+    .dicvd2 button{
+        width: 100%;
+        
+    }
+    #but2{
+        margin-bottom: 20px;
+    }
+}
