@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ReplyMessage from './Components/ReplyMessage/ReplyMessage'
 import MakeIntroduction from './Components/MakeIntroduction/MakeIntroduction';
 import NewMessage from './Components/NewMessage/NewMessage';
+import MyMembership from './Components/MyMembership/MyMembership';
+
 
 const App = () => {
   return (
@@ -12,6 +14,7 @@ const App = () => {
         <Route path="/replyMessage" element={<ReplyMessage />} />
         <Route path='/makeIntroduction' element={<MakeIntroduction />}/>
         <Route path='/' element={<NewMessage />}/>
+        <Route path='/myMembership' element={<MyMembership />} />
       </Routes>
      </Router>
     </div>
