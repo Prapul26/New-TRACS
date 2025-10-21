@@ -4,6 +4,8 @@ import ReplyMessage from './Components/ReplyMessage/ReplyMessage'
 import MakeIntroduction from './Components/MakeIntroduction/MakeIntroduction';
 import NewMessage from './Components/NewMessage/NewMessage';
 import MyMembership from './Components/MyMembership/MyMembership';
+import MyContacts from './Components/MyContacts/MyContacts';
+import MyProfile from './Components/MyProfile/MyProfile';
 
 
 const App = () => {
@@ -15,6 +17,8 @@ const App = () => {
         <Route path='/makeIntroduction' element={<MakeIntroduction />}/>
         <Route path='/' element={<NewMessage />}/>
         <Route path='/myMembership' element={<MyMembership />} />
+        <Route path='/myContacts' element={<MyContacts />} />
+        <Route path='/myProfile' element={<MyProfile />}/>
       </Routes>
      </Router>
     </div>
