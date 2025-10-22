@@ -6,6 +6,7 @@ import NewMessage from './Components/NewMessage/NewMessage';
 import MyMembership from './Components/MyMembership/MyMembership';
 import MyContacts from './Components/MyContacts/MyContacts';
 import MyProfile from './Components/MyProfile/MyProfile';
+import ChangePassword from './Components/ChangePassword/ChangePassword';
 
 
 const App = () => {
@@ -19,6 +20,7 @@ const App = () => {
         <Route path='/myMembership' element={<MyMembership />} />
         <Route path='/myContacts' element={<MyContacts />} />
         <Route path='/myProfile' element={<MyProfile />}/>
+        <Route path='/changePassword' element={<ChangePassword />}/>
       </Routes>
      </Router>
     </div>

@@ -87,32 +87,9 @@ const Sidebar = () => {
     );
 };
 
-const FormInput = ({ label, id, type = "text", value, required = false, readOnly = false }) => (
-    <div>
-        <label htmlFor={id} className="block text-sm font-medium text-gray-700">
-            {label} {required && <span className="text-red-500">*</span>}
-        </label>
-        <input type={type} id={id} defaultValue={value} readOnly={readOnly} className={`mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ${readOnly ? 'bg-gray-100' : ''}`} />
-    </div>
-);
 
-const FormTextarea = ({ label, id, value, rows = 6 }) => (
-     <div className="md:col-span-2">
-        <label htmlFor={id} className="block text-sm font-medium text-gray-700">{label}</label>
-        <textarea id={id} rows={rows} defaultValue={value} className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></textarea>
-    </div>
-);
 
-const FormSelect = ({ label, id, children, required = false, defaultValue }) => (
-    <div>
-        <label htmlFor={id} className="block text-sm font-medium text-gray-700">
-            {label} {required && <span className="text-red-500">*</span>}
-        </label>
-        <select id={id} defaultValue={defaultValue} className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md appearance-none bg-no-repeat bg-right" style={{ backgroundImage: `url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none" stroke="%23a0aec0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>')`, backgroundPosition: 'right 0.5rem center', backgroundSize: '1.5em 1.5em' }}>
-            {children}
-        </select>
-    </div>
-);
+
 
 
 
@@ -148,7 +125,53 @@ export default function MyProfile() {
   const [images, setImages] = useState([
 
   ]);
-  const [messageType, setMessageType] = useState(""); // "success" | "error"
+  const [messageType, setMessageType] = useState(""); 
+  const FormInput = ({ label, id, type = "text", value, required = false, readOnly = false, onChange }) => (
+  <div>
+    <label htmlFor={id} className="block text-sm font-medium text-gray-700">
+      {label} {required && <span className="text-red-500">*</span>}
+    </label>
+    <input
+      type={type}
+      id={id}
+      value={value}
+      onChange={onChange}
+      readOnly={readOnly}
+      className={`mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ${readOnly ? 'bg-gray-100' : ''}`}
+    />
+  </div>
+);
+const FormSelect = ({ label, id, value, onChange, required = false, children }) => (
+  <div>
+    <label htmlFor={id} className="block text-sm font-medium text-gray-700">
+      {label} {required && <span className="text-red-500">*</span>}
+    </label>
+    <select
+      id={id}
+      value={value}
+      onChange={onChange}
+      required={required}
+      className="mt-1 block w-full px-3 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+    >
+      <option value="">Select {label}</option>
+      {children}
+    </select>
+  </div>
+);
+
+const FormTextarea = ({ label, id, value, rows = 6, onChange }) => (
+  <div className="md:col-span-2">
+    <label htmlFor={id} className="block text-sm font-medium text-gray-700">{label}</label>
+    <textarea
+      id={id}
+      rows={rows}
+      value={value}
+      onChange={onChange}
+      className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+    ></textarea>
+  </div>
+);
+// "success" | "error"
  useEffect(() => {
     const timeoutId = setTimeout(() => {
       const fetchProfile = async () => {
@@ -227,55 +250,142 @@ setName(data.user.name || "")
         }
     `}</style>
   );
-  const ProfileImageUpload = () => (
-    <div>
-        <h3 className="text-lg font-semibold text-gray-900">Profile Picture</h3>
-        <hr className="mt-2 mb-6" />
-        <div className="flex flex-col items-center">
-            <img src={imagePreview} alt="Profile Picture" className="rounded-lg object-cover w-48 h-48" />
-            <label htmlFor="profile-picture-upload" className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-full font-semibold text-sm mt-4 cursor-pointer">
-                Upload Image
-            </label>
-            <input type="file" id="profile-picture-upload" className="hidden" />
-            <p className="text-xs text-gray-500 mt-2">PNG, JPG, GIF up to 10MB</p>
-        </div>
+ const ProfileImageUpload = () => (
+  <div>
+    <h3 className="text-lg font-semibold text-gray-900">Profile Picture</h3>
+    <hr className="mt-2 mb-6" />
+    <div className="flex flex-col items-center">
+      <img
+        src={imagePreview}
+        alt="Profile"
+        className="rounded-lg object-cover w-48 h-48"
+      />
+      <label
+        htmlFor="profile-picture-upload"
+        className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-full font-semibold text-sm mt-4 cursor-pointer"
+      >
+        Upload Image
+      </label>
+      <input
+        type="file"
+        id="profile-picture-upload"
+        className="hidden"
+        onChange={handleProfileImageChange}
+      />
     </div>
-);
-
-const AdditionalImage = ({ src }) => (
-    <div className="relative">
-        <img src={src} className="rounded-lg h-full w-full object-cover" alt="" />
-        <button className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 text-xs">
-            <Icon name="x" className="w-3 h-3" />
-        </button>
-    </div>
+  </div>
 );
 
 const AdditionalImageUpload = () => (
-    <div className="mt-8">
-        <h3 className="text-lg font-semibold text-gray-900">Additional Images</h3>
-        <hr className="mt-2 mb-6" />
-        <div className="grid grid-cols-2 gap-4">
-           {totalPhotos && totalPhotos.length > 0 ? (
-        totalPhotos.map((photo) => (
-          <AdditionalImage
-            key={photo.id}
-            src={`https://tracsdev.apttechsol.com/public/${photo.image}`}
-          />
-        ))
-      ) : (
-        <p className="text-gray-500 col-span-2">No additional images available</p>
-      )}
-            <div className="relative border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center cursor-pointer hover:bg-gray-50">
-                <label htmlFor="additional-images-upload" className="flex flex-col items-center p-4 text-gray-500">
-                    <Icon name="plus" className="w-8 h-8" />
-                    <span className="text-sm mt-1">Add Image</span>
-                </label>
-                <input type="file" id="additional-images-upload" className="hidden" multiple />
-            </div>
-        </div>
+  <div className="mt-8">
+    <h3 className="text-lg font-semibold text-gray-900">Additional Images</h3>
+    <hr className="mt-2 mb-6" />
+    <div className="grid grid-cols-2 gap-4">
+
+      {/* Existing images from API */}
+      {totalPhotos.length > 0 && totalPhotos.map((photo) => (
+        <img
+          key={photo.id}
+          src={`https://tracsdev.apttechsol.com/public/${photo.image}`}
+          className="rounded-lg h-full w-full object-cover"
+          alt=""
+        />
+      ))}
+
+      {/* Newly added images (local previews) */}
+      {addImg.length > 0 && addImg.map((file, index) => (
+        <img
+          key={`new-${index}`}
+          src={URL.createObjectURL(file)}
+          className="rounded-lg h-full w-full object-cover"
+          alt="Preview"
+        />
+      ))}
+
+      {/* Upload button */}
+      <div className="relative border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center cursor-pointer hover:bg-gray-50">
+        <label htmlFor="additional-images-upload" className="flex flex-col items-center p-4 text-gray-500">
+          <Icon name="plus" className="w-8 h-8" />
+          <span className="text-sm mt-1">Add Image</span>
+        </label>
+        <input
+          type="file"
+          id="additional-images-upload"
+          className="hidden"
+          multiple
+          onChange={handleAdditionalImageChange}
+        />
+      </div>
     </div>
+  </div>
 );
+
+
+const handleProfileImageChange = (e) => {
+  const file = e.target.files[0];
+  if (file) {
+    setSelectedFile(file);
+    setImagePreview(URL.createObjectURL(file));
+  }
+};
+
+const handleAdditionalImageChange = (e) => {
+ 
+  const files = Array.from(e.target.files);
+  setAddImg((prev) => [...prev, ...files]);
+};
+
+const handleUpdateProfile = async (e) => {
+  e.preventDefault();
+  setIsUpdating(true);
+
+  try {
+    const token = "Bearer 36|NUtJgD15eoKNZnQXYgYo5G3cbQdZe2PdeHD16Yy1";
+
+    const formData = new FormData();
+    formData.append("first_name", firstName);
+    formData.append("last_name", lastName);
+    formData.append("email", email);
+    formData.append("phone", phone);
+    formData.append("about", about);
+    formData.append("city", city);
+    formData.append("state", state);
+    formData.append("country", country);
+    formData.append("address", address);
+    formData.append("linkedin", linkedIn);
+    formData.append("business_name", businessName);
+    formData.append("business_description", businessDiscription);
+    formData.append("website", website);
+  formData.append("image", selectedFile); 
+
+
+    
+    // ✅ Append additional images
+    addImg.forEach((img, index) => {
+      formData.append(`additional_images[${index}]`, img);
+    });
+
+    const response = await axios.post(
+         "https://tracsdev.apttechsol.com/api/update-profile",
+      formData,
+      {
+        headers: {
+          Authorization: token,
+       
+        },
+      }
+    );
+console.log("FormData entries:", [...formData.entries()]);
+
+    console.log("✅ Profile updated successfully:", response.data);
+    setMessageType("success");
+  } catch (error) {
+    console.error("❌ Error updating profile:", error);
+    setMessageType("error");
+  } finally {
+    setIsUpdating(false);
+  }
+};
 
   return (
     <>
@@ -309,7 +419,7 @@ const AdditionalImageUpload = () => (
 
               <main className="p-4 md:p-8">
                   <div className="bg-white rounded-lg shadow p-6 md:p-8">
-                      <form>
+                      <form onSubmit={handleUpdateProfile}>
                           <div className="flex flex-col lg:flex-row gap-8">
                               {/* Left Side: Form */}
                               <div className="w-full lg:w-2/3 space-y-8">
@@ -318,10 +428,10 @@ const AdditionalImageUpload = () => (
                                       <h3 className="text-lg font-semibold text-gray-900">Personal Information</h3>
                                       <hr className="mt-2 mb-6" />
                                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                          <FormInput label="First Name" id="first-name" value={firstName}  required />
-                                          <FormInput label="Last Name" id="last-name" value={lastName} required />
-                                          <FormInput label="Email" id="email" type="email" value={email} required readOnly />
-                                          <FormInput label="Phone" id="phone" type="tel" value={phone} required />
+                                          <FormInput label="First Name" id="first-name" value={firstName}  required  onChange={(e) => setFirstName(e.target.value)}/>
+                                          <FormInput label="Last Name" id="last-name" value={lastName} required   onChange={(e) => setLastName(e.target.value)}/>
+                                          <FormInput label="Email" id="email" type="email" value={email} required readOnly  onChange={(e) => setEmail(e.target.value)} />
+                                          <FormInput label="Phone" id="phone" type="tel" value={phone} required   onChange={(e) => setPhone(e.target.value)}/>
                                       </div>
                                   </div>
 
@@ -331,9 +441,9 @@ const AdditionalImageUpload = () => (
                                       <hr className="mt-2 mb-6" />
                                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                         <div className="md:col-span-2">
-                                          <FormInput label="Business Name" id="business-name" value={businessName} />
+                                          <FormInput label="Business Name" id="business-name" value={businessName}  onChange={(e) => setBusinessName(e.target.value)} />
                                         </div>
-                                          <FormTextarea label="Business Description/About" id="business-description" value={about} />
+                                          <FormTextarea label="Business Description/About" id="business-description" value={about}  onChange={(e) => setAbout(e.target.value)} />
                                       </div>
                                   </div>
 
@@ -342,17 +452,17 @@ const AdditionalImageUpload = () => (
                                     <h3 className="text-lg font-semibold text-gray-900">Contact & Location</h3>
                                     <hr className="mt-2 mb-6" />
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                        <FormInput label="Website" id="website" value={website} />
-                                        <FormInput label="Linkedin" id="linkedin" value={linkedIn}/>
+                                        <FormInput label="Website" id="website" value={website}  onChange={(e) => setWebsite(e.target.value)}/>
+                                        <FormInput label="Linkedin" id="linkedin" value={linkedIn}  onChange={(e) => setLinkedIn(e.target.value)}/>
                                         <div className="md:col-span-2">
-                                            <FormInput label="Address" id="address" value={address} />
+                                            <FormInput label="Address" id="address" value={address}  onChange={(e) => setAddress(e.target.value)}/>
                                         </div>
                                         <FormSelect label="Country" id="country"  value={country} onChange={(e) => setCountry(e.target.value)} required>
                                             <option value="USA">USA</option>
                                             <option value="Canada">Canada</option>
                                             <option value="Mexico">Mexico</option>
                                         </FormSelect>
-                                        <FormInput label="City" id="city" value={city} />
+                                        <FormInput label="City" id="city" value={city}  onChange={(e) => setCity(e.target.value)}/>
                                         <FormSelect label="State" id="state" value={state}   onChange={(e) => setState(e.target.value)} >
                                            {states.map((s) => (
                                 <option key={s.id} value={s.code}>
