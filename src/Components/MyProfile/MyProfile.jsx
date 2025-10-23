@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import { MdEmail } from 'react-icons/md';
 
 // Icon components to replace lucide icons
@@ -92,7 +92,51 @@ const Sidebar = () => {
 
 
 
+  const FormInput = memo(({ label, id, type = "text", value, required = false, readOnly = false, onChange }) => (
+  <div>
+    <label htmlFor={id} className="block text-sm font-medium text-gray-700">
+      {label} {required && <span className="text-red-500">*</span>}
+    </label>
+    <input
+      type={type}
+      id={id}
+      value={value}
+      onChange={onChange}
+      readOnly={readOnly}
+      className={`mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ${readOnly ? 'bg-gray-100' : ''}`}
+    />
+  </div>
+));
+const FormSelect = memo(({ label, id, value, onChange, required = false, children }) => (
+  <div>
+    <label htmlFor={id} className="block text-sm font-medium text-gray-700">
+      {label} {required && <span className="text-red-500">*</span>}
+    </label>
+    <select
+      id={id}
+      value={value}
+      onChange={onChange}
+      required={required}
+      className="mt-1 block w-full px-3 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+    >
+      <option value="">Select {label}</option>
+      {children}
+    </select>
+  </div>
+));
 
+const FormTextarea = memo(({ label, id, value, rows = 6, onChange }) => (
+  <div className="md:col-span-2">
+    <label htmlFor={id} className="block text-sm font-medium text-gray-700">{label}</label>
+    <textarea
+      id={id}
+      rows={rows}
+      value={value}
+      onChange={onChange}
+      className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+    ></textarea>
+  </div>
+));
 
 
 
@@ -126,121 +170,52 @@ export default function MyProfile() {
 
   ]);
   const [messageType, setMessageType] = useState(""); 
-  const FormInput = ({ label, id, type = "text", value, required = false, readOnly = false, onChange }) => (
-  <div>
-    <label htmlFor={id} className="block text-sm font-medium text-gray-700">
-      {label} {required && <span className="text-red-500">*</span>}
-    </label>
-    <input
-      type={type}
-      id={id}
-      value={value}
-      onChange={onChange}
-      readOnly={readOnly}
-      className={`mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ${readOnly ? 'bg-gray-100' : ''}`}
-    />
-  </div>
-);
-const FormSelect = ({ label, id, value, onChange, required = false, children }) => (
-  <div>
-    <label htmlFor={id} className="block text-sm font-medium text-gray-700">
-      {label} {required && <span className="text-red-500">*</span>}
-    </label>
-    <select
-      id={id}
-      value={value}
-      onChange={onChange}
-      required={required}
-      className="mt-1 block w-full px-3 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-    >
-      <option value="">Select {label}</option>
-      {children}
-    </select>
-  </div>
-);
 
-const FormTextarea = ({ label, id, value, rows = 6, onChange }) => (
-  <div className="md:col-span-2">
-    <label htmlFor={id} className="block text-sm font-medium text-gray-700">{label}</label>
-    <textarea
-      id={id}
-      rows={rows}
-      value={value}
-      onChange={onChange}
-      className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-    ></textarea>
-  </div>
-);
 // "success" | "error"
- useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      const fetchProfile = async () => {
-        try {
-          const token = "Bearer 36|NUtJgD15eoKNZnQXYgYo5G3cbQdZe2PdeHD16Yy1";
-          const response = await axios.get(
-            `https://tracsdev.apttechsol.com/api/my-profile`,
-            {
-              headers: {
-                Authorization: token,
-              },
-            }
-          );
-          const data = response.data;
 
-          // ✅ Store userId in sessionStorage
-          if (data.user?.id) {
-            sessionStorage.setItem("userId", data.user.id);
-          }
+  const fetchProfile = async () => {
+    try {
+      const token = "Bearer 36|NUtJgD15eoKNZnQXYgYo5G3cbQdZe2PdeHD16Yy1";
+      const response = await axios.get("https://tracsdev.apttechsol.com/api/my-profile", {
+        headers: { Authorization: token },
+      });
 
-          const newImage = data.user?.image;
-          if (newImage) {
-            setImagePreview(`https://tracsdev.apttechsol.com/public/${newImage}`);
-          }
+      const data = response.data;
+      if (data.user?.id) sessionStorage.setItem("userId", data.user.id);
 
-          const fullName = data.user.name || "";
-          const [first, ...rest] = fullName.trim().split(" ");
-          const last = rest.join(" ");
-setName(data.user.name || "")
-          setFirstName(first || "");
-          setLastName(last || "");
-          setEmail(data.user.email || "");
-          setPhone(data.user.phone || "");
-          setAbout(data.user.about || "");
-          setCity(data.user.city || "");
-          setState(data.user.state || "");
-          setCountry(data.user.country || "");
-          setAddress(data.user.address || "");
-          setBusinessName(data.user.business_name || "");
-          setBusinessDescription(data.user.business_description || "");
-          setWebsite(data.user.website || "");
-          setLinkedIn(data.user.linkedin || "");
-          setStates(data.states || []);
-          setMemberType(data.user.member_type || "");
+      setName(data.user.name || "");
+      setFirstName(data.user.name?.split(" ")[0] || "");
+      setLastName(data.user.name?.split(" ").slice(1).join(" ") || "");
+      setEmail(data.user.email || "");
+      setPhone(data.user.phone || "");
+      setAbout(data.user.about || "");
+      setCity(data.user.city || "");
+      setState(data.user.state || "");
+      setCountry(data.user.country || "");
+      setAddress(data.user.address || "");
+      setBusinessName(data.user.business_name || "");
+      setBusinessDescription(data.user.business_description || "");
+      setWebsite(data.user.website || "");
+      setLinkedIn(data.user.linkedin || "");
+      setStates(data.states || []);
+      setMemberType(data.user.member_type || "");
+      setImagePreview(`https://tracsdev.apttechsol.com/public/${data.user.image}`);
 
-          // 👇 Fix: Set additional image URLs
-          const additional = data.total_photos || [];
-          const fullImageUrls = additional
-            .slice(0, 5)
-            .map((img) => ({
-              id: img.id,
-              url: `https://tracsdev.apttechsol.com/public/${img.image}`,
-            }));
+      const fullImageUrls = (data.total_photos || []).map(img => ({
+        id: img.id,
+        url: `https://tracsdev.apttechsol.com/public/${img.image}`,
+      }));
+      setImages(fullImageUrls);
+      setTotalPhotos(data.total_photos || []);
+    } catch (error) {
+      console.error("Error fetching profile data:", error);
+    }
+  };
+  useEffect(() => {
+    fetchProfile();
+  }, []); // ✅ runs only once when component mounts
 
-          setImages(fullImageUrls);
-          setTotalPhotos(data.total_photos || []);
-          console.log("✅ Stored userId:", data.user?.id);
-          console.log("eff:", JSON.stringify(fullImageUrls));
 
-        } catch (error) {
-          console.error("Error fetching profile data:", error);
-        }
-      };
-
-      fetchProfile();
-    }, 300);
-
-    return () => clearTimeout(timeoutId);
-  }, []);
   // A simple way to inject global styles
   const GlobalStyles = () => (
     <style>{`
@@ -362,8 +337,9 @@ const handleUpdateProfile = async (e) => {
     
     // ✅ Append additional images
     addImg.forEach((img, index) => {
-      formData.append(`additional_images[${index}]`, img);
+      formData.append("photo_list[]", img);
     });
+       
 
     const response = await axios.post(
          "https://tracsdev.apttechsol.com/api/update-profile",

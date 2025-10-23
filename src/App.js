@@ -7,6 +7,7 @@ import MyMembership from './Components/MyMembership/MyMembership';
 import MyContacts from './Components/MyContacts/MyContacts';
 import MyProfile from './Components/MyProfile/MyProfile';
 import ChangePassword from './Components/ChangePassword/ChangePassword';
+import EmailSignature from './Components/EmailSignature/EmailSignaature';
 
 
 const App = () => {
@@ -21,6 +22,7 @@ const App = () => {
         <Route path='/myContacts' element={<MyContacts />} />
         <Route path='/myProfile' element={<MyProfile />}/>
         <Route path='/changePassword' element={<ChangePassword />}/>
+        <Route path='/emailSignature' element={<EmailSignature/>}/>
       </Routes>
      </Router>
     </div>
