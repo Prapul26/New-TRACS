@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { memo, useEffect, useState } from 'react';
 import { MdEmail } from 'react-icons/md';
+import { Link } from 'react-router-dom';
 
 // Icon components to replace lucide icons
 const Icon = ({ name, className = "w-6 h-6" }) => {
@@ -30,11 +31,14 @@ const Icon = ({ name, className = "w-6 h-6" }) => {
     );
 };
 
-const SidebarLink = ({ icon, text, active = false }) => (
-    <a href="#" className={`flex items-center px-6 py-3 mt-2 ${active ? 'text-white bg-gray-700' : 'text-gray-400 hover:bg-gray-700 hover:text-white'}`}>
+const SidebarLink = ({ icon, text, to = "#", active = false }) => (
+    <Link
+        to={to}
+        className={`flex items-center px-6 py-3 mt-2 ${active ? 'text-white bg-gray-700' : 'text-gray-400 hover:bg-gray-700 hover:text-white'}`}
+    >
         <Icon name={icon} className="w-6 h-6" />
         <span className="ml-3">{text}</span>
-    </a>
+    </Link>
 );
 
 const SidebarSection = ({ title, links }) => (
@@ -49,19 +53,19 @@ const Sidebar = () => {
         {
             title: 'Account Settings',
             links: [
-                { icon: 'credit-card', text: 'My Membership' },
+                { icon: 'credit-card', text: 'My Membership' , to: '/myMembership'},
                 { icon: 'user', text: 'My Profile', active: true },
-                { icon: 'lock', text: 'Change Password' },
+                { icon: 'lock', text: 'Change Password', to: '/changePassword' },
                 { icon: 'link', text: 'Affiliation' },
             ],
         },
         {
             title: 'Introductions',
             links: [
-                { icon: 'inbox', text: 'Introduction Messages' },
-                { icon: 'users', text: 'My Contacts' },
-                { icon: 'mail', text: 'Email Templates' },
-                { icon: 'pen-square', text: 'Email Signature' },
+                { icon: 'inbox', text: 'Introduction Messages', to: '/' },
+                { icon: 'users', text: 'My Contacts'  , to: '/myContacts'},
+                { icon: 'mail', text: 'Email Templates', to: '/emailTemplate' },
+                { icon: 'pen-square', text: 'Email Signature', to: '/emailSignature' },
             ],
         },
         {
@@ -374,7 +378,7 @@ console.log("FormData entries:", [...formData.entries()]);
           <Sidebar />
 
           {/* Main content */}
-          <div className="flex flex-col flex-1 overflow-y-auto">
+            <div className="flex flex-col flex-1 overflow-y-auto">
               <header className="bg-white shadow-sm flex items-center justify-between p-4 border-b">
                   <div className="flex items-center">
                       <button onClick={() => setSidebarOpen(!isSidebarOpen)} className="text-gray-600 lg:hidden">
