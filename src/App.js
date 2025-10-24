@@ -8,6 +8,8 @@ import MyContacts from './Components/MyContacts/MyContacts';
 import MyProfile from './Components/MyProfile/MyProfile';
 import ChangePassword from './Components/ChangePassword/ChangePassword';
 import EmailSignature from './Components/EmailSignature/EmailSignaature';
+import EmailTemplate from './Components/EmailTemplate/EmailTemplate';
+import NewContacts from './Components/NewContacts/NewContacts';
 
 
 const App = () => {
@@ -23,6 +25,8 @@ const App = () => {
         <Route path='/myProfile' element={<MyProfile />}/>
         <Route path='/changePassword' element={<ChangePassword />}/>
         <Route path='/emailSignature' element={<EmailSignature/>}/>
+        <Route path='/emailTemplate' element={<EmailTemplate />}/>
+        <Route path='/newContacts' element={<NewContacts/>}/>
       </Routes>
      </Router>
     </div>

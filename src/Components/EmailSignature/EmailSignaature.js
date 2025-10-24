@@ -29,10 +29,11 @@ export default function EmailSignaature() {
 
 const handleSave = async () => {
   const token = "Bearer 36|NUtJgD15eoKNZnQXYgYo5G3cbQdZe2PdeHD16Yy1";
+  const userID=localStorage.getItem("userId")
   setLoading(true);
   try {
     await axios.post("https://tracsdev.apttechsol.com/api/signature_store_form", {
-      name: signature,
+      name: signature,user_id:userID,
     }, {
       headers: { Authorization: token },
     });
@@ -94,7 +95,7 @@ const handleSave = async () => {
 
                 <div className="bg-white p-8 rounded-2xl shadow-lg">
                     {/* Main Content Area */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div className="gap-8">
 
                         {/* Left Side: Input Form */}
                         <div className="flex flex-col space-y-6">
@@ -131,7 +132,7 @@ const handleSave = async () => {
                         </div>
 
                         {/* Right Side: Live Preview */}
-                        <div className="flex flex-col">
+                       { /*<div className="flex flex-col">
                             <h2 className="text-sm font-medium text-gray-700 mb-2">Preview</h2>
                             <div className="flex-grow p-4 border border-gray-200 rounded-lg bg-gray-50 min-h-[200px]">
                                 <div className="text-sm text-gray-500">
@@ -146,7 +147,7 @@ const handleSave = async () => {
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div>*/}
                     </div>
                 </div>
 

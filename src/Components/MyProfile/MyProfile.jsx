@@ -181,6 +181,10 @@ export default function MyProfile() {
       });
 
       const data = response.data;
+        if (data.user?.id) {
+            localStorage.setItem("userId", data.user.id);
+          }
+
       if (data.user?.id) sessionStorage.setItem("userId", data.user.id);
 
       setName(data.user.name || "");

@@ -37,19 +37,56 @@ const AddContactForm = ({ onSave, onCancel }) => {
     groupName: '',
   });
 
+    const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setContact((prevContact) => ({ ...prevContact, [name]: value }));
+    setContact((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!contact.firstName || !contact.lastName || !contact.email || !contact.groupName) {
-      alert('All fields are required.');
+
+    const { firstName, lastName, email, groupName } = contact;
+
+    if (!firstName || !lastName || !email || !groupName) {
+      setMessage("All fields are required.");
       return;
     }
-    onSave(contact);
-    setContact({ firstName: '', lastName: '', email: '', groupName: '' });
+
+    setLoading(true);
+    setMessage("");
+
+    try {
+      const token =  "Bearer 36|NUtJgD15eoKNZnQXYgYo5G3cbQdZe2PdeHD16Yy1";
+
+      const response = await axios.post(
+        `https://tracsdev.apttechsol.com/api/contact_store_form`,
+        {
+          first_name: firstName,
+          last_name: lastName,
+          email: email,
+          group_name: groupName,
+        },
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+
+      setMessage("Contact added successfully!");
+      setContact({ firstName: "", lastName: "", email: "", groupName: "" });
+window.location.reload()
+      // Notify parent component if needed
+      
+
+    } catch (error) {
+      setMessage(error.response?.data?.message || "Error adding the contact.");
+    } finally {
+      setLoading(false);
+    }
   };
 
 
@@ -179,7 +216,7 @@ const MyContacts = () => {
     const token = "Bearer 36|NUtJgD15eoKNZnQXYgYo5G3cbQdZe2PdeHD16Yy1";
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_API_BASE_URL}/view-introduction-email-list`,
+        `https://tracsdev.apttechsol.com/api/view-introduction-email-list`,
         {
           headers: {
             Authorization: token,
@@ -249,12 +286,12 @@ const MyContacts = () => {
             <tbody className="divide-y divide-gray-200">
               {contactss.length > 0 ? (
                 contactss.map((contact) => (
-                  <tr key={contact.id}>
-                            <td style={{ fontSize: "15px" }}>{contact.first_name}</td>
-                            <td style={{ fontSize: "15px" }}>{contact.last_name}</td>
-                            <td style={{ fontSize: "15px" }}>{contact.group_name}</td>
-                            <td style={{ fontSize: "15px" }}>{contact.email}</td>
-                            <td style={{ fontSize: "15px" }}>
+                  <tr key={contact.id} className="divide-x divide-gray-200">
+                            <td  className="px-6 py-4 whitespace-nowrap">{contact.first_name}</td>
+                            <td  className="px-6 py-4 whitespace-nowrap">{contact.last_name}</td>
+                            <td className="px-6 py-4 whitespace-nowrap">{contact.group_name}</td>
+                            <td className="px-6 py-4 whitespace-nowrap">{contact.email}</td>
+                            <td  className="px-6 py-4 whitespace-nowrap">
                               {new Date(contact.created_at).toISOString().split("T")[0]}
                             </td>
 
