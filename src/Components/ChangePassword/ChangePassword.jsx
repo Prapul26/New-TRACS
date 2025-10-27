@@ -21,8 +21,35 @@ const EyeIcon = ({
 
 
 export default function ChangePassword() {
-    // State management for form fields and UI
+
     const [isSidebarOpen, setSidebarOpen] = useState(false);
+    const [imagePreview, setImagePreview] = useState("");
+    const [name, setName] = useState("")
+
+
+    const fetchProfile = async () => {
+        try {
+            const token = "Bearer 36|NUtJgD15eoKNZnQXYgYo5G3cbQdZe2PdeHD16Yy1";
+            const response = await axios.get("https://tracsdev.apttechsol.com/api/my-profile", {
+                headers: { Authorization: token },
+            });
+
+            const data = response.data;
+
+            setName(data.user.name || "");
+
+            setImagePreview(`https://tracsdev.apttechsol.com/public/${data.user.image}`);
+
+
+        } catch (error) {
+            console.error("Error fetching profile data:", error);
+        }
+    };
+    useEffect(() => {
+        fetchProfile();
+    }, []);
+
+    // State management for form fields and UI
     const [currentPassword, setCurrentPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -142,6 +169,7 @@ export default function ChangePassword() {
         }
     `}</style>
     );
+
     const Icon = ({ name, className = "w-6 h-6" }) => {
         const icons = {
             'credit-card': <><path d="M2 9a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9Z" /><path d="M2 14h20" /></>,
@@ -169,15 +197,15 @@ export default function ChangePassword() {
         );
     };
 
- const SidebarLink = ({ icon, text, to = "#", active = false }) => (
-    <Link
-        to={to}
-        className={`flex items-center px-6 py-3 mt-2 ${active ? 'text-white bg-gray-700' : 'text-gray-400 hover:bg-gray-700 hover:text-white'}`}
-    >
-        <Icon name={icon} className="w-6 h-6" />
-        <span className="ml-3">{text}</span>
-    </Link>
-);
+    const SidebarLink = ({ icon, text, to = "#", active = false }) => (
+        <Link
+            to={to}
+            className={`flex items-center px-6 py-3 mt-2 ${active ? 'text-white bg-gray-700' : 'text-gray-400 hover:bg-gray-700 hover:text-white'}`}
+        >
+            <Icon name={icon} className="w-6 h-6" />
+            <span className="ml-3">{text}</span>
+        </Link>
+    );
 
     const SidebarSection = ({ title, links }) => (
         <div className="mt-8">
@@ -193,17 +221,17 @@ export default function ChangePassword() {
                 links: [
                     { icon: 'credit-card', text: 'My Membership', to: '/myMembership' },
                     { icon: 'user', text: 'My Profile', to: '/myProfile' },
-                    { icon: 'lock', text: 'Change Password', active: true  },
+                    { icon: 'lock', text: 'Change Password', active: true },
                     { icon: 'link', text: 'Affiliation' },
                 ],
             },
             {
                 title: 'Introductions',
                 links: [
-                    { icon: 'inbox', text: 'Introduction Messages' , to: '/'},
-                    { icon: 'users', text: 'My Contacts' , to: '/myContacts'},
-                    { icon: 'mail', text: 'Email Templates' , to: '/emailTemplate'},
-                    { icon: 'pen-square', text: 'Email Signature'  , to: '/emailSignature'},
+                    { icon: 'inbox', text: 'Introduction Messages', to: '/' },
+                    { icon: 'users', text: 'My Contacts', to: '/myContacts' },
+                    { icon: 'mail', text: 'Email Templates', to: '/emailTemplate' },
+                    { icon: 'pen-square', text: 'Email Signature', to: '/emailSignature' },
                 ],
             },
             {
@@ -217,6 +245,9 @@ export default function ChangePassword() {
             },
         ];
 
+
+
+
         return (
             <aside className="bg-[#1a202c] w-64 flex-shrink-0 hidden lg:block">
                 <div className="p-6">
@@ -229,86 +260,111 @@ export default function ChangePassword() {
         );
     };
 
-    return (
-          <div style={{display:"flex"}}><div><Sidebar /></div>
-        <div className="bg-gray-50 text-gray-800 font-sans p-4 sm:p-6 lg:p-8" style={{width:"100%"}}>
-            <div className="container mx-auto max-w-4xl bg-white p-8 rounded-2xl shadow-lg">
 
-                  <div className="text-center">
-                            <h1 className="text-3xl font-bold text-gray-800">Change Password</h1>
-                            <p className="text-gray-500 mt-2">Update your password for enhanced security.</p>
+
+    return (
+        <div style={{ display: "flex" }}><div><Sidebar /></div>
+        <div style={{width:"100%"}}><header className="bg-white shadow-sm flex items-center justify-between p-4 border-b">
+                    <div className="flex items-center">
+                        <button onClick={() => setSidebarOpen(!isSidebarOpen)} className="text-gray-600 lg:hidden">
+                            <Icon name="menu" className="w-6 h-6" />
+                        </button>
+                        <h1 className="text-2xl font-semibold text-gray-800 ml-4 lg:ml-0">Edit Profile</h1>
+                    </div>
+
+                    <div className="flex items-center space-x-4">
+                        <a href="#" className="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-full font-semibold text-sm">
+                            View Profile
+                        </a>
+                        <div className="relative">
+                            <button className="flex items-center space-x-2">
+                                <img src={imagePreview} alt="User Avatar" className="h-10 w-10 rounded-full" />
+                                <span className="hidden md:block">{name}</span>
+                                <Icon name="chevron-down" className="w-4 h-4" />
+                            </button>
+                        </div>
+                    </div>
+                </header>
+            <div className="bg-gray-50 text-gray-800 font-sans p-4 sm:p-6 lg:p-8" style={{ width: "100%" }}>
+                
+                <div className="container mx-auto max-w-4xl bg-white p-8 rounded-2xl shadow-lg">
+
+                    <div className="text-center">
+                        <h1 className="text-3xl font-bold text-gray-800">Change Password</h1>
+                        <p className="text-gray-500 mt-2">Update your password for enhanced security.</p>
+                    </div>
+
+                    <form onSubmit={handleSubmit} className="space-y-6">
+                        {/* Current Password */}
+                        <div>
+                            <label htmlFor="current-password" className="text-sm font-medium text-gray-700">Current Password</label>
+                            <div className="mt-1" style={{ position: 'relative' }}>
+                                <input
+                                    id="current-password"
+                                    type={isCurrentPasswordVisible ? 'text' : 'password'}
+                                    value={currentPassword}
+                                    onChange={(e) => setCurrentPassword(e.target.value)}
+                                    required
+                                    className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                />
+                                <EyeIcon onClick={() => setIsCurrentPasswordVisible(!isCurrentPasswordVisible)} isVisible={!isCurrentPasswordVisible} />
+                            </div>
                         </div>
 
-                        <form onSubmit={handleSubmit} className="space-y-6">
-                            {/* Current Password */}
-                            <div>
-                                <label htmlFor="current-password" className="text-sm font-medium text-gray-700">Current Password</label>
-                                <div className="mt-1" style={{ position: 'relative' }}>
-                                    <input
-                                        id="current-password"
-                                        type={isCurrentPasswordVisible ? 'text' : 'password'}
-                                        value={currentPassword}
-                                        onChange={(e) => setCurrentPassword(e.target.value)}
-                                        required
-                                        className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                    />
-                                    <EyeIcon onClick={() => setIsCurrentPasswordVisible(!isCurrentPasswordVisible)} isVisible={!isCurrentPasswordVisible} />
-                                </div>
+                        {/* New Password */}
+                        <div>
+                            <label htmlFor="new-password" className="text-sm font-medium text-gray-700">New Password</label>
+                            <div className="mt-1" style={{ position: 'relative' }}>
+                                <input
+                                    id="new-password"
+                                    type={isNewPasswordVisible ? 'text' : 'password'}
+                                    value={newPassword}
+                                    onChange={(e) => setNewPassword(e.target.value)}
+                                    required
+                                    className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                />
+                                <EyeIcon onClick={() => setIsNewPasswordVisible(!isNewPasswordVisible)} isVisible={!isNewPasswordVisible} />
                             </div>
+                            <p className="mt-2 text-xs text-gray-500">Password must be at least 8 characters long (12+ recommended).</p>
+                            {passwordStrength.text && <p className={`mt-2 text-xs ${passwordStrength.color}`}>Strength: {passwordStrength.text}</p>}
+                        </div>
 
-                            {/* New Password */}
-                            <div>
-                                <label htmlFor="new-password" className="text-sm font-medium text-gray-700">New Password</label>
-                                <div className="mt-1" style={{ position: 'relative' }}>
-                                    <input
-                                        id="new-password"
-                                        type={isNewPasswordVisible ? 'text' : 'password'}
-                                        value={newPassword}
-                                        onChange={(e) => setNewPassword(e.target.value)}
-                                        required
-                                        className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                    />
-                                    <EyeIcon onClick={() => setIsNewPasswordVisible(!isNewPasswordVisible)} isVisible={!isNewPasswordVisible} />
-                                </div>
-                                <p className="mt-2 text-xs text-gray-500">Password must be at least 8 characters long (12+ recommended).</p>
-                                {passwordStrength.text && <p className={`mt-2 text-xs ${passwordStrength.color}`}>Strength: {passwordStrength.text}</p>}
+                        {/* Confirm Password */}
+                        <div>
+                            <label htmlFor="confirm-password" className="text-sm font-medium text-gray-700">Confirm New Password</label>
+                            <div className="mt-1" style={{ position: 'relative' }}>
+                                <input
+                                    id="confirm-password"
+                                    type={isConfirmPasswordVisible ? 'text' : 'password'}
+                                    value={confirmPassword}
+                                    onChange={(e) => setConfirmPassword(e.target.value)}
+                                    required
+                                    className={`appearance-none block w-full px-3 py-2 border rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ${confirmPasswordBorderColor()}`}
+                                />
+                                <EyeIcon onClick={() => setIsConfirmPasswordVisible(!isConfirmPasswordVisible)} isVisible={!isConfirmPasswordVisible} />
                             </div>
+                            {matchStatus.text && <p className={`mt-2 text-xs ${matchStatus.color}`}>{matchStatus.text}</p>}
+                        </div>
 
-                            {/* Confirm Password */}
-                            <div>
-                                <label htmlFor="confirm-password" className="text-sm font-medium text-gray-700">Confirm New Password</label>
-                                <div className="mt-1" style={{ position: 'relative' }}>
-                                    <input
-                                        id="confirm-password"
-                                        type={isConfirmPasswordVisible ? 'text' : 'password'}
-                                        value={confirmPassword}
-                                        onChange={(e) => setConfirmPassword(e.target.value)}
-                                        required
-                                        className={`appearance-none block w-full px-3 py-2 border rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ${confirmPasswordBorderColor()}`}
-                                    />
-                                    <EyeIcon onClick={() => setIsConfirmPasswordVisible(!isConfirmPasswordVisible)} isVisible={!isConfirmPasswordVisible} />
-                                </div>
-                                {matchStatus.text && <p className={`mt-2 text-xs ${matchStatus.color}`}>{matchStatus.text}</p>}
+                        {/* Message Box */}
+                        {message.text && (
+                            <div className={`p-4 rounded-md text-sm ${message.type === 'error' ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700'}`}>
+                                {message.text}
                             </div>
+                        )}
 
-                            {/* Message Box */}
-                            {message.text && (
-                                <div className={`p-4 rounded-md text-sm ${message.type === 'error' ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700'}`}>
-                                    {message.text}
-                                </div>
-                            )}
-
-                            {/* Action Buttons */}
-                            <div className="flex items-center justify-end space-x-4">
-                                <button type="button" onClick={handleCancel} className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
-                                    Cancel
-                                </button>
-                                <button type="submit" className="px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                                    Update Password
-                                </button>
-                            </div>
-                        </form>
+                        {/* Action Buttons */}
+                        <div className="flex items-center justify-end space-x-4">
+                            <button type="button" onClick={handleCancel} className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
+                                Cancel
+                            </button>
+                            <button type="submit" className="px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                Update Password
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
-        </div></div>
+            </div></div>
     );
 }

@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import "./NewMessage.css"
 import { FaPlus } from 'react-icons/fa'
 import { IoIosArrowDown } from 'react-icons/io';
@@ -105,10 +106,57 @@ const NewMessage = () => {
         setShortBy((prev) => !prev);
     };
 
+      const [isSidebarOpen, setSidebarOpen] = useState(false);
+  const [imagePreview, setImagePreview] = useState("");
+  const [name, setName] = useState("")
+
+
+  const fetchProfile = async () => {
+    try {
+      const token = "Bearer 36|NUtJgD15eoKNZnQXYgYo5G3cbQdZe2PdeHD16Yy1";
+      const response = await axios.get("https://tracsdev.apttechsol.com/api/my-profile", {
+        headers: { Authorization: token },
+      });
+
+      const data = response.data;
+
+      setName(data.user.name || "");
+
+      setImagePreview(`https://tracsdev.apttechsol.com/public/${data.user.image}`);
+
+
+    } catch (error) {
+      console.error("Error fetching profile data:", error);
+    }
+  };
+  useEffect(() => {
+    fetchProfile();
+  }, []);
 
     return (
         <div style={{display:'flex'}}><div><Sidebar /></div>
         <div style={{ background: "#f4f7f9",width:"100%" }}>
+               <header className="bg-white shadow-sm flex items-center justify-between p-4 border-b">
+          <div className="flex items-center">
+            <button onClick={() => setSidebarOpen(!isSidebarOpen)} className="text-gray-600 lg:hidden">
+              <Icon name="menu" className="w-6 h-6" />
+            </button>
+            <h1 className="text-2xl font-semibold text-gray-800 ml-4 lg:ml-0">Edit Profile</h1>
+          </div>
+
+          <div className="flex items-center space-x-4">
+            <a href="#" className="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-full font-semibold text-sm">
+              View Profile
+            </a>
+            <div className="relative">
+              <button className="flex items-center space-x-2">
+                <img src={imagePreview} alt="User Avatar" className="h-10 w-10 rounded-full" />
+                <span className="hidden md:block">{name}</span>
+                <Icon name="chevron-down" className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+        </header>
             <div className='newMessageContainer'>
                 <div className='nmheading'>
                     <div className='nmheading1'>
