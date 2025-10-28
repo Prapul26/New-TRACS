@@ -249,7 +249,7 @@ export default function ChangePassword() {
 
 
         return (
-            <aside className="bg-[#1a202c] w-64 flex-shrink-0 hidden lg:block">
+            <aside className="bg-[#1a202c] w-64 flex-shrink-0 hidden lg:block h-[100%]">
                 <div className="p-6">
                     <a href="#" className="text-white text-2xl font-bold">TRACS</a>
                 </div>
@@ -269,13 +269,13 @@ export default function ChangePassword() {
                         <button onClick={() => setSidebarOpen(!isSidebarOpen)} className="text-gray-600 lg:hidden">
                             <Icon name="menu" className="w-6 h-6" />
                         </button>
-                        <h1 className="text-2xl font-semibold text-gray-800 ml-4 lg:ml-0">Edit Profile</h1>
+                        <h1 className="text-2xl font-semibold text-gray-800 ml-4 lg:ml-0"></h1>
                     </div>
 
                     <div className="flex items-center space-x-4">
-                        <a href="#" className="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-full font-semibold text-sm">
-                            View Profile
-                        </a>
+                        <Link to="/test" className="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-full font-semibold text-sm">
+                                                 View Profile
+                                             </Link>
                         <div className="relative">
                             <button className="flex items-center space-x-2">
                                 <img src={imagePreview} alt="User Avatar" className="h-10 w-10 rounded-full" />
@@ -285,14 +285,14 @@ export default function ChangePassword() {
                         </div>
                     </div>
                 </header>
-            <div className="bg-gray-50 text-gray-800 font-sans p-4 sm:p-6 lg:p-8" style={{ width: "100%" }}>
-                
-                <div className="container mx-auto max-w-4xl bg-white p-8 rounded-2xl shadow-lg">
-
-                    <div className="text-center">
+            <div className="bg-gray-50 text-gray-800 font-sans p-1 sm:p-6 lg:p-8" style={{ width: "100%" }}>
+                <div >
                         <h1 className="text-3xl font-bold text-gray-800">Change Password</h1>
                         <p className="text-gray-500 mt-2">Update your password for enhanced security.</p>
                     </div>
+                <div className="container mx-auto max-w-1xl mt-6 bg-white p-8 rounded-2xl shadow-lg">
+
+                    
 
                     <form onSubmit={handleSubmit} className="space-y-6">
                         {/* Current Password */}

@@ -195,7 +195,7 @@ const Sidebar = () => {
 
 
     return (
-        <aside className="bg-[#1a202c] w-64 flex-shrink-0 hidden lg:block">
+        <aside className="bg-[#1a202c] w-64 flex-shrink-0 hidden lg:block h-[100%]">
             <div className="p-6">
                 <a href="#" className="text-white text-2xl font-bold">TRACS</a>
             </div>
@@ -215,13 +215,13 @@ const Sidebar = () => {
             <button onClick={() => setSidebarOpen(!isSidebarOpen)} className="text-gray-600 lg:hidden">
               <Icon name="menu" className="w-6 h-6" />
             </button>
-            <h1 className="text-2xl font-semibold text-gray-800 ml-4 lg:ml-0">Edit Profile</h1>
+            <h1 className="text-2xl font-semibold text-gray-800 ml-4 lg:ml-0"></h1>
           </div>
 
           <div className="flex items-center space-x-4">
-            <a href="#" className="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-full font-semibold text-sm">
-              View Profile
-            </a>
+            <Link to="/test" className="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-full font-semibold text-sm">
+                                                            View Profile
+                                                        </Link>
             <div className="relative">
               <button className="flex items-center space-x-2">
                 <img src={imagePreview} alt="User Avatar" className="h-10 w-10 rounded-full" />

@@ -12,16 +12,57 @@ const InfoCard = ({ title, value, isHighlighted = false }) => (
 );
 
 // Sub-component for invoice history rows
-const InvoiceRow = ({ date, packageName, amount }) => (
+// ✅ Sub-component for invoice history rows
+const InvoiceRow = ({ date, packageName, amount, downloadUrl }) => {
+  const handleDownload = async (e) => {
+    e.preventDefault();
+    try {
+      const token = "Bearer 36|NUtJgD15eoKNZnQXYgYo5G3cbQdZe2PdeHD16Yy1";
+      const response = await axios.get(downloadUrl, {
+        headers: { Authorization: token },
+        responseType: "blob", // Important for downloading files
+      });
+
+      // Create a blob URL and trigger download
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement("a");
+
+      // 💡 Dynamic filename: use order ID or date in filename
+      const filename = `invoice-${date.replace(/[^a-zA-Z0-9]/g, "_")}.pdf`;
+
+      link.href = url;
+      link.setAttribute("download", filename);
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error("Error downloading invoice:", error);
+      alert("Failed to download invoice. Please try again.");
+    }
+  };
+
+  return (
     <tr>
-        <td className="px-6 py-4 whitespace-nowrap">{date}</td>
-        <td className="px-6 py-4 whitespace-nowrap hidden sm:table-cell">{packageName}</td>
-        <td className="px-6 py-4 whitespace-nowrap">{amount}</td>
-        <td className="px-6 py-4 whitespace-nowrap">
-            <a href="#" className="text-indigo-600 hover:text-indigo-800 font-medium">Download</a>
-        </td>
+      <td className="px-6 py-4 whitespace-nowrap">{date}</td>
+      <td className="px-6 py-4 whitespace-nowrap hidden sm:table-cell">{packageName}</td>
+      <td className="px-6 py-4 whitespace-nowrap">{amount}</td>
+      <td className="px-6 py-4 whitespace-nowrap">
+        <a
+          href="#"
+          onClick={handleDownload}
+          className="text-indigo-600 hover:text-indigo-800 font-medium"
+        >
+          Download
+        </a>
+      </td>
     </tr>
-);
+  );
+};
+
+
+
 const Icon = ({ name, className = "w-6 h-6" }) => {
   const icons = {
     'credit-card': <><path d="M2 9a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9Z" /><path d="M2 14h20" /></>,
@@ -98,7 +139,7 @@ const Sidebar = () => {
   ];
 
   return (
-    <aside className="bg-[#1a202c] w-64 flex-shrink-0 hidden lg:block">
+    <aside className="bg-[#1a202c] w-64 flex-shrink-0 hidden lg:block h-[100%]">
       <div className="p-6">
         <a href="#" className="text-white text-2xl font-bold">TRACS</a>
       </div>
@@ -196,13 +237,13 @@ formatDate("2025-02-27"); // "Feb 27, 2025"
             <button onClick={() => setSidebarOpen(!isSidebarOpen)} className="text-gray-600 lg:hidden">
               <Icon name="menu" className="w-6 h-6" />
             </button>
-            <h1 className="text-2xl font-semibold text-gray-800 ml-4 lg:ml-0">Edit Profile</h1>
+            <h1 className="text-2xl font-semibold text-gray-800 ml-4 lg:ml-0"></h1>
           </div>
 
           <div className="flex items-center space-x-4">
-            <a href="#" className="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-full font-semibold text-sm">
-              View Profile
-            </a>
+            <Link to="/test" className="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-full font-semibold text-sm">
+                                     View Profile
+                                 </Link>
             <div className="relative">
               <button className="flex items-center space-x-2">
                 <img src={imagePreview} alt="User Avatar" className="h-10 w-10 rounded-full" />
@@ -273,22 +314,26 @@ formatDate("2025-02-27"); // "Feb 27, 2025"
                                             <th className="px-6 py-3 text-sm font-semibold text-gray-600 uppercase tracking-wider">Invoice</th>
                                         </tr>
                                     </thead>
-                                    <tbody className="divide-y divide-gray-200">
-                                        {data.map(order => (
-                                            <InvoiceRow
-                                                key={order.id}
-                                                date={formatDate(order.purchase_date)}
-                                                packageName={order.listing_package_id === "2"
-                                            ? "Basic"
-                                            : order.listing_package_id === "1"
-                                                ? "Trail"
-                                                : order.listing_package_id === "3"
-                                                    ? "Standard"
-                                                    : "Unknown"}
-                                                amount={order.amount_usd}
-                                            />
-                                        ))}
-                                    </tbody>
+                                  <tbody className="divide-y divide-gray-200">
+  {data.map(order => (
+    <InvoiceRow
+      key={order.id}
+      date={formatDate(order.purchase_date)}
+      packageName={
+        order.listing_package_id === "2"
+          ? "Basic"
+          : order.listing_package_id === "1"
+          ? "Trail"
+          : order.listing_package_id === "3"
+          ? "Standard"
+          : "Unknown"
+      }
+      amount={`$${order.amount_usd}`}
+      downloadUrl={`https://tracsdev.apttechsol.com/api/invoice/${order.id}`} // Example
+    />
+  ))}
+</tbody>
+
                                 </table>
                             </div>
                         </div>

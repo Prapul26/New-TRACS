@@ -83,7 +83,7 @@ const Sidebar = () => {
   ];
 
   return (
-    <aside className="bg-[#1a202c] w-64 flex-shrink-0 hidden lg:block">
+    <aside className="bg-[#1a202c] w-64 flex-shrink-0 hidden lg:block h-[100%]">
       <div className="p-6">
         <a href="#" className="text-white text-2xl font-bold">TRACS</a>
       </div>
@@ -134,14 +134,14 @@ const NewMessage = () => {
   }, []);
 
     return (
-        <div style={{display:'flex'}}><div><Sidebar /></div>
+        <div style={{display:'flex'}}><div ><Sidebar /></div>
         <div style={{ background: "#f4f7f9",width:"100%" }}>
                <header className="bg-white shadow-sm flex items-center justify-between p-4 border-b">
           <div className="flex items-center">
             <button onClick={() => setSidebarOpen(!isSidebarOpen)} className="text-gray-600 lg:hidden">
               <Icon name="menu" className="w-6 h-6" />
             </button>
-            <h1 className="text-2xl font-semibold text-gray-800 ml-4 lg:ml-0">Edit Profile</h1>
+            <h1 className="text-2xl font-semibold text-gray-800 ml-4 lg:ml-0"></h1>
           </div>
 
           <div className="flex items-center space-x-4">

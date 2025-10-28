@@ -80,7 +80,7 @@ const Sidebar = () => {
     ];
 
     return (
-        <aside className="bg-[#1a202c] w-64 flex-shrink-0 hidden lg:block">
+        <aside className="bg-[#1a202c] w-64 flex-shrink-0 hidden lg:block h-[100%]">
             <div className="p-6">
                 <a href="#" className="text-white text-2xl font-bold">TRACS</a>
             </div>
@@ -196,7 +196,14 @@ export default function MyProfile() {
       setLastName(data.user.name?.split(" ").slice(1).join(" ") || "");
       setEmail(data.user.email || "");
       setPhone(data.user.phone || "");
-      setAbout(data.user.about || "");
+      const cleanHTML = (html) => {
+  if (!html) return "";
+  return html.replace(/<[^>]+>/g, ''); // remove all HTML tags
+};
+
+// inside your fetchProfile:
+setAbout(cleanHTML(data.user.about || ""));
+
       setCity(data.user.city || "");
       setState(data.user.state || "");
       setCountry(data.user.country || "");
@@ -223,7 +230,11 @@ export default function MyProfile() {
     fetchProfile();
   }, []); // ✅ runs only once when component mounts
 
-
+ const adjustInternalHtml = (html) => {
+  const container = document.createElement("div");
+  container.innerHTML = html;
+  return container.innerHTML;
+};
   // A simple way to inject global styles
   const GlobalStyles = () => (
     <style>{`
@@ -374,11 +385,11 @@ console.log("FormData entries:", [...formData.entries()]);
   return (
     <>
       <GlobalStyles />
-      <div className="flex h-screen bg-gray-100">
+      <div className="flex  bg-gray-100">
           <Sidebar />
 
           {/* Main content */}
-            <div className="flex flex-col flex-1 overflow-y-auto">
+            <div className="flex flex-col flex-1 h-screen overflow-y-auto">
               <header className="bg-white shadow-sm flex items-center justify-between p-4 border-b">
                   <div className="flex items-center">
                       <button onClick={() => setSidebarOpen(!isSidebarOpen)} className="text-gray-600 lg:hidden">
@@ -388,9 +399,9 @@ console.log("FormData entries:", [...formData.entries()]);
                   </div>
 
                   <div className="flex items-center space-x-4">
-                      <a href="#" className="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-full font-semibold text-sm">
+                      <Link to="/test" className="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-full font-semibold text-sm">
                           View Profile
-                      </a>
+                      </Link>
                       <div className="relative">
                           <button className="flex items-center space-x-2">
                               <img src={imagePreview} alt="User Avatar" className="h-10 w-10 rounded-full" />
