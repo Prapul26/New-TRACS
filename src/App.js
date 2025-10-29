@@ -11,6 +11,7 @@ import EmailSignature from './Components/EmailSignature/EmailSignaature';
 import EmailTemplate from './Components/EmailTemplate/EmailTemplate';
 import NewContacts from './Components/NewContacts/NewContacts';
 import Test from './Components/Test';
+import Test2 from './Components/Test2';
 
 
 const App = () => {
@@ -29,6 +30,7 @@ const App = () => {
         <Route path='/emailTemplate' element={<EmailTemplate />}/>
         <Route path='/newContacts' element={<NewContacts/>}/>
         <Route path='/test' element={<Test/>}/>
+          <Route path='/test2' element={<Test2/>}/>
       </Routes>
      </Router>
     </div>
