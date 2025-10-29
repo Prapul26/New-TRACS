@@ -112,7 +112,7 @@ const MakeIntroduction = () => {
   const [selectedTemplate, setSelectedTemplate] = useState('');
   const [emailBody, setEmailBody] = useState("");
   const [ggText, setGGText] = useState("")
-  const [signature,setSignature]=useState("");
+  const [signature,setSignature]=useState(false);
   const[msg,setMsg]=useState("")
   const [validationError, setValidationError] = useState("");
   const [message, setMessage] = useState("")
@@ -666,30 +666,34 @@ const MakeIntroduction = () => {
                       </button>
 
                       <label className="flex items-center space-x-2">
-                       <input
-                type="checkbox"
-                checked={!!signature}
-                onChange={(e) => {
-                  const checked = e.target.checked;
+                     <label className="flex items-center space-x-2">
+  <input
+    type="checkbox"
+    checked={signature}
+    onChange={(e) => {
+      const checked = e.target.checked;
 
-                  if (!data?.signature?.name) {
-                    setMsg("No signature found. Please add one first.");
-                    return;
-                  }
+      if (!data?.signature?.name) {
+        setMsg("No signature found. Please add one first.");
+        return;
+      }
 
-                  const rawSignature = data.signature.name;
-                  const wrappedSignature = `<div class="signature-block">${rawSignature}</div>`;
-                  const htmlSignature = adjustInternalHtml(wrappedSignature);
+      const sigText = `\n\n${data.signature.name}`; // add some spacing before signature
 
-                  if (checked) {
-                    setGGText((prev) => prev + htmlSignature);
-                    setSignature(htmlSignature);
-                  } else {
-                    setGGText((prev) => prev.replace(signature, "").trim());
-                    setSignature("");
-                  }
-                }}
-              />
+      if (checked) {
+        // Add signature to the bottom of textarea
+        setEmailBody((prev) => prev + sigText);
+        setSignature(true);
+      } else {
+        // Remove signature text if already present
+        setEmailBody((prev) => prev.replace(sigText, "").trim());
+        setSignature(false);
+      }
+    }}
+  />
+  <span>Signature</span>
+</label>
+
                         <span>Signature</span>
                       </label>
                     </div>
