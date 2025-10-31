@@ -112,8 +112,8 @@ const MakeIntroduction = () => {
   const [selectedTemplate, setSelectedTemplate] = useState('');
   const [emailBody, setEmailBody] = useState("");
   const [ggText, setGGText] = useState("")
-  const [signature,setSignature]=useState(false);
-  const[msg,setMsg]=useState("")
+  const [signature, setSignature] = useState(false);
+  const [msg, setMsg] = useState("")
   const [validationError, setValidationError] = useState("");
   const [message, setMessage] = useState("")
   const [subject, setSubject] = useState("");
@@ -269,7 +269,7 @@ const MakeIntroduction = () => {
           `https://tracsdev.apttechsol.com/api/sendmailintro/introduction_email`,
           {
             headers: {
-              Authorization: `Bearer ${token}`,
+              Authorization: token,
             },
           }
         );
@@ -299,6 +299,70 @@ const MakeIntroduction = () => {
       setSubject("");
     }
   }, [selectedMembers, data?.userInfo]);
+  const handleSendIntroduction = async () => {
+  // Basic validation
+  if (selectedMembers.length === 0) {
+    setValidationError("Please select at least one member before sending.");
+    setShowSelectionError(true);
+    return;
+  }
+
+  if (!subject || !emailBody) {
+    setValidationError("Subject and message body are required.");
+    return;
+  }
+
+  try {
+    const token = "Bearer 36|NUtJgD15eoKNZnQXYgYo5G3cbQdZe2PdeHD16Yy1";
+
+    // 🔹 Create FormData
+    const formData = new FormData();
+   
+    formData.append("subject", subject);
+    formData.append("message", emailBody);
+    formData.append("template_id", selectedTemplate || "");
+    formData.append("signature", signature ? data?.signature?.name || "" : "");
+
+    // 🔹 Append all selected member emails like mail_id[]
+    selectedMembers.forEach((user) => {
+      if (user.email) {
+        formData.append("mail_id[]", user.email);
+      }
+    });
+
+    console.log("📤 Sending form data:");
+    for (let pair of formData.entries()) {
+      console.log(pair[0], pair[1]);
+    }
+
+    // 🔹 API POST request
+    const response = await axios.post(
+      "https://tracsdev.apttechsol.com/api/sendmailintrotointromem",
+      formData,
+      {
+        headers: {
+          Authorization: token,
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+
+    if (response.data.success) {
+      alert("✅ Introduction email sent successfully!");
+      setSelectedMembers([]);
+      setEmailBody("");
+      setSubject("");
+      setSelectedTemplate("");
+    } else {
+      alert("⚠️ Failed to send introduction. Please try again.");
+    }
+  } catch (error) {
+    console.error("❌ Error sending introduction:", error);
+    alert(error.response?.data?.message || "Something went wrong.");
+  }
+};
+
+
   return (
     <div style={{ display: 'flex' }}><div><Sidebar /></div>
       <div style={{ width: "100%" }}>
@@ -424,7 +488,7 @@ const MakeIntroduction = () => {
                           onClick={() => handleMemberSelect(member)}
                         >
                           {/* Member Left Section */}
-                          <div className="flex items-center">
+                          <div className="flex items-center" style={{overflow:"hidden"}}>
                             <img
                               src={
                                 member?.image && member.image !== "null" && member.image !== ""
@@ -597,117 +661,117 @@ const MakeIntroduction = () => {
                         </option>
                       ))}
                     </select>
-                   </div>
-                          </div>
-                  <button
-                    className="w-full sm:w-auto p-2  text-white font-medium rounded-lg hover:bg-green-600 transition"
-                    onClick={toggleTemplateModal}
-                    style={{ background: "green" }}
-                  >
-                    + Create New Template
-                  </button>
+                  </div>
                 </div>
-                    {/* Subject */}
-                    <div className="mt-4">
-                      <label className="block text-sm font-medium text-gray-700">Subject</label>
-                      <input
-                        className="mt-1 bg-green-50 border border-black pr-2 pl-2 pt-2 pb-2 w-full rounded"
-                        placeholder="subject will populate automatically"
-                        value={subject}
-                        onChange={(e) => setSubject(e.target.value)}
-                      />
-                      <p className="text-[13px] mt-2">
-                        **Subject structure:** [Introducer Name] connecting [Receiver 1 Name] & [Receiver 2 Name]
-                      </p>
-                    </div>
+                <button
+                  className="w-full sm:w-auto p-2  text-white font-medium rounded-lg hover:bg-green-600 transition"
+                  onClick={toggleTemplateModal}
+                  style={{ background: "green" }}
+                >
+                  + Create New Template
+                </button>
+              </div>
+              {/* Subject */}
+              <div className="mt-4">
+                <label className="block text-sm font-medium text-gray-700">Subject</label>
+                <input
+                  className="mt-1 bg-green-50 border border-black pr-2 pl-2 pt-2 pb-2 w-full rounded"
+                  placeholder="subject will populate automatically"
+                  value={subject}
+                  onChange={(e) => setSubject(e.target.value)}
+                />
+                <p className="text-[13px] mt-2">
+                  **Subject structure:** [Introducer Name] connecting [Receiver 1 Name] & [Receiver 2 Name]
+                </p>
+              </div>
 
-                    {/* Message Body */}
-                    <div className="mt-6">
-                      <label className="block text-sm font-medium text-gray-700">Message Body</label>
-                      <textarea
-                        className="w-full h-[200px] border border-black mt-2 rounded p-2"
-                        value={emailBody}
-                        onChange={(e) => setEmailBody(e.target.value)}
-                      />
-                      <p className="text-[13px] mt-2">
-                        *Available Tokens:* **[INT_NAME]**, **[R1_NAME]**, **[R1_EMAIL]**, **[R2_NAME]**, **[R2_EMAIL]**.
-                      </p>
-                    </div>
+              {/* Message Body */}
+              <div className="mt-6">
+                <label className="block text-sm font-medium text-gray-700">Message Body</label>
+                <textarea
+                  className="w-full h-[200px] border border-black mt-2 rounded p-2"
+                  value={emailBody}
+                  onChange={(e) => setEmailBody(e.target.value)}
+                />
+                <p className="text-[13px] mt-2">
+                  *Available Tokens:* **[INT_NAME]**, **[R1_NAME]**, **[R1_EMAIL]**, **[R2_NAME]**, **[R2_EMAIL]**.
+                </p>
+              </div>
 
-                    {/* Replace Tokens Button */}
-                    <div className="flex items-center justify-between mt-4">
-                      <button
-                        type="button"
-                        className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-                        onClick={() => {
-                          if (selectedMembers.length < 2) {
-                            setValidationError("Please select at least two users to replace tokens.");
-                            return;
-                          }
+              {/* Replace Tokens Button */}
+              <div className="flex items-center justify-between mt-4">
+                <button
+                  type="button"
+                  className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                  onClick={() => {
+                    if (selectedMembers.length < 2) {
+                      setValidationError("Please select at least two users to replace tokens.");
+                      return;
+                    }
 
-                          const [user1, user2] = selectedMembers;
+                    const [user1, user2] = selectedMembers;
 
-                          // Replace tokens in both plain text and HTML versions
-                          const replacedBody = emailBody
-                            .replace(/\[\[name_1\]\]/gi, user1.name)
-                            .replace(/\[\[name_2\]\]/gi, user2.name)
-                            .replace(/\[\[R1_NAME\]\]/gi, user1.name)
-                            .replace(/\[\[R2_NAME\]\]/gi, user2.name)
-                            .replace(/\[\[R1_EMAIL\]\]/gi, user1.email)
-                            .replace(/\[\[R2_EMAIL\]\]/gi, user2.email);
+                    // Replace tokens in both plain text and HTML versions
+                    const replacedBody = emailBody
+                      .replace(/\[\[name_1\]\]/gi, user1.name)
+                      .replace(/\[\[name_2\]\]/gi, user2.name)
+                      .replace(/\[\[R1_NAME\]\]/gi, user1.name)
+                      .replace(/\[\[R2_NAME\]\]/gi, user2.name)
+                      .replace(/\[\[R1_EMAIL\]\]/gi, user1.email)
+                      .replace(/\[\[R2_EMAIL\]\]/gi, user2.email);
 
-                          setEmailBody(replacedBody);
-                          setMessage(replacedBody);
-                          setGGText(replacedBody);
-                          setValidationError("");
-                        }}
-                      >
-                        Replace Tokens
-                      </button>
+                    setEmailBody(replacedBody);
+                    setMessage(replacedBody);
+                    setGGText(replacedBody);
+                    setValidationError("");
+                  }}
+                >
+                  Replace Tokens
+                </button>
 
-                      <label className="flex items-center space-x-2">
-                     <label className="flex items-center space-x-2">
-  <input
-    type="checkbox"
-    checked={signature}
-    onChange={(e) => {
-      const checked = e.target.checked;
+                <label className="flex items-center space-x-2">
+                  <label className="flex items-center space-x-2">
+                    <input
+                      type="checkbox"
+                      checked={signature}
+                      onChange={(e) => {
+                        const checked = e.target.checked;
 
-      if (!data?.signature?.name) {
-        setMsg("No signature found. Please add one first.");
-        return;
-      }
+                        if (!data?.signature?.name) {
+                          setMsg("No signature found. Please add one first.");
+                          return;
+                        }
 
-      const sigText = `\n\n${data.signature.name}`; // add some spacing before signature
+                        const sigText = `\n\n${data.signature.name}`; // add some spacing before signature
 
-      if (checked) {
-        // Add signature to the bottom of textarea
-        setEmailBody((prev) => prev + sigText);
-        setSignature(true);
-      } else {
-        // Remove signature text if already present
-        setEmailBody((prev) => prev.replace(sigText, "").trim());
-        setSignature(false);
-      }
-    }}
-  />
-  <span>Signature</span>
-</label>
+                        if (checked) {
+                          // Add signature to the bottom of textarea
+                          setEmailBody((prev) => prev + sigText);
+                          setSignature(true);
+                        } else {
+                          // Remove signature text if already present
+                          setEmailBody((prev) => prev.replace(sigText, "").trim());
+                          setSignature(false);
+                        }
+                      }}
+                    />
+                    <span>Signature</span>
+                  </label>
 
-                        <span>Signature</span>
-                      </label>
-                    </div>
+                 
+                </label>
+              </div>
 
-                  </div>
-                  <div className='dicvd2'>  <div><button id="but2">Cancle</button></div>
-                    <div><button id="but1">Send Introduction</button> </div>
-                  </div>
-                </div> {/* end of Right Column */}
-              </div> {/* end of grid */}
-            </div> {/* end of page container */}
-          </div>
+            </div>
+            <div className='dicvd2'>  <div><button id="but2">Cancle</button></div>
+              <div><button id="but1"  onClick={handleSendIntroduction}>Send Introduction</button> </div>
+            </div>
+          </div> {/* end of Right Column */}
+        </div> {/* end of grid */}
+      </div> {/* end of page container */}
+    </div>
 
-      )
+  )
 }
 
-      export default MakeIntroduction
+export default MakeIntroduction
