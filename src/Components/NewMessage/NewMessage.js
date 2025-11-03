@@ -7,6 +7,11 @@ import { TiArrowBack } from "react-icons/ti";
 import { GrFormView } from "react-icons/gr";
 import { FaArchive } from "react-icons/fa";
 import { Link } from 'react-router-dom';
+import {
+  Search,
+  ChevronDown,
+} from 'lucide-react';
+import { RiArrowDropDownLine } from 'react-icons/ri';
 const Icon = ({ name, className = "w-6 h-6" }) => {
   const icons = {
     'credit-card': <><path d="M2 9a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9Z" /><path d="M2 14h20" /></>,
@@ -35,13 +40,13 @@ const Icon = ({ name, className = "w-6 h-6" }) => {
 };
 
 const SidebarLink = ({ icon, text, to = "#", active = false }) => (
-    <Link
-        to={to}
-        className={`flex items-center px-6 py-3 mt-2 ${active ? 'text-white bg-gray-700' : 'text-gray-400 hover:bg-gray-700 hover:text-white'}`}
-    >
-        <Icon name={icon} className="w-6 h-6" />
-        <span className="ml-3">{text}</span>
-    </Link>
+  <Link
+    to={to}
+    className={`flex items-center px-6 py-3 mt-2 ${active ? 'text-white bg-gray-700' : 'text-gray-400 hover:bg-gray-700 hover:text-white'}`}
+  >
+    <Icon name={icon} className="w-6 h-6" />
+    <span className="ml-3">{text}</span>
+  </Link>
 );
 
 const SidebarSection = ({ title, links }) => (
@@ -57,8 +62,8 @@ const Sidebar = () => {
       title: 'Account Settings',
       links: [
         { icon: 'credit-card', text: 'My Membership', to: '/myMembership', to: '/myMembership' },
-        { icon: 'user', text: 'My Profile', to: '/myProfile' , to: '/myProfile'},
-        { icon: 'lock', text: 'Change Password', to: '/changePassword' , to: '/changePassword' },
+        { icon: 'user', text: 'My Profile', to: '/myProfile', to: '/myProfile' },
+        { icon: 'lock', text: 'Change Password', to: '/changePassword', to: '/changePassword' },
         { icon: 'link', text: 'Affiliation' },
       ],
     },
@@ -66,9 +71,9 @@ const Sidebar = () => {
       title: 'Introductions',
       links: [
         { icon: 'inbox', text: 'Introduction Messages', active: true },
-        { icon: 'users', text: 'My Contacts' , to: '/myContacts'},
-        { icon: 'mail', text: 'Email Templates' , to: '/emailTemplate'},
-        { icon: 'pen-square', text: 'Email Signature' , to: '/emailSignature' },
+        { icon: 'users', text: 'My Contacts', to: '/myContacts' },
+        { icon: 'mail', text: 'Email Templates', to: '/emailTemplate' },
+        { icon: 'pen-square', text: 'Email Signature', to: '/emailSignature' },
       ],
     },
     {
@@ -97,20 +102,25 @@ const Sidebar = () => {
 
 
 const NewMessage = () => {
-    const [showFolloup, setFollowUp] = useState(false);
-    const [showShortBy, setShortBy] = useState(false);
-    const HandleFollowUp = () => {
-        setFollowUp((prev) => !prev);
-    };
-    const handleShortBy = () => {
-        setShortBy((prev) => !prev);
-    };
+  const [showFolloup, setFollowUp] = useState(false);
+  const [showShortBy, setShortBy] = useState(false);
+  const [messageFilter, setMessageFilter] = useState("");
+  const [sentMessages, setSentMessages] = useState([]);
 
-      const [isSidebarOpen, setSidebarOpen] = useState(false);
+  const [replyFilter, setReplyFilter] = useState("");
+
+  const HandleFollowUp = () => {
+    setFollowUp((prev) => !prev);
+  };
+  const handleShortBy = () => {
+    setShortBy((prev) => !prev);
+  };
+
+  const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [imagePreview, setImagePreview] = useState("");
   const [name, setName] = useState("")
 
-
+  const [userId, setUserId] = useState("")
   const fetchProfile = async () => {
     try {
       const token = "Bearer 36|NUtJgD15eoKNZnQXYgYo5G3cbQdZe2PdeHD16Yy1";
@@ -124,7 +134,7 @@ const NewMessage = () => {
 
       setImagePreview(`https://tracsdev.apttechsol.com/public/${data.user.image}`);
 
-
+      setUserId(data.user.id)
     } catch (error) {
       console.error("Error fetching profile data:", error);
     }
@@ -132,11 +142,117 @@ const NewMessage = () => {
   useEffect(() => {
     fetchProfile();
   }, []);
+  useEffect(() => {
+    const fetchMessages = async () => {
+      const token = "Bearer 36|NUtJgD15eoKNZnQXYgYo5G3cbQdZe2PdeHD16Yy1";
+      try {
+        const response = await axios.get(
+          "https://tracsdev.apttechsol.com/api/view-inbox-list-from-intro-api",
+          {
+            headers: {
+              Authorization: token,
+              Accept: "application/json",
+            },
+            params: {
+              bump: replyFilter || "",      // only add if filter selected
+              all_filter: messageFilter || ""
+            },
+          }
+        );
 
-    return (
-        <div style={{display:'flex'}}><div ><Sidebar /></div>
-        <div style={{ background: "#f4f7f9",width:"100%" }}>
-               <header className="bg-white shadow-sm flex items-center justify-between p-4 border-b">
+     const mails = response.data.sentMails || [];
+setSentMessages(mails);
+
+// ✅ Open first message by default
+if (mails.length > 0) {
+  setMessageDropdown(mails[0].id); // or use index 0 if no id exists
+}
+      } catch (error) {
+        console.error("Error fetching inbox data:", error.response?.data || error.message);
+      }
+    };
+
+    fetchMessages();
+  }, [replyFilter, messageFilter]); // 👈 refetch when filter changes
+  const cleanHTML = (html) => {
+    if (!html) return "";
+    return html.replace(/<[^>]+>/g, ''); // remove all HTML tags
+  };
+
+  const [messageDropDown, setMessageDropdown] = useState(false);
+  const handelMessageDropDown = (id) => {
+    setMessageDropdown(prevId => (prevId === id ? null : id))
+  }
+  const [filterType, setFilterType] = useState("all-intros");
+  const [sortOrder, setSortOrder] = useState("latest");
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const filteredMessages = sentMessages.filter((item) => {
+    if (filterType === "all-intros") return true;
+
+    // Messages Sent → when the logged-in user (name/email) matches sender
+    if (filterType === "messages-sent") {
+      return (
+        item.first_sender_name?.toLowerCase() === name?.toLowerCase()
+      );
+    }
+
+
+    // Messages Received → when the logged-in user is in the recipient list
+    if (filterType === "messages-received") {
+      return (
+
+
+        Number(item.user_id) !== Number(userId)
+      );
+    }
+    // Future placeholders
+    if (filterType === "follow-up") {
+      return (
+        Array.isArray(item.recipients_info) &&
+        item.recipients_info.length > 0 &&
+        item.recipients_info.every((rec) => Number(rec.replied_count) === 0)
+      );
+    }
+    if (filterType === "archive") {
+      return (
+        Array.isArray(item.recipients_info) &&
+        item.recipients_info.length > 0 &&
+        item.recipients_info.every((rec) => Number(rec.replied_count) >= 1)
+      );
+    };
+
+    return true;
+  }).filter((item) => {
+    // ✅ Search filter
+    if (!searchTerm.trim()) return true;
+
+    const term = searchTerm.toLowerCase();
+
+    // Match sender name or any recipient name
+    const senderMatch = item.first_sender_name?.toLowerCase().includes(term);
+    const recipientMatch = item.recipients_info?.some((rec) =>
+      rec.name?.toLowerCase().includes(term)
+    );
+
+    return senderMatch || recipientMatch;
+  }).sort((a, b) => {
+    // 🕒 Sort messages by date
+    const dateA = new Date(a.created_at);
+    const dateB = new Date(b.created_at);
+
+    if (sortOrder === "latest") {
+      return dateB - dateA; // newest first
+    } else {
+      return dateA - dateB; // oldest first
+    }
+  });;
+
+
+  return (
+    <div style={{ display: 'flex' }}><div ><Sidebar /></div>
+      <div style={{ background: "#f4f7f9", width: "100%" }}>
+        <header className="bg-white shadow-sm flex items-center justify-between p-4 border-b">
           <div className="flex items-center">
             <button onClick={() => setSidebarOpen(!isSidebarOpen)} className="text-gray-600 lg:hidden">
               <Icon name="menu" className="w-6 h-6" />
@@ -157,210 +273,195 @@ const NewMessage = () => {
             </div>
           </div>
         </header>
-            <div className='newMessageContainer'>
-                <div className='nmheading'>
-                    <div className='nmheading1'>
-                        <div><h1>Messages</h1></div>
-                        <div><p>Your conversations with members</p></div>
-                    </div>
-                    <div className='nmheading2'><Link to="/makeIntroduction" style={{textDecoration:"nnoe",color:"inherit"}}> <button><div style={{marginTop:"3px"}}><FaPlus /></div>Make A Introduction</button></Link> </div>
+
+        <div className='containerFilter'>
+          <div className="mb-8">
+            <div className="bg-white p-4 rounded-xl shadow-sm border border-slate-200">
+              <div className="flex flex-col sm:flex-row gap-4 sm:items-end">
+                {/* Search Bar */}
+                <div className="w-full sm:flex-grow">
+                  <label htmlFor="searchInput" className="block text-sm font-medium text-slate-600 mb-1">
+                    Search
+                  </label>
+                  <div className="relative">
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5" />
+                    <input
+                      type="text"
+                      id="searchInput"
+                      placeholder="Search introductions..."
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      className="w-full bg-slate-50 border border-slate-200 rounded-lg py-2 pl-9 pr-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                    />
+
+                  </div>
                 </div>
-                <div className='filter'>
-                    <div className='status'><label>Status :</label><div><div className='status1' onClick={HandleFollowUp}><strong>All Introductions</strong> <div style={{marginTop:"3px"}}><IoIosArrowDown /></div></div>
-                        {showFolloup && <div className='showFolloup'>
-                            <div className='showFolloup1'>All Introductions</div>
-                            <div className='showFolloup1'>Need Follow-Up</div>
-                            <div className='showFolloup1'>Messages Sent</div>
-                            <div className='showFolloup1'>Messages Received</div>
-                        </div>}</div></div>
-                    <div className='shortby'><label>Sort By :</label><div><div className='shortby1' onClick={handleShortBy}><strong>Oldest</strong> <div style={{marginTop:"3px"}}><IoIosArrowDown /></div></div>
-                        {showShortBy && <div className='showShortBy'>
-                            <div className='showShortBy1'>Latest</div>
-                            <div className='showShortBy1'>Oldest</div>
-                        </div>}</div></div>
-                    <div className='filterSearch'><input placeholder='Search introductions or members.....' /></div>
+
+                {/* Filter for Status (Dropdown) */}
+                <div className="w-full sm:w-auto">
+                  <label htmlFor="statusFilter" className="block text-sm font-medium text-slate-600 mb-1">
+                    Status
+                  </label>
+                  <div className="relative">
+                    <select
+                      id="statusFilter"
+                      className="w-full sm:w-52 appearance-none bg-slate-50 border border-slate-200 rounded-lg py-2 px-3 text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                      value={filterType}
+                      onChange={(e) => setFilterType(e.target.value)}
+                    >
+                      <option value="all-intros">All Introductions</option>
+                      <option value="messages-sent">Messages Sent</option>
+                      <option value="messages-received">Messages Received</option>
+                      <option value="follow-up">Follow-up</option>
+                      <option value="archive">Archive</option>
+                    </select>
+
+                    <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5 pointer-events-none" />
+                  </div>
                 </div>
-                <div className='cardContainer1'>
-                    <Link to="/replyMessage"><div className='cardHolderDetails'>
-                        <div className='cardmemberDetails'>
-                            <div className='cardmemberDetails1'>
-                                <div><img src='https://i.pravatar.cc/40?img=1' /></div>
-                                <div><h3>S Kumar Nelli</h3></div>
-                                <div style={{ marginTop: "8px" }}><strong>1 day ago</strong></div>
-                                <div className='statusFF' style={{ marginTop: "8px" }}><strong>Needs Follow-up</strong></div>
-                            </div>
-                            <div className='cardmemberDetails2'>
-                                <div><h2>Shankar Vanga <span style={{ marginLeft: "6px", marginRight: "6px", color: "#999" }}>&</span>  Tracs Member</h2></div>
-                            </div>
-                            <div className='cardmemberDetails3'>
-                              <div style={{display:"flex"}}>
-                                <div><img src="https://i.pravatar.cc/35?img=15" /></div>
-                                <div><div><p>Shankar Vanga</p></div>
-                                    <div style={{ marginTop: "-5px" }}><strong>0 Replies</strong></div>
-                                </div>
-                                </div>
 
-                              <div style={{display:"flex"}}> <div><img src="https://i.pravatar.cc/35?img=22" /></div>
-                                <div><div><p>Tracs Member</p></div>
-                                    <div style={{ marginTop: "-5px" }}><strong>0 Replies</strong></div>
-                                </div></div> 
-
-                            </div>
-                            <div className='ojnhgtr'><h3>Latest Message:</h3></div>
-                            <div className='cardmemberDetails4'>
-                                <div><img src='https://i.pravatar.cc/40?img=1' /></div>
-                                <div><h3>S Kumar Nelli</h3></div>
-                                <div style={{ marginTop: "-4px" }}><strong>(1 day ago)</strong></div>
-
-                            </div>
-                            <div className='cardmemberDetails5'>
-                                <p>Hi Tracs Member, I'd like to introduce you to Shankar Vanga, who I believe could be a valuable connection for your work in sustainable energy solutions. I thought your expertise in battery technology would perfectly complement his project goals...</p>
-                            </div>
-                        </div>
-                        <div className='cardmembersbuttons'>
-                            <div><button style={{ background: "#007bff",color:"white" }}> <div><TiArrowBack size={19} /></div>Reply</button></div>
-                            <div><button style={{ background: "#e9f5ff", border: "1px solid #007bff", color: "#007bff" }}><div><GrFormView size={20} /></div>View</button></div>
-                            <div><button style={{ background: "#f8d7da", color: "#721c24", border: "1px solid #f5c6cb" }}><div style={{marginTop:"3.2px"}}><FaArchive size={15} /></div>Archive</button></div>
-                        </div>
-                    </div></Link>
-
+                {/* Sort by (Dropdown) */}
+                <div className="w-full sm:w-auto">
+                  <label htmlFor="sortFilter" className="block text-sm font-medium text-slate-600 mb-1">
+                    Sort by
+                  </label>
+                  <div className="relative">
+                    <select
+                      id="sortFilter"
+                      value={sortOrder}
+                      onChange={(e) => setSortOrder(e.target.value)}
+                      className="w-full sm:w-48 appearance-none bg-slate-50 border border-slate-200 rounded-lg py-2 px-3 text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                    >
+                      <option value="latest">Latest</option>
+                      <option value="oldest">Oldest</option>
+                    </select>
+                    <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5 pointer-events-none" />
+                  </div>
                 </div>
-                <div className='cardContainer2'>
-                    <Link to="/replyMessage"><div className='cardHolderDetails'>
-                        <div className='cardmemberDetails'>
-                            <div className='cardmemberDetails1'>
-                                <div><img src='https://i.pravatar.cc/40?img=5' /></div>
-                                <div><h3>Mary J.</h3></div>
-                                <div style={{ marginTop: "8px" }}><strong>4 day ago</strong></div>
-                                <div className='statusFF2' style={{ marginTop: "8px" ,background:"#d4edda",color:"#155724"}}><strong style={{color:"#155724"}}>Conversation Started</strong></div>
-                            </div>
-                            <div className='cardmemberDetails2'>
-                                <div><h2>Kenji T.  <span style={{ marginLeft: "6px", marginRight: "6px", color: "#999" }}>&</span>  Priya S.</h2></div>
-                            </div>
-                            <div className='cardmemberDetails3'>
-                              <div style={{display:"flex"}}>
-                                <div><img src="https://i.pravatar.cc/35?img=33" /></div>
-                                <div><div><p>Kenji T.</p></div>
-                                    <div style={{ marginTop: "-5px" }}><strong>2 Replies</strong></div>
-                                </div>
-                                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-                              <div style={{display:"flex"}}> <div><img src="https://i.pravatar.cc/20?img=49" /></div>
-                                <div><div><p>Priya S.</p></div>
-                                    <div style={{ marginTop: "-5px" }}><strong>0 Replies</strong></div>
-                                </div></div> 
 
-                            </div>
-                            <div className='ojnhgtr'><h3>Latest Message:</h3></div>
-                            <div className='cardmemberDetails4'>
-                                <div><img src='https://i.pravatar.cc/20?img=33' /></div>
-                                <div><h3>Kenji T.</h3></div>
-                                <div style={{ marginTop: "-4px" }}><strong>(3 hours ago)</strong></div>
+        {filteredMessages.map((item, index) => (<div className='messagesContainer' key={index}>
+          <div className='myDetails' >
+            <div style={{ display: "flex" }}>
+              <div><img className='w-7 h-7 rounded-full object-cover border-2 border-white shadow' src={item.first_senderFullImage} />
+              </div>
+              <div><span>{item.first_sender_name}</span></div>
+              <div><span>.</span></div>
+              <div><span> {(() => {
+                const diffMs = Date.now() - new Date(item.created_at).getTime();
+                const diffMinutes = Math.floor(diffMs / (1000 * 60));
+                const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+                const diffDays = Math.floor(diffHours / 24);
 
-                            </div>
-                            <div className='cardmemberDetails5'>
-                                <p>Kenji, thanks for making the connection, Priya. Looking forward to discussing this further! Please let me know your availability for a quick 15-minute call next week to review the deck.</p>
-                            </div>
-                        </div>
-                        <div className='cardmembersbuttons'>
-                            <div><button style={{ background: "#007bff",color:"white" }}> <div><TiArrowBack size={19} /></div>Reply</button></div>
-                            <div><button style={{ background: "#e9f5ff", border: "1px solid #007bff", color: "#007bff" }}><div><GrFormView size={20} /></div>View</button></div>
-                        </div>
-                    </div></Link>
+                if (diffMinutes < 60) {
+                  return `${diffMinutes} minute${diffMinutes !== 1 ? "s" : ""} ago`;
+                } else if (diffHours < 24) {
+                  return `${diffHours} hour${diffHours !== 1 ? "s" : ""} ago`;
+                } else {
+                  return `${diffDays} day${diffDays !== 1 ? "s" : ""} ago`;
+                }
+              })()}</span></div>
+              {Array.isArray(item.recipients_info) &&
+                item.recipients_info.length > 0 &&
+                item.recipients_info.every((rec) => Number(rec.replied_count) === 0) && (
+                  <p className="text-sm text-red-500 font-semibold ml-2 bg-yellow">Follow Up</p>
+                )}
 
+
+            </div>
+            <div><h2 className="font-bold text-lg text-slate-900 mb-4">
+              Intro:{" "}
+              {item.recipients_info && item.recipients_info.length > 0
+                ? item.recipients_info.map((rec, i) => (
+                  <span key={i}>
+                    {rec.name}
+                    {i < item.recipients_info.length - 1 && " < > "}
+                  </span>
+                ))
+                : "No recipients"}
+            </h2>
+            </div>
+          </div>
+
+          <div className='senderDetails'>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 border-t border-slate-200 pt-4">
+              <div className='senderpicHolder'>
+                {item.recipients_info.map((recipient, idx) => (<div className="flex items-center gap-3 ml-50">
+                  <img src={
+                    recipient?.profile_image
+                      ? `https://tracsdev.apttechsol.com/public/${recipient.profile_image}`
+                      : "https://tracsdev.apttechsol.com/public/uploads/user_avatar.jpeg"
+                  } className="w-12 h-12 rounded-full object-cover" />
+                  <div>
+                    <p className="font-semibold text-slate-800">{recipient.name}</p>
+                    <p className="text-sm text-slate-500">{recipient.replied_count} reply</p>
+                  </div>
+                </div>))}
+
+              </div>
+            </div>
+            <div className='flex justify-between mt-4'>
+              <div><p>Latest Message</p></div>
+              <div onClick={() => handelMessageDropDown(item.id)}><RiArrowDropDownLine size={30} /></div>
+            </div>
+            {/* Latest Message */}
+            {messageDropDown === item.id && <div className="bg-slate-50 rounded-lg p-4 mt-4 border border-slate-200">
+
+              <div className="flex items-start gap-3">
+                <img src={item.sender_full_image || "https://tracsdev.apttechsol.com/public/uploads/user_avatar.jpeg"} alt="Latest message user avatar" className="w-8 h-8 rounded-full object-cover flex-shrink-0" />
+                <div className="flex-1">
+                  <p className="text-slate-700 text-sm">
+                    <strong>{item.sender_full_name}</strong><div
+                      dangerouslySetInnerHTML={{
+                        __html: item.senderMessage || "",
+                      }}
+                    ></div>
+                  </p>
+                  <p className="text-xs text-slate-400 text-right mt-1">{(() => {
+                    const diffMs = Date.now() - new Date(item.senderDate).getTime();
+                    const diffMinutes = Math.floor(diffMs / (1000 * 60));
+                    const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+                    const diffDays = Math.floor(diffHours / 24);
+
+                    if (diffMinutes < 60) {
+                      return `${diffMinutes} minute${diffMinutes !== 1 ? "s" : ""} ago`;
+                    } else if (diffHours < 24) {
+                      return `${diffHours} hour${diffHours !== 1 ? "s" : ""} ago`;
+                    } else {
+                      return `${diffDays} day${diffDays !== 1 ? "s" : ""} ago`;
+                    }
+                  })()}</p>
                 </div>
-                <div className='cardContainer3'>
-                    <Link to="/replyMessage"><div className='cardHolderDetails'>
-                        <div className='cardmemberDetails'>
-                            <div className='cardmemberDetails1'>
-                                <div><img src='https://i.pravatar.cc/40?img=12' /></div>
-                                <div><h3>David L.</h3></div>
-                                <div style={{ marginTop: "8px" }}><strong>3 weeks ago</strong></div>
-                                <div className='statusFF3' style={{ marginTop: "8px" }}><strong style={{color:"#1e7e34"}}>Conversation Completed</strong></div>
-                            </div>
-                            <div className='cardmemberDetails2'>
-                                <div><h2>Sarah M. <span style={{ marginLeft: "6px", marginRight: "6px", color: "#999" }}>&</span>  Ben C.</h2></div>
-                            </div>
-                            <div className='cardmemberDetails3'>
-                              <div style={{display:"flex"}}>
-                                <div><img src="https://i.pravatar.cc/35?img=10" /></div>
-                                <div><div><p>Sarah M.</p></div>
-                                    <div style={{ marginTop: "-5px" }}><strong>5 Replies</strong></div>
-                                </div>
-                                </div>
+              </div>
+            </div>}
 
-                              <div style={{display:"flex"}}> <div><img src="https://i.pravatar.cc/35?img=19" /></div>
-                                <div><div><p>Ben C.</p></div>
-                                    <div style={{ marginTop: "-5px" }}><strong>3 Replies</strong></div>
-                                </div></div> 
 
-                            </div>
-                            <div className='ojnhgtr'><h3>Latest Message:</h3></div>
-                            <div className='cardmemberDetails4'>
-                                <div><img src='https://i.pravatar.cc/40?img=12' /></div>
-                                <div><h3>David L.</h3></div>
-                                <div style={{ marginTop: "-4px" }}><strong>(2 weeks ago)</strong></div>
+          </div>
+          {/* Action Buttons */}
+          <div className="flex justify-end gap-3 mt-4 pt-4 border-t border-slate-200">
+            <button className="bg-white text-slate-700 border border-slate-300 font-medium py-2 px-4 rounded-lg hover:bg-slate-50 transition-colors duration-200">View</button>
+           <Link to={`/replyMessage/${item.subject}/${item.user_id}/${item.replies_code}`}> <button className="bg-cyan-600 text-white font-medium py-2 px-4 rounded-lg hover:bg-cyan-700 transition-colors duration-200">Reply</button></Link>
 
-                            </div>
-                            <div className='cardmemberDetails5'>
-                                <p>Great! Glad to hear the three of you connected successfully. I'm archiving this thread now. Let me know if anything else comes up. Best, David.</p>
-                            </div>
-                        </div>
-                        <div className='cardmembersbuttons'>
-                            <div><button style={{ background: "#e9f5ff", border: "1px solid #007bff", color: "#007bff" }}><div><GrFormView size={20} /></div>View</button></div>
-         
-                            <div><button style={{ background: "#f8d7da", color: "#721c24", border: "1px solid #f5c6cb",width:"130px" }}><div  style={{marginTop:"3.2px"}}><FaArchive size={15} /></div>Re-Archive</button></div>
-                        </div>
-                    </div></Link>
+            {Array.isArray(item.recipients_info) &&
+              item.recipients_info.length > 0 &&
+              item.recipients_info.every((rec) => Number(rec.replied_count) >= 1) && (
+                <button className="bg-green-600 text-white font-medium py-2 px-4 rounded-lg hover:bg-cyan-700 transition-colors duration-200">Archive</button>
+              )}
 
-                </div>
-                <div className='cardContainer4'>
-                   <Link to="/replyMessage"> <div className='cardHolderDetails'>
-                        <div className='cardmemberDetails'>
-                            <div className='cardmemberDetails1'>
-                                <div><img src='https://i.pravatar.cc/40?img=61' /></div>
-                                <div><h3>Alex P.</h3></div>
-                                <div style={{ marginTop: "8px" }}><strong>5 minutes ago</strong></div>
-                                <div className='statusFF4' style={{ marginTop: "8px" }}><strong style={{color:'#495057'}}>Awating Reply</strong></div>
-                            </div>
-                            <div className='cardmemberDetails2'>
-                                <div><h2>Jenna K. <span style={{ marginLeft: "6px", marginRight: "6px", color: "#999" }}>&</span>  Market Analyst</h2></div>
-                            </div>
-                            <div className='cardmemberDetails3'>
-                              <div style={{display:"flex"}}>
-                                <div><img src="https://i.pravatar.cc/35?img=65" /></div>
-                                <div><div><p>Jenna K. </p></div>
-                                    <div style={{ marginTop: "-5px" }}><strong>0 Replies</strong></div>
-                                </div>
-                                </div>
 
-                              <div style={{display:"flex"}}> <div><img src="https://i.pravatar.cc/35?img=66" /></div>
-                                <div><div><p>Market Analyst</p></div>
-                                    <div style={{ marginTop: "-5px" }}><strong>0 Replies</strong></div>
-                                </div></div> 
 
-                            </div>
-                            <div className='ojnhgtr'><h3>Latest Message:</h3></div>
-                            <div className='cardmemberDetails4'>
-                                <div><img src='https://i.pravatar.cc/40?img=61' /></div>
-                                <div><h3>Alex P.</h3></div>
-                                <div style={{ marginTop: "-4px" }}><strong>(5 minutes ago)</strong></div>
 
-                            </div>
-                            <div className='cardmemberDetails5'>
-                                <p>Jenna, meet our new Market Analyst. I thought they should connect with you directly regarding the Q3 sales projections and budget allocations for the digital advertising campaigns starting next month...</p>
-                            </div>
-                        </div>
-                        <div className='cardmembersbuttons'>
-                            <div><button style={{ background: "#007bff",color:"white" }}> <div><TiArrowBack size={19} /></div>Reply</button></div>
-                            <div><button style={{ background: "#e9f5ff", border: "1px solid #007bff", color: "#007bff" }}><div><GrFormView size={20} /></div>View</button></div>
-                        </div>
-                    </div></Link>
 
-                </div>
-                </div>
-        </div></div>
-    )
+          </div>
+        </div>))}
+
+      </div></div>
+  )
 }
 
 export default NewMessage

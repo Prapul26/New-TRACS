@@ -19,7 +19,7 @@ const App = () => {
     <div>
      <Router>
       <Routes>
-        <Route path="/replyMessage" element={<ReplyMessage />} />
+        <Route path="/replyMessage/:subject/:user_id/:replies_code" element={<ReplyMessage />} />
         <Route path='/makeIntroduction' element={<MakeIntroduction />}/>
         <Route path='/' element={<NewMessage />}/>
         <Route path='/myMembership' element={<MyMembership />} />
