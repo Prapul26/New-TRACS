@@ -261,9 +261,9 @@ if (mails.length > 0) {
           </div>
 
           <div className="flex items-center space-x-4">
-            <a href="#" className="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-full font-semibold text-sm">
+            <Link to="/test"className="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-full font-semibold text-sm">
               View Profile
-            </a>
+            </Link>
             <div className="relative">
               <button className="flex items-center space-x-2">
                 <img src={imagePreview} alt="User Avatar" className="h-10 w-10 rounded-full" />
