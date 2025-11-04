@@ -217,7 +217,7 @@ const ReplyMessage = () => {
                     { headers: { Authorization: token } }
                 );
                 setData(response.data);
-
+setSentMails(response.data.sentMails?.data || [])
                setrecivedmails()
                 setSignature(cleanHTML(response.data.authsignature?.name));
                 setTemplate1(response.data.normal_email_templates)
@@ -240,6 +240,11 @@ const ReplyMessage = () => {
   }
 }, [includeSignature, signature]);
 
+  const stripHtmlTags = (html) => {
+    const div = document.createElement("div");
+    div.innerHTML = html;
+    return div.textContent || div.innerText || "";
+  };
     return (
         <div style={{ display: "flex" }}>
             <div><Sidebar /></div>
@@ -361,19 +366,34 @@ const ReplyMessage = () => {
                             </div>
 
                             {/* 6. Previous Messages List (Full Width, Stacked Below) */}
+
+                            
                             <div className="bg-white p-6 rounded-xl message-box-shadow" style={{ overflowY: "auto", height: "500px" }}>
                                 <h2 className="text-xl font-semibold text-gray-700 mb-4">Previous Messages</h2>
-                                <div id="MessagesContainer">
+                               {sentMail.map((details,index)=>(<div id="MessagesContainer" key={details.id}>
                                     <div id="MessagesContainer1">
-                                        <div className="w-8 h-8 flex-shrink-0 flex items-center justify-center bg-gray-400 text-white rounded-full text-xs font-bold">AJ</div>
-                                        <div className='ml-2'><strong>{data.userInfo?.name}</strong>
-                                            <p>2 hours ago</p></div>
-                                        <div className='ml-2'><p>{"("}Manager{")"}</p></div>
+                                        <div className="w-8 h-8 flex-shrink-0 flex items-center justify-center bg-gray-400 text-white rounded-full text-xs font-bold"><img className='newimg1' src={ details.user_from.image ?`https://tracsdev.apttechsol.com/public/${details.user_from.image}` : "https://tracsdev.apttechsol.com/public/uploads/user_avatar.jpeg"}/></div>
+                                        <div className='ml-2'><strong>{details.user_from.name}</strong>
+                                            <p>{(() => {
+                                    const diffMs = Date.now() - new Date(details.updated_at).getTime();
+                                    const diffMinutes = Math.floor(diffMs / (1000 * 60));
+                                    const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+                                    const diffDays = Math.floor(diffHours / 24);
+
+                                    if (diffMinutes < 60) {
+                                      return `${diffMinutes} minute${diffMinutes !== 1 ? "s" : ""} ago`;
+                                    } else if (diffHours < 24) {
+                                      return `${diffHours} hour${diffHours !== 1 ? "s" : ""} ago`;
+                                    } else {
+                                      return `${diffDays} day${diffDays !== 1 ? "s" : ""} ago`;
+                                    }
+                                  })()}</p></div>
+                                        <div className='ml-2'><p>{"("}{details.user_from.member_type  === "1" ? "H7" : "Tracs" }{")"}</p></div>
                                     </div>
                                     <div id="MessagesContainer2">
-                                        <p>         Hi Sarah and Alex, happy to make this connection! John is a fantastic lead engineer. I'll let you two take it from here.</p>
+                                        <p>     {stripHtmlTags(details.body)}  </p>
                                     </div>
-                                </div>
+                                </div>))} 
                                 
                             </div>
 

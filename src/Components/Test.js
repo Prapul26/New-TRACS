@@ -250,15 +250,9 @@ export default function Test() {
     const [activeLayout, setActiveLayout] = useState('card');
 
     const renderLayout = () => {
-        switch (activeLayout) {
-            case 'two-column':
-                return <TwoColumnLayout profile={profile}/>;
-            case 'banner':
-                return <BannerLayout profile={profile}/>;
-            case 'card':
-            default:
+    
                 return <CardLayout profile={profile}/>;
-        }
+        
     };
     const Icon = ({ name, className = "w-6 h-6" }) => {
     const icons = {
@@ -437,7 +431,7 @@ const Sidebar = () => {
                 in your main `index.html` file or imported in your main CSS file.
             */}
             <div className="container mx-auto p-4 md:p-8 max-w-1xl">
-                <LayoutSwitcher activeLayout={activeLayout} setActiveLayout={setActiveLayout} />
+               
                 {renderLayout()}
             </div>
         </div></div></div>
