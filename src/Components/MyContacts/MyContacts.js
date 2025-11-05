@@ -128,6 +128,8 @@ const AddContactForm = ({ onSave, onCancel }) => {
     groupName: '',
   });
 
+
+
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -252,6 +254,111 @@ const AddContactForm = ({ onSave, onCancel }) => {
   );
 };
 
+//Edit Component
+const EditContact = ({ contactToEdit, onSave2, onCancel2 }) => {
+  const [contact, setContact] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    groupName: "",
+  });
+  const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (contactToEdit) {
+      setContact({
+        firstName: contactToEdit.first_name || "",
+        lastName: contactToEdit.last_name || "",
+        email: contactToEdit.email || "",
+        groupName: contactToEdit.group_name || "",
+      });
+    }
+  }, [contactToEdit]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setContact((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const { firstName, lastName, email, groupName } = contact;
+
+    if (!firstName || !lastName || !email || !groupName) {
+      setMessage("All fields are required.");
+      return;
+    }
+
+    setLoading(true);
+    setMessage("");
+
+    try {
+      const token = "Bearer 36|NUtJgD15eoKNZnQXYgYo5G3cbQdZe2PdeHD16Yy1";
+      await axios.post(
+        `https://tracsdev.apttechsol.com/api/contact_edit_form/${contactToEdit.id}`,
+        {
+          first_name: firstName,
+          last_name: lastName,
+          email,
+          group_name: groupName,
+        },
+        { headers: { Authorization: token } }
+      );
+
+      setMessage("Contact updated successfully!");
+      onSave2();
+    } catch (error) {
+      setMessage(error.response?.data?.message || "Error updating contact.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="bg-white p-6 rounded-lg shadow-lg mb-8">
+      <h2 className="text-2xl font-bold mb-4">Edit Contact</h2>
+      {message && <p className="text-sm text-red-500 mb-2">{message}</p>}
+      <form onSubmit={handleSubmit}>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {["firstName", "lastName", "email", "groupName"].map((field) => (
+            <div key={field}>
+              <label className="block text-sm font-medium text-gray-700 capitalize">
+                {field.replace(/([A-Z])/g, " $1")}*
+              </label>
+              <input
+                type={field === "email" ? "email" : "text"}
+                name={field}
+                value={contact[field]}
+                onChange={handleChange}
+                className="mt-1 block w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                required
+              />
+            </div>
+          ))}
+        </div>
+        <div className="mt-6 flex justify-end gap-4">
+          <button
+            type="button"
+            onClick={onCancel2}
+            className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-lg transition"
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition"
+            disabled={loading}
+          >
+            {loading ? "Saving..." : "Save"}
+          </button>
+        </div>
+      </form>
+    </div>
+  );
+};
+
+
 // Main Component
 const MyContacts = () => {
   const initialContacts = [
@@ -353,7 +460,35 @@ const MyContacts = () => {
   useEffect(() => {
     fetchProfile();
   }, []);
+  const handleDelete = async (id) => {
+    const token = "Bearer 36|NUtJgD15eoKNZnQXYgYo5G3cbQdZe2PdeHD16Yy1";
 
+    try {
+      await axios.get(
+        `https://tracsdev.apttechsol.com/api/destroy-contact-from-intro/${id}`,
+
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+
+      setContactss((prev) => prev.filter((contact) => contact.id !== id));
+
+    } catch (err) {
+      console.error("Delete failed:", err);
+
+    }
+  };
+  const [editingContact, setEditingContact] = useState(null);
+
+  const[showEdit,setEdit]=useState(false);
+const handleEdit = (contact) => {
+  setEditingContact(contact); // store contact details in state
+  setEdit(true); // show edit form
+};
+  
   return (
     <div style={{ display: "flex" }}><div>   <Sidebar /></div>
       <div className="bg-gray-100 text-gray-800 min-h-screen font-sans" style={{ width: "100%" }}>
@@ -366,9 +501,9 @@ const MyContacts = () => {
           </div>
 
           <div className="flex items-center space-x-4">
-           <Link to="/test" className="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-full font-semibold text-sm">
-                                                           View Profile
-                                                       </Link>
+            <Link to="/test" className="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-full font-semibold text-sm">
+              View Profile
+            </Link>
             <div className="relative">
               <button className="flex items-center space-x-2">
                 <img src={imagePreview} alt="User Avatar" className="h-10 w-10 rounded-full" />
@@ -409,6 +544,16 @@ const MyContacts = () => {
           </header>
 
           {showForm && <AddContactForm onSave={handleSaveContact} onCancel={() => setShowForm(false)} />}
+{showEdit && (
+  <EditContact
+    contactToEdit={editingContact}
+    onCancel2={() => setEdit(false)}
+    onSave2={() => {
+      setEdit(false);
+      fetchContacts(); // refresh list after saving
+    }}
+  />
+)}
 
           <main className="bg-white rounded-lg shadow-lg overflow-x-auto">
             <table className="w-full text-left">
@@ -432,12 +577,15 @@ const MyContacts = () => {
                     <tr key={contact.id} className="divide-x divide-gray-200">
                       <td className="px-6 py-4 whitespace-nowrap">{contact.first_name}</td>
                       <td className="px-6 py-4 whitespace-nowrap">{contact.last_name}</td>
-                      <td className="px-6 py-4 whitespace-nowrap">{contact.group_name}</td>
                       <td className="px-6 py-4 whitespace-nowrap">{contact.email}</td>
+                      <td className="px-6 py-4 whitespace-nowrap">{contact.group_name}</td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         {new Date(contact.created_at).toISOString().split("T")[0]}
                       </td>
-
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                        <a href="#" className="text-blue-600 hover:text-blue-900" onClick={()=>handleEdit(contact)}>Edit</a>
+                        <a href="#" className="text-red-600 hover:text-red-900 ml-4" onClick={() => handleDelete(contact.id)}>Delete</a>
+                      </td>
 
                     </tr>
                   ))
@@ -452,7 +600,9 @@ const MyContacts = () => {
             </table>
           </main>
         </div>
-      </div></div>
+      </div>
+    
+      </div>
   );
 };
 

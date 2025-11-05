@@ -130,9 +130,9 @@ const ReplyMessage = () => {
 
     // Function to handle template selection
     const cleanHTML = (html) => {
-                if (!html) return "";
-                return html.replace(/<[^>]+>/g, ""); // removes all HTML tags
-            };
+        if (!html) return "";
+        return html.replace(/<[^>]+>/g, ""); // removes all HTML tags
+    };
     const handleTemplateChange = (e) => {
         const templateId = parseInt(e.target.value);
         const template = template1.find(t => t.id === templateId);
@@ -207,7 +207,8 @@ const ReplyMessage = () => {
     const [sentMail, setSentMails] = useState([]);
     const [signature, setSignature] = useState([]);
     const [template1, setTemplate1] = useState([])
-    const [recivesmails,setrecivedmails]=useState([])
+    const [recivesmails, setrecivedmails] = useState([]);
+    const [selectedTemplateId, setSelectedTemplateId] = useState(null);
     useEffect(() => {
         const fetchData = async () => {
             const token = "Bearer 36|NUtJgD15eoKNZnQXYgYo5G3cbQdZe2PdeHD16Yy1";
@@ -217,8 +218,8 @@ const ReplyMessage = () => {
                     { headers: { Authorization: token } }
                 );
                 setData(response.data);
-setSentMails(response.data.sentMails?.data || [])
-               setrecivedmails()
+                setSentMails(response.data.sentMails?.data || [])
+                setrecivedmails()
                 setSignature(cleanHTML(response.data.authsignature?.name));
                 setTemplate1(response.data.normal_email_templates)
             } catch (err) {
@@ -229,22 +230,60 @@ setSentMails(response.data.sentMails?.data || [])
     }, [subject, user_id, replies_code]);
 
     useEffect(() => {
-  if (includeSignature) {
-    // only append signature if it's not already present
-    if (!messageBody.includes(signature)) {
-      setMessageBody(prev => prev + "\n\n" + signature);
-    }
-  } else {
-    // remove signature if unchecked
-    setMessageBody(prev => prev.replace(signature, "").trim());
-  }
-}, [includeSignature, signature]);
+        if (includeSignature) {
+            // only append signature if it's not already present
+            if (!messageBody.includes(signature)) {
+                setMessageBody(prev => prev + "\n\n" + signature);
+            }
+        } else {
+            // remove signature if unchecked
+            setMessageBody(prev => prev.replace(signature, "").trim());
+        }
+    }, [includeSignature, signature]);
 
-  const stripHtmlTags = (html) => {
-    const div = document.createElement("div");
-    div.innerHTML = html;
-    return div.textContent || div.innerText || "";
-  };
+    const stripHtmlTags = (html) => {
+        const div = document.createElement("div");
+        div.innerHTML = html;
+        return div.textContent || div.innerText || "";
+    };
+
+
+
+
+    const [selectedRecipientEmails, setSelectedRecipientEmails] = useState([]);
+
+    const payload = {
+        user_id: data.userInfo?.id,
+        sent_mail_history_id: data.sentMailsfirst?.id,
+        replies_code,
+    temp_id: selectedTemplateId,
+        subject: data.sentMailsfirst?.subject,
+   selected_emails: selectedRecipientEmails,
+        redirect_to: "https://tracsdev.apttechsol.com/user/view-inbox-list-from-intro",
+        is_bump: data.sentMailsfirst?.is_bump,
+        cc_mail_id: null,
+    emails: selectedRecipientEmails,
+        email_template: selectedTemplate,
+ message:messageBody,
+        files: null
+    };
+
+    const handleSendReply = async () => {
+        const token = "Bearer 36|NUtJgD15eoKNZnQXYgYo5G3cbQdZe2PdeHD16Yy1";
+        try {
+            const response = await axios.post(
+                `https://tracsdev.apttechsol.com/api/sendReplyMailtomem_Api`,
+                payload,
+                { headers: { Authorization: token, "Content-Type": "application/json" } }
+            );
+            console.log("Mail Sent Successfully", response.data);
+
+        } catch (error) {
+            console.error("Error sending reply mail:", error);
+
+
+        }
+    };
     return (
         <div style={{ display: "flex" }}>
             <div><Sidebar /></div>
@@ -290,13 +329,26 @@ setSentMails(response.data.sentMails?.data || [])
                                                     id={`recipient-${recipient.id}`}
                                                     type="checkbox"
                                                     className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 cursor-pointer"
+                                                    checked={selectedRecipientEmails.includes(recipient.email)}
+                                                    onChange={(e) => {
+                                                        const checked = e.target.checked;
+                                                        setSelectedRecipientEmails(prev =>
+                                                            checked
+                                                                ? [...prev, recipient.email]
+                                                                : prev.filter(email => email !== recipient.email)
+                                                        );
+                                                    }}
                                                 />
-                                                <label htmlFor={`recipient-${recipient.id}`} className="ml-2 text-sm text-gray-700 cursor-pointer">
-                                                    {recipient.name}
+                                                <label
+                                                    htmlFor={`recipient-${recipient.id}`}
+                                                    className="ml-2 text-sm text-gray-700 cursor-pointer"
+                                                >
+                                                    {recipient.email}
                                                 </label>
                                             </div>
                                         ))}
                                     </div>
+
                                 </div>
 
                                 {/* 2. Email Template Selection & Creation */}
@@ -315,12 +367,12 @@ setSentMails(response.data.sentMails?.data || [])
                                             </option>
                                         ))}
                                     </select>
-                                    <button
+                                   <Link to="/emailTemplate"> <button
                                         onClick={simulateCreateTemplate}
                                         className="bg-indigo-500 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-indigo-600 transition duration-200 shadow-md whitespace-nowrap"
                                     >
                                         + Create New Template
-                                    </button>
+                                    </button></Link>
                                 </div>
 
                                 {/* 3. Message Body */}
@@ -356,7 +408,7 @@ setSentMails(response.data.sentMails?.data || [])
                                         Cancel
                                     </button>
                                     <button
-                                        onClick={simulateSend}
+                                        onClick={handleSendReply}
                                         className="px-8 py-3 bg-blue-600 text-white rounded-xl font-semibold hover:bg-blue-700 transition duration-200 shadow-lg shadow-blue-200"
                                     >
                                         Send Message
@@ -367,34 +419,34 @@ setSentMails(response.data.sentMails?.data || [])
 
                             {/* 6. Previous Messages List (Full Width, Stacked Below) */}
 
-                            
+
                             <div className="bg-white p-6 rounded-xl message-box-shadow" style={{ overflowY: "auto", height: "500px" }}>
                                 <h2 className="text-xl font-semibold text-gray-700 mb-4">Previous Messages</h2>
-                               {sentMail.map((details,index)=>(<div id="MessagesContainer" key={details.id}>
+                                {sentMail.map((details, index) => (<div id="MessagesContainer" key={details.id}>
                                     <div id="MessagesContainer1">
-                                        <div className="w-8 h-8 flex-shrink-0 flex items-center justify-center bg-gray-400 text-white rounded-full text-xs font-bold"><img className='newimg1' src={ details.user_from.image ?`https://tracsdev.apttechsol.com/public/${details.user_from.image}` : "https://tracsdev.apttechsol.com/public/uploads/user_avatar.jpeg"}/></div>
+                                        <div className="w-8 h-8 flex-shrink-0 flex items-center justify-center bg-gray-400 text-white rounded-full text-xs font-bold"><img className='newimg1' src={details.user_from.image ? `https://tracsdev.apttechsol.com/public/${details.user_from.image}` : "https://tracsdev.apttechsol.com/public/uploads/user_avatar.jpeg"} /></div>
                                         <div className='ml-2'><strong>{details.user_from.name}</strong>
                                             <p>{(() => {
-                                    const diffMs = Date.now() - new Date(details.updated_at).getTime();
-                                    const diffMinutes = Math.floor(diffMs / (1000 * 60));
-                                    const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
-                                    const diffDays = Math.floor(diffHours / 24);
+                                                const diffMs = Date.now() - new Date(details.updated_at).getTime();
+                                                const diffMinutes = Math.floor(diffMs / (1000 * 60));
+                                                const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+                                                const diffDays = Math.floor(diffHours / 24);
 
-                                    if (diffMinutes < 60) {
-                                      return `${diffMinutes} minute${diffMinutes !== 1 ? "s" : ""} ago`;
-                                    } else if (diffHours < 24) {
-                                      return `${diffHours} hour${diffHours !== 1 ? "s" : ""} ago`;
-                                    } else {
-                                      return `${diffDays} day${diffDays !== 1 ? "s" : ""} ago`;
-                                    }
-                                  })()}</p></div>
-                                        <div className='ml-2'><p>{"("}{details.user_from.member_type  === "1" ? "H7" : "Tracs" }{")"}</p></div>
+                                                if (diffMinutes < 60) {
+                                                    return `${diffMinutes} minute${diffMinutes !== 1 ? "s" : ""} ago`;
+                                                } else if (diffHours < 24) {
+                                                    return `${diffHours} hour${diffHours !== 1 ? "s" : ""} ago`;
+                                                } else {
+                                                    return `${diffDays} day${diffDays !== 1 ? "s" : ""} ago`;
+                                                }
+                                            })()}</p></div>
+                                        <div className='ml-2'><p>{"("}{details.user_from.member_type === "1" ? "H7" : "Tracs"}{")"}</p></div>
                                     </div>
                                     <div id="MessagesContainer2">
                                         <p>     {stripHtmlTags(details.body)}  </p>
                                     </div>
-                                </div>))} 
-                                
+                                </div>))}
+
                             </div>
 
                         </div>

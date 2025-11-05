@@ -4,43 +4,43 @@ import { Link } from 'react-router-dom';
 
 // --- Main App Component ---
 export default function EmailTemplate() {
-    // State to manage which view is currently visible ('list' or 'add')
-    const [view, setView] = useState('list');
+  // State to manage which view is currently visible ('list' or 'add')
+  const [view, setView] = useState('list');
+  const [editTemplate, setEditTemplate] = useState(null);
+  // State to hold the list of email templates
+  const [templates, setTemplates] = useState([
 
-    // State to hold the list of email templates
-    const [templates, setTemplates] = useState([
+  ]);
+  useEffect(() => {
+    let isCalled = false;
+    const fetchTemplates = async () => {
+      if (isCalled) return;
+      isCalled = true;
 
-    ]);
-    useEffect(() => {
-        let isCalled = false;
-        const fetchTemplates = async () => {
-            if (isCalled) return;
-            isCalled = true;
+      const token = "Bearer 36|NUtJgD15eoKNZnQXYgYo5G3cbQdZe2PdeHD16Yy1";
+      try {
+        const response = await axios.get(`https://tracsdev.apttechsol.com/api/view-template-list`, {
+          headers: {
+            Authorization: token,
+          },
+        });
 
-            const token = "Bearer 36|NUtJgD15eoKNZnQXYgYo5G3cbQdZe2PdeHD16Yy1";
-            try {
-                const response = await axios.get(`https://tracsdev.apttechsol.com/api/view-template-list`, {
-                    headers: {
-                        Authorization: token,
-                    },
-                });
+        const fetchedTemplates = response.data.templates.data;
+        setTemplates(fetchedTemplates);
 
-                const fetchedTemplates = response.data.templates.data;
-                setTemplates(fetchedTemplates);
+        const initialStatuses = {};
+        fetchedTemplates.forEach((template) => {
+          initialStatuses[template.id] = template.status === "1";
+        });
 
-                const initialStatuses = {};
-                fetchedTemplates.forEach((template) => {
-                    initialStatuses[template.id] = template.status === "1";
-                });
+      } catch (err) {
+        console.log(err.response?.data?.message || "Failed to fetch templates.");
+      }
+    };
 
-            } catch (err) {
-                console.log(err.response?.data?.message || "Failed to fetch templates.");
-            }
-        };
+    fetchTemplates();
+  }, []);
 
-        fetchTemplates();
-    }, []);
-    
 
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [imagePreview, setImagePreview] = useState("");
@@ -70,22 +70,22 @@ export default function EmailTemplate() {
   }, []);
 
 
-    // Function to toggle the status of a template
-    // Function to toggle the status of a template
-    const handleStatusToggle = (id) => {
-        setTemplates((prevTemplates) =>
-            prevTemplates.map((template) =>
-                template.id === id
-                    ? {
-                        ...template,
-                        status: template.status === "1" ? "0" : "1", // toggle between "1" and "0"
-                    }
-                    : template
-            )
-        );
-    };
+  // Function to toggle the status of a template
+  // Function to toggle the status of a template
+  const handleStatusToggle = (id) => {
+    setTemplates((prevTemplates) =>
+      prevTemplates.map((template) =>
+        template.id === id
+          ? {
+            ...template,
+            status: template.status === "1" ? "0" : "1", // toggle between "1" and "0"
+          }
+          : template
+      )
+    );
+  };
 
- const handleDelete = async (id) => {
+  const handleDelete = async (id) => {
     const token = "Bearer 36|NUtJgD15eoKNZnQXYgYo5G3cbQdZe2PdeHD16Yy1";
 
     try {
@@ -101,116 +101,120 @@ export default function EmailTemplate() {
 
       const updatedTemplates = templates.filter((template) => template.id !== id);
       setTemplates(updatedTemplates);
-     
+
 
     } catch (err) {
       console.error("Delete failed:", err);
 
-  
+
     }
   };
+  const handleEditTemplate = (template) => {
+    setEditTemplate(template);
+    setView("edit");
+  };
 
-    // Function to handle form submission (for now, it just logs to console and switches view)
-    const handleAddTemplate = (e) => {
-        e.preventDefault();
-        // In a real app, you would process form data here
-        console.log("New template saved!");
-        setView('list'); // Switch back to the list view
-    };
-const Icon = ({ name, className = "w-6 h-6" }) => {
+  // Function to handle form submission (for now, it just logs to console and switches view)
+  const handleAddTemplate = (e) => {
+    e.preventDefault();
+    // In a real app, you would process form data here
+    console.log("New template saved!");
+    setView('list'); // Switch back to the list view
+  };
+  const Icon = ({ name, className = "w-6 h-6" }) => {
     const icons = {
-        'credit-card': <><path d="M2 9a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9Z" /><path d="M2 14h20" /></>,
-        'user': <><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></>,
-        'lock': <><rect width="18" height="11" x="3" y="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" /></>,
-        'link': <><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.72" /><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.72-1.72" /></>,
-        'inbox': <><polyline points="22 12 16 12 14 15 10 15 8 12 2 12" /><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z" /></>,
-        'users': <><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M22 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></>,
-        'mail': <><rect width="20" height="16" x="2" y="4" rx="2" /><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" /></>,
-        'pen-square': <><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" /><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" /></>,
-        'help-circle': <><circle cx="12" cy="12" r="10" /><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" /><path d="M12 17h.01" /></>,
-        'thumbs-up': <><path d="M7 10v12" /><path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2h0a2 2 0 0 1 1.01.27Z" /></>,
-        'message-square': <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />,
-        'book-open': <><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" /><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" /></>,
-        'menu': <><line x1="4" x2="20" y1="12" y2="12" /><line x1="4" x2="20" y1="6" y2="6" /><line x1="4" x2="20" y1="18" y2="18" /></>,
-        'chevron-down': <path d="m6 9 6 6 6-6" />,
-        'x': <><path d="M18 6 6 18" /><path d="m6 6 12 12" /></>,
-        'plus': <><path d="M5 12h14" /><path d="M12 5v14" /></>,
+      'credit-card': <><path d="M2 9a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9Z" /><path d="M2 14h20" /></>,
+      'user': <><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></>,
+      'lock': <><rect width="18" height="11" x="3" y="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" /></>,
+      'link': <><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.72" /><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.72-1.72" /></>,
+      'inbox': <><polyline points="22 12 16 12 14 15 10 15 8 12 2 12" /><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z" /></>,
+      'users': <><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M22 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></>,
+      'mail': <><rect width="20" height="16" x="2" y="4" rx="2" /><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" /></>,
+      'pen-square': <><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" /><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" /></>,
+      'help-circle': <><circle cx="12" cy="12" r="10" /><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" /><path d="M12 17h.01" /></>,
+      'thumbs-up': <><path d="M7 10v12" /><path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2h0a2 2 0 0 1 1.01.27Z" /></>,
+      'message-square': <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />,
+      'book-open': <><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" /><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" /></>,
+      'menu': <><line x1="4" x2="20" y1="12" y2="12" /><line x1="4" x2="20" y1="6" y2="6" /><line x1="4" x2="20" y1="18" y2="18" /></>,
+      'chevron-down': <path d="m6 9 6 6 6-6" />,
+      'x': <><path d="M18 6 6 18" /><path d="m6 6 12 12" /></>,
+      'plus': <><path d="M5 12h14" /><path d="M12 5v14" /></>,
     };
 
     return (
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-            {icons[name]}
-        </svg>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+        {icons[name]}
+      </svg>
     );
-};
+  };
 
-const SidebarLink = ({ icon, text, to = "#", active = false }) => (
+  const SidebarLink = ({ icon, text, to = "#", active = false }) => (
     <Link
-        to={to}
-        className={`flex items-center px-6 py-3 mt-2 ${active ? 'text-white bg-gray-700' : 'text-gray-400 hover:bg-gray-700 hover:text-white'}`}
+      to={to}
+      className={`flex items-center px-6 py-3 mt-2 ${active ? 'text-white bg-gray-700' : 'text-gray-400 hover:bg-gray-700 hover:text-white'}`}
     >
-        <Icon name={icon} className="w-6 h-6" />
-        <span className="ml-3">{text}</span>
+      <Icon name={icon} className="w-6 h-6" />
+      <span className="ml-3">{text}</span>
     </Link>
-);
+  );
 
-const SidebarSection = ({ title, links }) => (
+  const SidebarSection = ({ title, links }) => (
     <div className="mt-8">
-        <span className="text-xs font-semibold text-gray-500 uppercase px-6">{title}</span>
-        {links.map(link => <SidebarLink key={link.text} {...link} />)}
+      <span className="text-xs font-semibold text-gray-500 uppercase px-6">{title}</span>
+      {links.map(link => <SidebarLink key={link.text} {...link} />)}
     </div>
-);
+  );
 
-const Sidebar = () => {
+  const Sidebar = () => {
     const sections = [
-        {
-            title: 'Account Settings',
-            links: [
-                { icon: 'credit-card', text: 'My Membership', to: '/myMembership' },
-        { icon: 'user', text: 'My Profile', to: '/myProfile' },
-        { icon: 'lock', text: 'Change Password', to: '/changePassword'  },
-        { icon: 'link', text: 'Affiliation' },
-            ],
-        },
-        {
-            title: 'Introductions',
-            links: [
-                { icon: 'inbox', text: 'Introduction Messages', to: '/' },
-                { icon: 'users', text: 'My Contacts', to: '/myContacts'  },
-                { icon: 'mail', text: 'Email Templates', active: true  },
-                { icon: 'pen-square', text: 'Email Signature' , to: '/emailSignature' },
-            ],
-        },
-        {
-            title: 'Resources',
-            links: [
-                { icon: 'help-circle', text: 'App Help' },
-                { icon: 'thumbs-up', text: 'Feedback' },
-                { icon: 'message-square', text: 'Contact Us' },
-                { icon: 'book-open', text: 'Networking 101' },
-            ],
-        },
+      {
+        title: 'Account Settings',
+        links: [
+          { icon: 'credit-card', text: 'My Membership', to: '/myMembership' },
+          { icon: 'user', text: 'My Profile', to: '/myProfile' },
+          { icon: 'lock', text: 'Change Password', to: '/changePassword' },
+          { icon: 'link', text: 'Affiliation' },
+        ],
+      },
+      {
+        title: 'Introductions',
+        links: [
+          { icon: 'inbox', text: 'Introduction Messages', to: '/' },
+          { icon: 'users', text: 'My Contacts', to: '/myContacts' },
+          { icon: 'mail', text: 'Email Templates', active: true },
+          { icon: 'pen-square', text: 'Email Signature', to: '/emailSignature' },
+        ],
+      },
+      {
+        title: 'Resources',
+        links: [
+          { icon: 'help-circle', text: 'App Help' },
+          { icon: 'thumbs-up', text: 'Feedback' },
+          { icon: 'message-square', text: 'Contact Us' },
+          { icon: 'book-open', text: 'Networking 101' },
+        ],
+      },
     ];
-      
+
 
 
     return (
-        <aside className="bg-[#1a202c] w-64 flex-shrink-0 hidden lg:block h-[100%]">
-            <div className="p-6">
-                <a href="#" className="text-white text-2xl font-bold">TRACS</a>
-            </div>
-            <nav className="mt-6">
-                {sections.map(section => <SidebarSection key={section.title} {...section} />)}
-            </nav>
-        </aside>
+      <aside className="bg-[#1a202c] w-64 flex-shrink-0 hidden lg:block h-[100%]">
+        <div className="p-6">
+          <a href="#" className="text-white text-2xl font-bold">TRACS</a>
+        </div>
+        <nav className="mt-6">
+          {sections.map(section => <SidebarSection key={section.title} {...section} />)}
+        </nav>
+      </aside>
     );
-};
+  };
 
 
-    return (
-        <div style={{display:'flex'}}><div><Sidebar /></div>
-        <div className="bg-gray-50 text-gray-800 font-sans" style={{width:"100%"}}>
-      <header className="bg-white shadow-sm flex items-center justify-between p-4 border-b">
+  return (
+    <div style={{ display: 'flex' }}><div><Sidebar /></div>
+      <div className="bg-gray-50 text-gray-800 font-sans" style={{ width: "100%" }}>
+        <header className="bg-white shadow-sm flex items-center justify-between p-4 border-b">
           <div className="flex items-center">
             <button onClick={() => setSidebarOpen(!isSidebarOpen)} className="text-gray-600 lg:hidden">
               <Icon name="menu" className="w-6 h-6" />
@@ -220,8 +224,8 @@ const Sidebar = () => {
 
           <div className="flex items-center space-x-4">
             <Link to="/test" className="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-full font-semibold text-sm">
-                                                            View Profile
-                                                        </Link>
+              View Profile
+            </Link>
             <div className="relative">
               <button className="flex items-center space-x-2">
                 <img src={imagePreview} alt="User Avatar" className="h-10 w-10 rounded-full" />
@@ -231,82 +235,89 @@ const Sidebar = () => {
             </div>
           </div>
         </header>
-            <div className="container mx-auto p-4 sm:p-6 lg:p-8">
-                {view === 'list' ? (
-                    <TemplateListView
-                        templates={templates}
-                        onAddNew={() => setView('add')}
-                        onStatusToggle={handleStatusToggle}
-                         onDelete={handleDelete}
-                    />
-                ) : (
-                    <AddTemplateFormView
-                        onBack={() => setView('list')}
-                        onCancel={() => setView('list')}
-                        onSubmit={handleAddTemplate}
-                    />
-                )}
-            </div>
-        </div></div>
-    );
+        <div className="container mx-auto p-4 sm:p-6 lg:p-8">
+          {view === 'list' ? (
+            <TemplateListView
+              templates={templates}
+              onAddNew={() => setView('add')}
+              onStatusToggle={handleStatusToggle}
+              onDelete={handleDelete}
+              onEdit={handleEditTemplate}
+            />
+          ) : view === 'add' ? (
+            <AddTemplateFormView
+              onBack={() => setView('list')}
+              onCancel={() => setView('list')}
+            />
+          ) : (
+            <EditTemplateFormView
+              template={editTemplate}          // 👈 Pass data here
+              onBack={() => setView('list')}
+              onCancel={() => setView('list')}
+            />
+          )}
+
+        </div>
+      </div></div>
+  );
 }
 
 // --- Template List View Component ---
-const TemplateListView = ({ templates, onAddNew, onStatusToggle , onDelete}) => {
-  
-    return (
-        <div className="bg-white p-6 rounded-xl shadow-md animate-fade-in">
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
-                <h1 className="text-2xl font-bold text-gray-900">Email Templates</h1>
-                <button onClick={onAddNew} className="mt-4 sm:mt-0 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-300">
-                    Add New Template
-                </button>
-            </div>
+const TemplateListView = ({ templates, onAddNew, onStatusToggle, onDelete, onEdit }) => {
 
-            <div className="overflow-x-auto">
-                <table className="min-w-full bg-white border border-gray-200 rounded-lg">
-                    <thead className="bg-gray-100">
-                        <tr>
-                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
-                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
-                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Body</th>
-                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Updated On</th>
-                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody className="divide-y divide-gray-200">
-                        {templates.map(template => (
-                            <tr key={template.id}>
-                                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{template.template_name}</td>
-                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{template.category_id === "5" ? "Reply-Email" : template.category_id === "1" ? "Introduction-Email" : template.category_id === "2" ? "Bump" : template.category_id === "3" ? "Follow-up" : template.category_id === "4" ? "Member-Email" : template.category_id?.toString()}</td>
-                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 truncate max-w-xs">{template.email_body}</td>
-                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{template.created_at}</td>
-                                <td className="px-6 py-4 whitespace-nowrap">
-                                    <td className="px-6 py-4 whitespace-nowrap">
-                                        <span
-                                            onClick={() => onStatusToggle(template.id)}
-                                            className={`cursor-pointer px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${template.status === "1"
-                                                    ? "bg-green-100 text-green-800"
-                                                    : "bg-red-100 text-red-800"
-                                                }`}
-                                        >
-                                            {template.status === "1" ? "Active" : "Inactive"}
-                                        </span>
-                                    </td>
+  return (
+    <div className="bg-white p-6 rounded-xl shadow-md animate-fade-in">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
+        <h1 className="text-2xl font-bold text-gray-900">Email Templates</h1>
+        <button onClick={onAddNew} className="mt-4 sm:mt-0 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-300">
+          Add New Template
+        </button>
+      </div>
 
-                                </td>
-                                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                    <a href="#" className="text-blue-600 hover:text-blue-900">Edit</a>
-                                    <a href="#" className="text-red-600 hover:text-red-900 ml-4" onClick={() => onDelete(template.id)}>Delete</a>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    );
+      <div className="overflow-x-auto">
+        <table className="min-w-full bg-white border border-gray-200 rounded-lg">
+          <thead className="bg-gray-100">
+            <tr>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Body</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Updated On</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-gray-200">
+            {templates.map(template => (
+              <tr key={template.id}>
+                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{template.template_name}</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{template.category_id === "5" ? "Reply-Email" : template.category_id === "1" ? "Introduction-Email" : template.category_id === "2" ? "Bump" : template.category_id === "3" ? "Follow-up" : template.category_id === "4" ? "Member-Email" : template.category_id?.toString()}</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 truncate max-w-xs">{template.email_body}</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{template.created_at}</td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <span
+                      onClick={() => onStatusToggle(template.id)}
+                      className={`cursor-pointer px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${template.status === "1"
+                        ? "bg-green-100 text-green-800"
+                        : "bg-red-100 text-red-800"
+                        }`}
+                    >
+                      {template.status === "1" ? "Active" : "Inactive"}
+                    </span>
+                  </td>
+
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                  <a href="#" className="text-blue-600 hover:text-blue-900" onClick={() => onEdit(template)} >Edit</a>
+                  <a href="#" className="text-red-600 hover:text-red-900 ml-4" onClick={() => onDelete(template.id)}>Delete</a>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
 };
 
 
@@ -369,13 +380,13 @@ const AddTemplateFormView = ({ onBack, onCancel, onSubmit }) => {
 
       alert(response.data.message || "Template added successfully!");
       onBack(); // Go back to the list view after success
-    window.location.reload()
+      window.location.reload()
     } catch (error) {
       console.log(error.response?.data?.message || "Error adding the Template");
       alert("Error adding the Template");
     }
   };
-  
+
 
   return (
     <div className="bg-white p-6 sm:p-8 rounded-xl shadow-md animate-fade-in">
@@ -506,3 +517,243 @@ const AddTemplateFormView = ({ onBack, onCancel, onSubmit }) => {
     </div>
   );
 };
+//Edit Template
+
+
+
+
+const EditTemplateFormView = ({ template, onBack, onCancel }) => {
+  const [title, setTitle] = useState("");
+  const [category, setCategory] = useState("");
+  const [description, setDescription] = useState("");
+  const [adminTemplate, setAdminTemplate] = useState("");
+  const [adminTemplates, setAdminTemplates] = useState([]);
+  const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(true);
+
+  // ✅ Convert template.id to base64
+  const base64Id = btoa(template?.id);
+
+  useEffect(() => {
+    let isCalled = false;
+
+    const fetchTemplateById = async () => {
+      if (isCalled || !base64Id) return;
+      isCalled = true;
+
+      const token = "Bearer 36|NUtJgD15eoKNZnQXYgYo5G3cbQdZe2PdeHD16Yy1";
+
+      try {
+        // ✅ Fetch selected template details
+        const response = await axios.get(
+          `https://tracsdev.apttechsol.com/api/edit-template/${base64Id}`,
+          {
+            headers: {
+              Authorization: token,
+            },
+          }
+        );
+
+        const data = response.data?.template;
+        if (data) {
+          setTitle(data.template_name || "");
+          setCategory(data.category_id?.toString() || "");
+          setDescription(data.email_body || "");
+        
+        }
+      } catch (err) {
+        console.error("Error fetching template:", err);
+        setMessage(err.response?.data?.message || "Failed to fetch template.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTemplateById();
+  }, [base64Id]);
+ useEffect(() => {
+    const fetchTemplates = async () => {
+      const token = "Bearer 36|NUtJgD15eoKNZnQXYgYo5G3cbQdZe2PdeHD16Yy1";
+
+      try {
+        const response = await axios.get(
+          "https://tracsdev.apttechsol.com/api/create-template",
+          {
+            headers: { Authorization: token },
+          }
+        );
+
+        const templates = response.data?.admintemplates || [];
+        setAdminTemplates(templates);
+
+        console.log("Fetched Admin Templates:", templates);
+      } catch (err) {
+        console.error("Error fetching admin templates:", err);
+      }
+    };
+
+    fetchTemplates();
+  }, []);
+  // ✅ Fetch all admin templates for dropdown
+  useEffect(() => {
+    const fetchAdminTemplates = async () => {
+      const token = "Bearer 36|NUtJgD15eoKNZnQXYgYo5G3cbQdZe2PdeHD16Yy1";
+
+      try {
+        const response = await axios.get(
+          "https://tracsdev.apttechsol.com/api/admin-template-list",
+          {
+            headers: { Authorization: token },
+          }
+        );
+
+        if (response.data?.adminTemplates) {
+          setAdminTemplates(response.data.adminTemplates);
+        }
+      } catch (err) {
+        console.error("Error fetching admin templates:", err);
+      }
+    };
+
+    fetchAdminTemplates();
+  }, []);
+
+  // ✅ Handle update submit
+   // ✅ Handle form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const token = "Bearer 36|NUtJgD15eoKNZnQXYgYo5G3cbQdZe2PdeHD16Yy1";
+
+    try {
+      const response = await axios.post(
+        "https://tracsdev.apttechsol.com/api/store-template",
+        {
+          title: title,
+          category_id: category,
+          description: description,
+          id: atob(base64Id), // decoded ID for update
+        },
+        {
+          headers: {
+            Authorization: token,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      alert("Template updated successfully!");
+      window.location.reload();
+    } catch (error) {
+     alert(error.response?.data?.message || "Failed to update template.");
+     
+    }
+  };
+
+
+  if (loading) {
+    return (
+      <div className="p-6 text-center text-gray-500">
+        Fetching template details...
+      </div>
+    );
+  }
+
+  return (
+    <div className="bg-white p-6 rounded-lg shadow-md">
+      <h2 className="text-xl font-semibold mb-4">Edit Email Template</h2>
+
+      {message && <div className="text-red-500 mb-3">{message}</div>}
+
+      <form onSubmit={handleSubmit}>
+        {/* Template Title */}
+        <div className="mb-4">
+          <label className="block font-medium mb-1">Template Title</label>
+          <input
+            type="text"
+            className="w-full border rounded px-3 py-2"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder="Enter template title"
+          />
+        </div>
+
+        {/* ✅ Category Dropdown */}
+        <div className="mb-4">
+          <label className="block font-medium mb-1">Category</label>
+          <select
+            className="w-full border rounded px-3 py-2"
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+          >
+            <option value="">Select a category</option>
+            <option value="1">Introduction-Email</option>
+            <option value="2">Bump</option>
+            <option value="3">Follow Up</option>
+            <option value="4">Member-Email</option>
+            <option value="5">Reply-Email</option>
+          </select>
+        </div>
+
+        {/* ✅ Admin Template Dropdown */}
+        <div className="mb-4">
+          <label className="block font-medium mb-1">Admin Templates</label>
+          <select
+            className="w-full border rounded px-3 py-2"
+            value={adminTemplate}
+            onChange={(e) => {
+              const selectedValue = e.target.value;
+              setAdminTemplate(selectedValue);
+
+              const selectedTemplate = adminTemplates.find(
+                (item) => item.id === parseInt(selectedValue)
+              );
+
+              if (selectedTemplate) {
+                setDescription(selectedTemplate.email_body);
+              }
+            }}
+          >
+            <option value="">Select an Admin Template</option>
+            {adminTemplates.map((item) => (
+              <option key={item.id} value={item.id}>
+                {item.template_name}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        {/* Email Body */}
+        <div className="mb-4">
+          <label className="block font-medium mb-1">Email Body</label>
+          <textarea
+            className="w-full border rounded px-3 py-2"
+            rows="6"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            placeholder="Enter email body"
+          />
+        </div>
+
+        {/* Buttons */}
+        <div className="flex gap-3">
+          <button
+            type="submit"
+            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+          >
+            Update Template
+          </button>
+          <button
+            type="button"
+            onClick={onCancel}
+            className="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400"
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  );
+};
+
+
