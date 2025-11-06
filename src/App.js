@@ -12,6 +12,7 @@ import EmailTemplate from './Components/EmailTemplate/EmailTemplate';
 import NewContacts from './Components/NewContacts/NewContacts';
 import Test from './Components/Test';
 import Test2 from './Components/Test2';
+import ViewMessage from './Components/ViewMessage/ViewMessage';
 
 
 const App = () => {
@@ -30,6 +31,7 @@ const App = () => {
         <Route path='/emailTemplate' element={<EmailTemplate />}/>
         <Route path='/newContacts' element={<NewContacts/>}/>
         <Route path='/test' element={<Test/>}/>
+        <Route path='/viewMessage/:subject/:user_id/:replies_code' element={<ViewMessage/>} />
           <Route path='/test2' element={<Test2/>}/>
       </Routes>
      </Router>

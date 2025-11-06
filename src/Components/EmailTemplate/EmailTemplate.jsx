@@ -291,7 +291,7 @@ const TemplateListView = ({ templates, onAddNew, onStatusToggle, onDelete, onEdi
               <tr key={template.id}>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{template.template_name}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{template.category_id === "5" ? "Reply-Email" : template.category_id === "1" ? "Introduction-Email" : template.category_id === "2" ? "Bump" : template.category_id === "3" ? "Follow-up" : template.category_id === "4" ? "Member-Email" : template.category_id?.toString()}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 truncate max-w-xs">{template.email_body}</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 truncate max-w-xs"   dangerouslySetInnerHTML={{ __html: template.email_body }}></td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{template.created_at}</td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <td className="px-6 py-4 whitespace-nowrap">
@@ -533,7 +533,10 @@ const EditTemplateFormView = ({ template, onBack, onCancel }) => {
 
   // ✅ Convert template.id to base64
   const base64Id = btoa(template?.id);
-
+const cleanHTML = (html) => {
+                if (!html) return "";
+                return html.replace(/<[^>]+>/g, ""); // removes all HTML tags
+            };
   useEffect(() => {
     let isCalled = false;
 
@@ -558,7 +561,7 @@ const EditTemplateFormView = ({ template, onBack, onCancel }) => {
         if (data) {
           setTitle(data.template_name || "");
           setCategory(data.category_id?.toString() || "");
-          setDescription(data.email_body || "");
+          setDescription(cleanHTML(data.email_body || ""));
         
         }
       } catch (err) {

@@ -444,7 +444,7 @@ if (mails.length > 0) {
           </div>
           {/* Action Buttons */}
           <div className="flex justify-end gap-3 mt-4 pt-4 border-t border-slate-200">
-            <button className="bg-white text-slate-700 border border-slate-300 font-medium py-2 px-4 rounded-lg hover:bg-slate-50 transition-colors duration-200">View</button>
+          <Link to={`/viewMessage/${item.subject}/${item.user_id}/${item.replies_code}`}>  <button className="bg-white text-slate-700 border border-slate-300 font-medium py-2 px-4 rounded-lg hover:bg-slate-50 transition-colors duration-200">View</button></Link>
            <Link to={`/replyMessage/${item.subject}/${item.user_id}/${item.replies_code}`}> <button className="bg-cyan-600 text-white font-medium py-2 px-4 rounded-lg hover:bg-cyan-700 transition-colors duration-200">Reply</button></Link>
 
             {Array.isArray(item.recipients_info) &&

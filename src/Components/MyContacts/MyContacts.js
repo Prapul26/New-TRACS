@@ -1,4 +1,6 @@
 import axios from 'axios';
+import * as XLSX from "xlsx";
+
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 const Icon = ({ name, className = "w-6 h-6" }) => {
@@ -384,11 +386,11 @@ const MyContacts = () => {
   const [showForm, setShowForm] = useState(false);
   const [fileName, setFileName] = useState('');
 
-  const handleFileChange = (e) => {
+   const handleFileChange = (e) => {
     const file = e.target.files[0];
-    setFileName(file ? file.name : '');
+    setFileName(file ? file.name : "");
+    setSelectedFile(file);
   };
-
   const handleSaveContact = (newContact) => {
     const updatedContact = {
       ...newContact,
@@ -483,12 +485,118 @@ const MyContacts = () => {
   };
   const [editingContact, setEditingContact] = useState(null);
 
-  const[showEdit,setEdit]=useState(false);
-const handleEdit = (contact) => {
-  setEditingContact(contact); // store contact details in state
-  setEdit(true); // show edit form
-};
+  const [showEdit, setEdit] = useState(false);
+  const handleEdit = (contact) => {
+    setEditingContact(contact); // store contact details in state
+    setEdit(true); // show edit form
+  };
+  const handleDownloadTemplate = () => {
+    // Define the header row
+    const headers = [["First Name", "Last Name", "Email", "Group Name"]];
+
+    // Create a worksheet
+    const worksheet = XLSX.utils.aoa_to_sheet(headers);
+
+    // Create a workbook and append the worksheet
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Template");
+
+    // Trigger download
+    XLSX.writeFile(workbook, "contacts_template.xlsx");
+
+
+  };
+   const [selectedFile, setSelectedFile] = useState(null);
   
+  const handleImport = async () => {
+  if (!selectedFile) {
+    alert("Please select a file first!");
+    return;
+  }
+
+  const token = "Bearer 36|NUtJgD15eoKNZnQXYgYo5G3cbQdZe2PdeHD16Yy1";
+
+  const reader = new FileReader();
+
+  reader.onload = async (evt) => {
+    const fileExt = selectedFile.name.split(".").pop().toLowerCase();
+    let data = evt.target.result;
+    let workbook;
+
+    if (fileExt === "csv") {
+      workbook = XLSX.read(data, { type: "string" });
+    } else {
+      workbook = XLSX.read(data, { type: "binary" });
+    }
+
+    const sheetName = workbook.SheetNames[0];
+    const worksheet = workbook.Sheets[sheetName];
+    const rows = XLSX.utils.sheet_to_json(worksheet, { defval: "" });
+
+    if (!rows.length) {
+      alert("No data found in file.");
+      return;
+    }
+
+    let imported = 0;
+    let skipped = 0;
+    let failed = 0;
+    let duplicates = 0;
+
+    const existingEmails = new Set(contacts.map(c => c.email?.toLowerCase()));
+
+    for (let row of rows) {
+      const firstName = row["First Name"];
+      const lastName = row["Last Name"];
+      const email = row["Email"];
+      const groupName = row["Group Name"];
+
+      if (!firstName || !lastName || !email || !groupName) {
+        skipped++;
+        continue;
+      }
+
+      if (existingEmails.has(email.toLowerCase())) {
+        duplicates++;
+        continue;
+      }
+
+      try {
+        await axios.post(
+          `https://tracsdev.apttechsol.com/api/contact_store_form`,
+          {
+            first_name: firstName,
+            last_name: lastName,
+            email,
+            group_name: groupName,
+          },
+          { headers: { Authorization: token } }
+        );
+
+        imported++;
+        existingEmails.add(email.toLowerCase());
+      } catch (err) {
+        console.error("Failed row:", row, err.response?.data);
+        failed++;
+      }
+    }
+
+    alert(
+      `✅ Imported: ${imported}\n⚠ Duplicates: ${duplicates}\n⚠ Skipped: ${skipped}\n❌ Failed: ${failed}`
+    );
+
+    fetchContacts(); // ✅ Refresh table
+  };
+
+  // ✅ Detect correct reader type
+  if (selectedFile.name.endsWith(".csv")) {
+    reader.readAsText(selectedFile);
+  } else {
+    reader.readAsBinaryString(selectedFile);
+  }
+};
+
+
   return (
     <div style={{ display: "flex" }}><div>   <Sidebar /></div>
       <div className="bg-gray-100 text-gray-800 min-h-screen font-sans" style={{ width: "100%" }}>
@@ -517,11 +625,11 @@ const handleEdit = (contact) => {
           <header className="mb-8">
             <h1 className="text-3xl font-bold text-gray-900 mb-4">My Contacts</h1>
             <div className="flex flex-wrap items-center gap-4">
-              <button className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition-transform transform hover:scale-105">
+              <button className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition-transform transform hover:scale-105" onClick={handleDownloadTemplate}>
                 <i className="fas fa-download mr-2"></i>Download Template
               </button>
               <div className="relative">
-                <input type="file" id="file-upload" className="hidden" onChange={handleFileChange} />
+                <input type="file" id="file-upload" className="hidden" accept=".xlsx, .xls" onChange={handleFileChange} />
                 <label
                   htmlFor="file-upload"
                   className="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition-transform transform hover:scale-105 cursor-pointer"
@@ -530,7 +638,7 @@ const handleEdit = (contact) => {
                   {fileName || 'Choose File'}
                 </label>
               </div>
-              <button className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition-transform transform hover:scale-105">
+              <button onClick={handleImport} className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition-transform transform hover:scale-105">
                 <i className="fas fa-file-import mr-2"></i>Import
               </button>
               <button
@@ -544,16 +652,16 @@ const handleEdit = (contact) => {
           </header>
 
           {showForm && <AddContactForm onSave={handleSaveContact} onCancel={() => setShowForm(false)} />}
-{showEdit && (
-  <EditContact
-    contactToEdit={editingContact}
-    onCancel2={() => setEdit(false)}
-    onSave2={() => {
-      setEdit(false);
-      fetchContacts(); // refresh list after saving
-    }}
-  />
-)}
+          {showEdit && (
+            <EditContact
+              contactToEdit={editingContact}
+              onCancel2={() => setEdit(false)}
+              onSave2={() => {
+                setEdit(false);
+                fetchContacts(); // refresh list after saving
+              }}
+            />
+          )}
 
           <main className="bg-white rounded-lg shadow-lg overflow-x-auto">
             <table className="w-full text-left">
@@ -583,7 +691,7 @@ const handleEdit = (contact) => {
                         {new Date(contact.created_at).toISOString().split("T")[0]}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                        <a href="#" className="text-blue-600 hover:text-blue-900" onClick={()=>handleEdit(contact)}>Edit</a>
+                        <a href="#" className="text-blue-600 hover:text-blue-900" onClick={() => handleEdit(contact)}>Edit</a>
                         <a href="#" className="text-red-600 hover:text-red-900 ml-4" onClick={() => handleDelete(contact.id)}>Delete</a>
                       </td>
 
@@ -601,8 +709,8 @@ const handleEdit = (contact) => {
           </main>
         </div>
       </div>
-    
-      </div>
+
+    </div>
   );
 };
 
