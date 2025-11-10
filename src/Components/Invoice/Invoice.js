@@ -139,7 +139,7 @@ const Invoice = () => {
     useEffect(() => {
         fetchProfile();
     }, []);
-      const printRef = useRef();
+    const printRef = useRef();
     const handlePrint = () => {
         const printContents = printRef.current.innerHTML;
         const printWindow = window.open("", "_blank", "width=800,height=600");
@@ -205,11 +205,11 @@ const Invoice = () => {
                                     <p>{email}</p>
                                     <p>{phone}</p>
                                 </div>
-                               <div className="division2">
-        <p>Purchase Date: {order?.purchase_date || "Loading..."}</p>
-        <p>Expire Date: {order?.expired_date || "Loading..."}</p>
-       
-    </div>
+                                <div className="division2">
+                                    <p>Purchase Date: {order?.purchase_date || "Loading..."}</p>
+                                    <p>Expire Date: {order?.expired_date || "Loading..."}</p>
+
+                                </div>
 
                             </div>
                             {order ? (
