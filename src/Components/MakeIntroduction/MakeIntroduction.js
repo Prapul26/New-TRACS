@@ -60,6 +60,7 @@ const MakeIntroduction = () => {
           { icon: 'user', text: 'My Profile', to: '/myProfile', to: '/myProfile' },
           { icon: 'lock', text: 'Change Password', to: '/changePassword', to: '/changePassword' },
         
+          
         ],
       },
       {
