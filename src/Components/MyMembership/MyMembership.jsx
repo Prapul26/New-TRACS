@@ -13,49 +13,21 @@ const InfoCard = ({ title, value, isHighlighted = false }) => (
 
 // Sub-component for invoice history rows
 // ✅ Sub-component for invoice history rows
-const InvoiceRow = ({ date, packageName, amount, downloadUrl }) => {
-  const handleDownload = async (e) => {
-    e.preventDefault();
-    try {
-      const token = "Bearer 36|NUtJgD15eoKNZnQXYgYo5G3cbQdZe2PdeHD16Yy1";
-      const response = await axios.get(downloadUrl, {
-        headers: { Authorization: token },
-        responseType: "blob", // Important for downloading files
-      });
-
-      // Create a blob URL and trigger download
-      const url = window.URL.createObjectURL(new Blob([response.data]));
-      const link = document.createElement("a");
-
-      // 💡 Dynamic filename: use order ID or date in filename
-      const filename = `invoice-${date.replace(/[^a-zA-Z0-9]/g, "_")}.pdf`;
-
-      link.href = url;
-      link.setAttribute("download", filename);
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-
-      window.URL.revokeObjectURL(url);
-    } catch (error) {
-      console.error("Error downloading invoice:", error);
-      alert("Failed to download invoice. Please try again.");
-    }
-  };
-
+const InvoiceRow = ({ id, date, packageName, amount }) => {
   return (
     <tr>
       <td className="px-6 py-4 whitespace-nowrap">{date}</td>
       <td className="px-6 py-4 whitespace-nowrap hidden sm:table-cell">{packageName}</td>
       <td className="px-6 py-4 whitespace-nowrap">{amount}</td>
+
+      {/* ✅ Replace Download with a Button */}
       <td className="px-6 py-4 whitespace-nowrap">
-        <a
-          href="#"
-          onClick={handleDownload}
+        <Link
+          to={`/invoice/${id}`}
           className="text-indigo-600 hover:text-indigo-800 font-medium"
         >
-          Download
-        </a>
+          Invoice
+        </Link>
       </td>
     </tr>
   );
@@ -115,7 +87,7 @@ const Sidebar = () => {
         { icon: 'credit-card', text: 'My Membership' , active: true},
         { icon: 'user', text: 'My Profile', to: '/myProfile'},
         { icon: 'lock', text: 'Change Password', to: '/changePassword'  },
-        { icon: 'link', text: 'Affiliation' },
+  
       ],
     },
     {
@@ -130,7 +102,7 @@ const Sidebar = () => {
     {
       title: 'Resources',
       links: [
-        { icon: 'help-circle', text: 'App Help' },
+        { icon: 'help-circle', text: 'App Help',to:'/appHelp' },
         { icon: 'thumbs-up', text: 'Feedback' },
         { icon: 'message-square', text: 'Contact Us' },
         { icon: 'book-open', text: 'Networking 101' },
@@ -314,10 +286,11 @@ formatDate("2025-02-27"); // "Feb 27, 2025"
                                             <th className="px-6 py-3 text-sm font-semibold text-gray-600 uppercase tracking-wider">Invoice</th>
                                         </tr>
                                     </thead>
-                                  <tbody className="divide-y divide-gray-200">
+                <tbody className="divide-y divide-gray-200">
   {data.map(order => (
     <InvoiceRow
       key={order.id}
+      id={order.id}
       date={formatDate(order.purchase_date)}
       packageName={
         order.listing_package_id === "2"
@@ -329,10 +302,10 @@ formatDate("2025-02-27"); // "Feb 27, 2025"
           : "Unknown"
       }
       amount={`$${order.amount_usd}`}
-      downloadUrl={`https://tracsdev.apttechsol.com/api/invoice/${order.id}`} // Example
     />
   ))}
 </tbody>
+
 
                                 </table>
                             </div>

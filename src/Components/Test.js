@@ -405,27 +405,9 @@ const Sidebar = () => {
   }, []);
 
     return (
-        <div style={{display:"flex"}}><div ><Sidebar /></div>
+        <div style={{display:"flex"}}><div ></div>
         <div style={{width:"100%"}}>
-            <div>   <header className="bg-white shadow-sm flex items-center justify-between p-4 border-b">
-                  <div className="flex items-center">
-                      <button onClick={() => setSidebarOpen(!isSidebarOpen)} className="text-gray-600 lg:hidden">
-                          <Icon name="menu" className="w-6 h-6" />
-                      </button>
-                      <h1 className="text-2xl font-semibold text-gray-800 ml-4 lg:ml-0"></h1>
-                  </div>
-
-                  <div className="flex items-center space-x-4">
-                     
-                      <div className="relative">
-                          <button className="flex items-center space-x-2">
-                              <img src={imagePreview} alt="User Avatar" className="h-10 w-10 rounded-full" />
-                              <span className="hidden md:block">{name}</span>
-                              <Icon name="chevron-down" className="w-4 h-4" />
-                          </button>
-                      </div>
-                  </div>
-              </header></div>
+            <div>  </div>
         <div className="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200 min-h-screen font-sans" style={{width:"100%"}}>
              {/* In a real React project, Google Fonts and Font Awesome would be included 
                 in your main `index.html` file or imported in your main CSS file.

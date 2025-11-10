@@ -173,7 +173,7 @@ export default function EmailTemplate() {
           { icon: 'credit-card', text: 'My Membership', to: '/myMembership' },
           { icon: 'user', text: 'My Profile', to: '/myProfile' },
           { icon: 'lock', text: 'Change Password', to: '/changePassword' },
-          { icon: 'link', text: 'Affiliation' },
+   
         ],
       },
       {
@@ -188,7 +188,7 @@ export default function EmailTemplate() {
       {
         title: 'Resources',
         links: [
-          { icon: 'help-circle', text: 'App Help' },
+          { icon: 'help-circle', text: 'App Help' ,to:'/appHelp'},
           { icon: 'thumbs-up', text: 'Feedback' },
           { icon: 'message-square', text: 'Contact Us' },
           { icon: 'book-open', text: 'Networking 101' },
@@ -292,7 +292,20 @@ const TemplateListView = ({ templates, onAddNew, onStatusToggle, onDelete, onEdi
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{template.template_name}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{template.category_id === "5" ? "Reply-Email" : template.category_id === "1" ? "Introduction-Email" : template.category_id === "2" ? "Bump" : template.category_id === "3" ? "Follow-up" : template.category_id === "4" ? "Member-Email" : template.category_id?.toString()}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 truncate max-w-xs"   dangerouslySetInnerHTML={{ __html: template.email_body }}></td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{template.created_at}</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{(() => {
+                    const diffMs = Date.now() - new Date(template.created_at).getTime();
+                    const diffMinutes = Math.floor(diffMs / (1000 * 60));
+                    const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+                    const diffDays = Math.floor(diffHours / 24);
+
+                    if (diffMinutes < 60) {
+                      return `${diffMinutes} minute${diffMinutes !== 1 ? "s" : ""} ago`;
+                    } else if (diffHours < 24) {
+                      return `${diffHours} hour${diffHours !== 1 ? "s" : ""} ago`;
+                    } else {
+                      return `${diffDays} day${diffDays !== 1 ? "s" : ""} ago`;
+                    }
+                  })()}</td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <td className="px-6 py-4 whitespace-nowrap">
                     <span

@@ -165,7 +165,7 @@ export default function EmailSignaature() {
                     { icon: 'credit-card', text: 'My Membership', to: '/myMembership' },
                     { icon: 'user', text: 'My Profile', to: '/myProfile' },
                     { icon: 'lock', text: 'Change Password', to: '/changePassword' },
-                    { icon: 'link', text: 'Affiliation' },
+                 
                 ],
             },
             {
@@ -180,7 +180,7 @@ export default function EmailSignaature() {
             {
                 title: 'Resources',
                 links: [
-                    { icon: 'help-circle', text: 'App Help' },
+                    { icon: 'help-circle', text: 'App Help',to:'/appHelp' },
                     { icon: 'thumbs-up', text: 'Feedback' },
                     { icon: 'message-square', text: 'Contact Us' },
                     { icon: 'book-open', text: 'Networking 101' },
