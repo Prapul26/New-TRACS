@@ -186,7 +186,7 @@ const ViewMessage = () => {
     const [data, setData] = useState("");
     const [sentMail, setSentMails] = useState([]);
     const [signature, setSignature] = useState([]);
-    const [template1, setTemplate1] = useState([])
+    const [template1, setTemplate1] = useState([]);
     const [recivesmails, setrecivedmails] = useState([]);
     const [selectedTemplateId, setSelectedTemplateId] = useState(null);
     useEffect(() => {
