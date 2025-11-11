@@ -51,9 +51,9 @@ const ViewMessage = () => {
             {
                 title: 'Account Settings',
                 links: [
-                    { icon: 'credit-card', text: 'My Membership', to: '/myMembership', to: '/myMembership' },
-                    { icon: 'user', text: 'My Profile', to: '/myProfile', to: '/myProfile' },
-                    { icon: 'lock', text: 'Change Password', to: '/changePassword', to: '/changePassword' },
+                    { icon: 'credit-card', text: 'My Membership', to: '/myMembership' },
+                    { icon: 'user', text: 'My Profile', to: '/myProfile' },
+                    { icon: 'lock', text: 'Change Password', to: '/changePassword' },
             
                 ],
             },
@@ -81,7 +81,7 @@ const ViewMessage = () => {
 
             <aside className="bg-[#1a202c] w-64 flex-shrink-0 hidden lg:block h-[100%]">
                 <div className="p-6">
-                    <a href="#" className="text-white text-2xl font-bold">TRACS</a>
+                    <a  className="text-white text-2xl font-bold">TRACS</a>
                 </div>
                 <nav className="mt-6">
                     {sections.map(section => <SidebarSection key={section.title} {...section} />)}
@@ -98,7 +98,7 @@ const ViewMessage = () => {
     const [messageBody, setMessageBody] = useState('');
 
     // State for the include signature checkbox
-    const [includeSignature, setIncludeSignature] = useState(true);
+    const [includeSignature] = useState(true);
 
     // State for the selected template
     const [selectedTemplate, setSelectedTemplate] = useState('');
