@@ -1,0 +1,163 @@
+.contatContainer{
+    display: flex;
+    height: fit-content;
+    width: 85%;
+    margin-left: 5%;
+    margin-right: 5%;
+   margin-bottom: 80px;
+    margin-top: 100px;
+background-color: white;    padding: 40px;
+    box-shadow: 10px 10px 15px 10px rgba(0, 0, 0, 0.15);
+    border-radius: 20px;
+}
+.a_u{
+    height: 200px;
+    background: linear-gradient(109.6deg, rgb(36, 45, 57) 11.2%, rgb(16, 37, 60) 51.2%, rgb(0, 0, 0) 98.6%);
+    margin-top: -20px;
+
+}
+.a_u h1{
+    margin-top: 20px;
+    color: rgb(0, 0, 0);
+    text-align: center;
+    padding-top: 80px;
+
+}
+.ch{
+width: 70%;
+display: none;
+ }
+.ci{
+width: 30%;
+
+
+}
+.ch1{
+display: flex;
+justify-content: space-around;
+margin-top: 80px;
+}
+.ch2{
+    display: flex;
+    justify-content: space-around;
+    margin-top: 80px;
+
+}
+.ch3{
+margin-top: 80px;
+margin-left: 35px;
+}
+.ch3 textarea{
+    height: 200px;
+    width: 80%;
+    border: transparent;
+    box-shadow: 10px 10px 15px 10px rgba(0, 0, 0, 0.15);
+}
+.ch4{
+margin-top: 40px;
+margin-left: 35px;
+}
+.ch4 button{
+    height: 60px;
+    width: 200px;
+    background-color: rgb(246, 162, 7);
+    color: white;
+    box-shadow: 10px 10px 15px 10px rgba(0, 0, 0, 0.15);
+
+}
+.contatContainer h1{
+    color: rgb(0, 0, 0);
+}
+.contatContainer input{
+    height: 40px;
+    width: 300px;
+    border-radius: 10px;
+    border: transparent;
+    box-shadow: 10px 10px 15px 10px rgba(0, 0, 0, 0.15);
+    border-bottom: 2px solid rgb(11, 11, 113);
+}
+.ci1{
+    width: 100%;
+  height: fit-content;
+  background-image:url(https://tracs.app/public/user/images/background/dot-left-t-dark.png) ;
+    margin-top: 100px;
+background-color: rgb(15, 18, 33);
+    background-size: cover;
+    padding: 10px;
+ 
+}
+.ci2{
+    display: flex;
+   
+    margin-left: 0px;
+}
+.ci3{
+    display: flex;
+    margin-top: 20px;
+   
+}
+.ci4{
+    display: flex;
+    margin-left: 0px;
+}
+.ci21{
+margin-top: 17px;
+}
+.ci41{
+    margin-top: 17px;
+}
+.ci31{
+    margin-top: 17px;
+}
+.ci1 h2{
+    color: white;
+}
+@media (max-width: 480px){
+    .contatContainer{
+        display: flex;
+        flex-direction: column;
+        margin-left: -0%;
+        width: 80%;
+    }
+    .ci{
+        width: 100%;
+        background-image: "https://tracs.app/public/user/images/background/dot-left-t-dark.png";
+    }
+    .ch1{
+        display: flex;
+        flex-direction: column;
+      
+    }
+    .ch1 input{
+        margin-top: 20px;
+    }
+    .ch2 input{
+        margin-top: 20px;
+    }
+    .ch2{
+        display: flex;
+        flex-direction: column;
+    }
+    .ph1{
+        margin-top: 5px;
+    }
+    .ch3{
+        width: 90%;
+    }
+    .ch3 textarea{
+        width: 150%;
+        margin-left: -15%;
+    }
+}
+@media (min-width: 601px) and (max-width: 1024px){
+    .contatContainer{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        margin-left: -0%;
+     
+    }
+    .ci{
+        width: 100%;
+    }
+}

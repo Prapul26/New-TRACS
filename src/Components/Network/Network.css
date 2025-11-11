@@ -1,0 +1,13 @@
+.networkContainer{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 10%;
+    margin-right: 10%;
+    width: 80%;
+    height: 600px;
+}
+@media(max-width:1024px){
+  .networkContainer{
+    height: 100vh;
+  }
+}

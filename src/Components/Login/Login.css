@@ -1,0 +1,286 @@
+
+.LoginPage {
+    display: flex;
+    justify-content:space-around;
+    align-items: center;
+ 
+  margin-bottom: 0px;
+    background-color: rgb(108, 107, 107);
+}
+.abd{
+    margin-top: 10px;
+    margin-left: 80px;
+    margin-bottom: 150px;
+}
+.abd h1{
+    font-family: "Roboto", sans-serif;
+    font-weight: 600;
+    font-style: normal;
+    color: white;
+            font-size: 30px;
+}
+.no1{
+    display: flex;
+    margin: 30px; 
+}
+.oneb{
+    margin-top: 20px;
+    height: 70px;
+    width: 70px;
+    text-align: center;
+    
+    background-color:#0056b3;
+    margin-left: -30px;
+    border-radius: 70px;
+}
+.oneb h1{
+    color: white;
+}
+
+.oneContent{
+    overflow: hidden;
+    word-wrap: break-word;
+    width: 500px;
+    margin-left: 40px;
+}
+.oneContent h4{
+    font-size: 20px;
+    font-weight: 500;
+    color: #fff;
+}
+.oneContent p{
+    color: #ffffff;
+}
+.no2{
+    display: flex;
+}
+.twob{
+    margin-top: 20px;
+    height: 70px;
+    text-align: center;
+    width: 70px;
+    background-color:#0056b3;
+    margin-left: 0px;
+    border-radius: 70px;
+}
+.twob h1{
+    color: white;
+}
+.twoContent{
+    overflow: hidden;
+    word-wrap: break-word;
+    width: 500px;
+    margin-left: 40px;
+}
+.twoContent h4{
+    font-size: 20px;
+    margin-top: 40px;
+    color: #fff;
+    font-weight: 500;
+}
+.LoginContainer {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    border: 1px solid #e7e7e7;
+    width: 30%;
+    margin-top: 20px;
+
+    background-color: #fff;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.LoginContainer label {
+    margin-bottom: 5px;
+    font-family:sans-serif;
+    font-weight: 700;
+}
+.LoginContainer input {
+    margin-bottom: 10px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+   
+}
+.LoginContainer button {
+    padding: 10px;
+    margin-top: 20px;
+    background-color: #eeba2b;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-bottom: 5px;
+    transition: 1s;
+}
+.LoginContainer button:hover {
+    background-color: #0f4177;
+    color:rgb(179, 245, 236);
+}
+.LoginContainer h1{
+    text-align: center;
+    margin-bottom: 60px;
+}
+.LoginContainer p{
+    cursor: pointer;
+}
+.switch:hover{
+color: red;
+}
+.regP p{
+color:#007bff;
+font-weight: 500 !important;
+font-size: 15px !important;
+}
+.forpass p{
+color:#007bff;
+font-weight: 500 !important;
+font-size: 15px !important;
+}
+.forpassd p{
+    color:#8f9091;
+    font-weight: 400 !important;
+font-size: 14px !important;
+}
+.forpass{
+   margin-top: -12px;
+}
+.forpassd{
+    margin-top: -12px;
+    margin-left: 4px;
+}
+.loginInputsDiv{
+    width: 100%;
+  
+    display: flex;
+    border: 2px solid rgb(239, 239, 239);
+height: 31px;
+}
+.loginInputsDiv input{
+    width: 95%;
+    outline: transparent;
+    border: transparent;
+}
+.registerKey{
+    display: flex;
+}
+.popShow{
+    position: absolute;
+    margin-top: 147px;
+    padding: 5px;
+    border-radius: 5px;
+    height: 180px;
+    width: 220px;
+    background-color: rgb(0, 0, 0);
+    
+    color: white !important;
+}
+.popShow p{
+    color: rgb(255, 255, 255) !important;
+    
+}
+.popShow span{
+    color: white !important;
+}
+@media (max-width: 1024px) {
+    .LoginContainer {
+        width: 80%;
+        margin-top: -140px;
+    }.LoginContainer h1{
+        margin-top: -10px !important;
+    }
+    .LoginContainer button{
+        margin-top: -9px !important;
+    }
+    .LoginPage{
+        display: flex;
+        flex-direction: column;
+        height: fit-content;
+        margin-bottom: 0px;
+        margin-top: -30px;
+    }
+    .abd{
+        margin-top: 9px;
+        margin-left: 20px;
+        overflow: hidden;
+        word-wrap: break-word;
+    }
+    .LoginContainer h1{
+        text-align: left;
+        margin-bottom: 25px;
+        margin-top: 10px;
+    }
+    .abd h1{
+        font-size: 20px !important;
+        font-weight: 600 !important;
+    }
+    .abd h4{
+font-size: 15px !important;
+font-weight: 500 !important;
+    }
+    .abd p{
+        font-size: 16px !important;
+    }
+    .oneContent{
+        width: 70%;
+        margin-left: 5px;
+        margin-top: -15px;
+    }
+    .no2{
+        margin-top: -45px;
+    }
+    .twoContent{
+        width: 70%;
+        margin-left: 5px;
+        margin-top: -23px;
+    }
+    .oneb{
+    margin-top: 20px;
+    height: 50px;
+    width: 50px;
+    text-align: center;
+    margin-right: 20px;
+    background-color:#0056b3;
+    margin-left: -30px;
+    border-radius: 70px;
+}
+.registerKey{
+    margin-bottom: -12px;
+}
+.twob{
+    margin-top: 20px;
+    height: 50px;
+    text-align: center;
+    width: 50px;
+     margin-right: 20px;
+    background-color:#0056b3;
+    margin-left: 0px;
+    border-radius: 70px;
+}
+  .loginInputsDiv{
+        margin-top: -14px;
+        ;
+    }
+    
+
+}
+@media (min-width: 601px) and (max-width: 1024px){
+    .LoginContainer {
+        width: 50%;
+    }
+    .LoginPage{
+        display: flex;
+        flex-direction: column;
+        height: fit-content;
+        margin-bottom: 20px;
+    }
+    .abd{
+        margin-top: 40px;
+        margin-left: 70px;
+        overflow: hidden;
+        word-wrap: break-word;
+    }
+  
+   
+}

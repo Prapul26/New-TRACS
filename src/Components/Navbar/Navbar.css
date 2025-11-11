@@ -1,5 +1,5 @@
 .Navbar-Container{
-    height: 60px;
+    height: 120px;
     width: 100%;
    background-color: white;
 
@@ -58,7 +58,7 @@ background-color: #eeeeee;
     max-height: 100%;
 }
 .navbar-holder ul{
-    margin-left: -35px;
+    margin-left: 0px;
     margin-top: 19px;
     margin-bottom: -10px;
 }

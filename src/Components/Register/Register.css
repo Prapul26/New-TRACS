@@ -1,0 +1,120 @@
+.registerPage{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  
+    background-color: #f5f5f5;
+   
+}
+.picgif{
+    content: "\e005";
+    box-sizing: border-box;
+    line-height: 44px;
+    text-align: center;
+    font-size: 16px;
+    margin-left: 5px;
+    
+}
+
+.registerForm{
+   
+    display: flex;
+   
+    flex-direction: column;
+    border: 1px solid #ccc;
+   
+    width: 60%;
+    margin-left: 20%;
+    margin-right: 10%;
+    
+  margin-top: 60px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 40px;
+}
+.regHolder{
+    width: 70%;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+margin-left: 15%;
+margin-right: 15%;
+margin-top: 100px;
+background-color: white;
+}
+.registerForm label{
+    margin-bottom: 15px;
+    font-family:sans-serif;
+    font-weight: 700;
+}
+.registerForm input{
+    margin-bottom: 0px;
+    padding: 8px;
+    height: 25px;
+ 
+   border: transparent;
+    border-radius: 4px;
+}
+.inputgif{
+    width: 90%;
+    background-color: transparent;
+}
+.inputgif input{
+    width: 100%;
+    border: transparent;
+      outline: none;
+}
+.registerForm button{
+    padding: 10px;
+    margin-top: 20px;
+    background-color:#0056b3;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-bottom: 5px;
+    transition: 1s;
+}
+
+.registerForm button:hover{
+    background-color: #073b72;
+    color:rgb(179, 245, 236);
+}
+.registerForm p{
+    cursor: pointer;
+}
+.registerForm p{
+    margin-left: 20px;
+}
+.regContainer{
+    padding: 20px;
+}
+.reg1cont{
+    background-color: #eeeded;
+}
+
+
+
+@media (max-width: 1024px){
+       .regHolder{
+    width: 100%;
+margin-top: 0px;
+padding: 0px;
+margin-left: 0px;
+margin-right: 0px;
+}
+  .registerForm {
+       display: block;
+       width: 95%;
+       margin-left: 10px;
+       margin-top: 20px;
+    }
+    .reg1cont{
+        background-color: #eeeded;
+        padding-top: 10px;
+    }
+    .reg1cont p{
+        margin-top: 0px;
+            background-color: #eeeded;
+
+    }
+}

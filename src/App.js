@@ -16,6 +16,14 @@ import ViewMessage from './Components/ViewMessage/ViewMessage';
 import AppHelp from './Components/AppHelp/AppHelp';
 import Invoice from './Components/Invoice/Invoice';
 import Home from './Components/Home/Home';
+import Pricing from './Components/PRICING/Pricing';
+import Partner from './Components/Partner/Partner';
+import About_us from './Components/ABOUT_US/About_us';
+import Contact from './Components/Contact/Contact';
+import Faq from './Components/Faq/Faq';
+import  Network  from './Components/Network/Network';
+import Login from './Components/Login/Login';
+import Register from './Components/Register/Register'
 
 
 const App = () => {
@@ -39,6 +47,14 @@ const App = () => {
           <Route path='/appHelp' element={<AppHelp />}/>
           <Route path='/invoice/:id' element={<Invoice />}/>
             <Route path='/home' element={<Home />}/>
+            <Route path='/pricing' element={<Pricing />}/>
+            <Route path='/partner' element={<Partner />}/>
+            <Route path='/about_us' element={<About_us />}/>
+            <Route path='/contact' element={<Contact />}/>
+            <Route path='/faq' element={<Faq />}/>
+            <Route path='/network' element={<Network />}/>
+            <Route path='/login' element={<Login />}/>
+            <Route path='/register' element={<Register />}/>
       </Routes>
      </Router>
     </div>

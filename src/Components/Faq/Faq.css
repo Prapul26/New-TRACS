@@ -1,0 +1,30 @@
+.faqContainer{
+    width: 70%;
+    margin-left: 15%;
+    margin-right: 15%;
+    margin-top: 60px;
+    margin-bottom: 70px;
+}
+.faqHolder{
+    display: flex;
+    justify-content: space-between;
+    background-color: rgb(240, 240, 240);
+    padding: 20px 30px 20px 30px;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    border-left:1px solid black ;
+    border-right: 1px solid black;
+    margin-top: 30px;
+}
+.faqDes{
+     border-bottom: 1px solid black;
+    border-left:1px solid black ;
+    border-right: 1px solid black;
+    margin-top: 0px;
+        padding: 20px 30px 20px 30px;
+
+}
+.faqContainer{
+    width: 90%;
+    margin-left: 5%;
+}
