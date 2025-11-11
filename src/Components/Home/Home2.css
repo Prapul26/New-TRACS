@@ -1,0 +1,248 @@
+.heading1{
+    margin-top: 60px;
+    width: 45%;
+}
+.heading1 h1{
+    font-size: 60px;
+    font-weight: 1000;
+    font-weight: bolder;
+    
+}
+.heading1 p{
+    color: #6b7280;
+    font-size: 20px !important;
+    margin: 24px 0px 0px;
+    margin-top: -20px;
+}
+.heading1 button{
+    color: black;
+    background-color: #eeba2b !important;
+    padding: 12px 32px;
+    font-size: 18px !important;
+    border-radius: 20px;
+    margin-top: 20px;
+    font-weight: bold;
+
+}
+.heading2{
+    text-align: center;
+}
+.heading2 h2{
+            font-size:36px !important;
+        line-height: 2.5rem !important;
+}
+.heading2 p{
+     color: #6b7280;
+    font-size: 18px !important;
+    margin-top: -20px;
+    margin-bottom: 40px;
+}
+.hoverCards{
+    display: flex;justify-content: space-between;
+   
+}
+.hover1{
+     
+    border: 1px solid rgb(255, 255, 255);
+    padding-top: 30px;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-bottom: 10px;
+    text-align: center;
+    width: 26%;
+    border-radius: 30px;
+        box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+
+}
+.hover1:hover{
+    margin-top: -20px;
+        box-shadow: 0 13px 16px rgba(0, 0, 0, 0.15);
+
+}
+
+.hoverImg{
+    height: 40px;
+    width: 40px;
+    margin-bottom: 40px;
+     display: flex;              /* ✅ add this */
+    align-items: center;        /* ✅ center vertically */
+    justify-content: center;   
+    color:#2563eb;
+    background-color: #DBEAFE;
+    align-items: center;
+    justify-content: center;padding: 30px;
+    border-radius: 50%;
+}
+.hoverImg2{
+    height: 40px;
+    width: 40px;
+    margin-bottom: 40px;
+     display: flex;              /* ✅ add this */
+    align-items: center;        /* ✅ center vertically */
+    justify-content: center;   
+    color:#16A34A;
+    background-color: #DCFCE7;
+    align-items: center;
+    justify-content: center;padding: 30px;
+    border-radius: 50%;
+}
+.hoverImg3{
+    height: 40px;
+    width: 40px;
+    margin-bottom: 40px;
+     display: flex;              /* ✅ add this */
+    align-items: center;        /* ✅ center vertically */
+    justify-content: center;   
+    color:#9333EA;
+    background-color: #F3E8FF;
+    align-items: center;
+    justify-content: center;padding: 30px;
+    border-radius: 50%;
+}
+
+.hoverCenrterimg{
+       display: flex;              /* ✅ add this */
+    align-items: center;        /* ✅ center vertically */
+    justify-content: center;   
+}
+.hoverImg svg{
+    height: 42px !important;
+}
+.heading3{
+    align-items: center;
+    text-align: center;
+    margin-top: 80px;
+}
+.heading3 h2{
+    font-size: 36px !important;
+}
+.heading3 p{
+    font-size: 18px !important;
+     color: #6b7280;
+     margin-top: -20px;
+}
+.numberCards{
+    display: flex;
+    justify-content: space-between;
+}
+.numcard1{
+    width: 23%;
+     border: 1px solid rgb(255, 255, 255);
+    padding: 30px;
+    text-align: center;
+    width: 20%;
+    border-radius: 30px;
+    
+}
+.nimImgholder{
+ 
+       display: flex;              /* ✅ add this */
+    align-items: center;        /* ✅ center vertically */
+    justify-content: center;   
+}
+.numImg{
+    background-color: #2563eb;
+    color: white;
+    height: 15px;
+    width: 20px;
+      display: flex;              /* ✅ add this */
+    align-items: center;        /* ✅ center vertically */
+    justify-content: center;   
+    margin-bottom: 20px;
+    font-size: 30px;
+    padding: 30px;
+    border-radius: 50%;
+}
+.numImg2{
+    background-color: #16A34A;
+    color: white;
+    height: 15px;
+    width: 20px;
+      display: flex;              /* ✅ add this */
+    align-items: center;        /* ✅ center vertically */
+    justify-content: center;   
+    margin-bottom: 20px;
+    font-size: 30px;
+    padding: 30px;
+    border-radius: 50%;
+}
+.numImg3{
+    background-color: #9333EA;
+    color: white;
+    height: 15px;
+    width: 20px;
+      display: flex;              /* ✅ add this */
+    align-items: center;        /* ✅ center vertically */
+    justify-content: center;   
+    margin-bottom: 20px;
+    font-size: 30px;
+    padding: 30px;
+    border-radius: 50%;
+}
+.heading4{
+    height: 300px;
+    width: 100%;
+    display: flex;
+    background-color: #2563eb;
+    text-align: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.heading4 h2{
+    font-size: 36px !important;
+    color: white;
+    margin-top: 60px;
+    
+}
+.heading4 p{
+    font-size: 20px !important;
+    margin-top: -10px;
+    color:white;
+}
+.heading4 button{
+    background-color: white;
+    color: #2563eb;
+font-size: 20px !important;
+font-weight: bold;
+    padding: 16px 40px;
+    margin-bottom: 40px;
+    border-radius: 30px;
+}
+.homeHolder h1,p,h2,button,h3{
+font-family:  "Inter", sans-serif !important;
+}
+@media (max-width: 1024px) {
+    .heading1{
+    margin-top: 60px;
+    width: 100%;
+    text-align: center;
+}
+.heading1 h1{
+    font-size: 36px !important;
+    margin-bottom: 35px;
+}
+.heading1 button{
+    margin-bottom: 60px;
+    margin-top: 40px;
+    width: 90%;
+}
+.hoverCards{
+    flex-direction: column;
+}
+.hover1{
+    width: 80%;
+    margin-bottom: 20px;
+}
+.numberCards{
+    flex-direction: column;
+}
+.numcard1{
+    width: 80%;
+}
+.heading4 button{
+    margin-bottom: 70px;
+}
+.heading4{
+    height: 400px;
+}
+}

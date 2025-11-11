@@ -15,6 +15,7 @@ import Test2 from './Components/Test2';
 import ViewMessage from './Components/ViewMessage/ViewMessage';
 import AppHelp from './Components/AppHelp/AppHelp';
 import Invoice from './Components/Invoice/Invoice';
+import Home from './Components/Home/Home';
 
 
 const App = () => {
@@ -37,6 +38,7 @@ const App = () => {
           <Route path='/test2' element={<Test2/>}/>
           <Route path='/appHelp' element={<AppHelp />}/>
           <Route path='/invoice/:id' element={<Invoice />}/>
+            <Route path='/home' element={<Home />}/>
       </Routes>
      </Router>
     </div>

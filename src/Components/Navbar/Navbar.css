@@ -1,0 +1,82 @@
+.Navbar-Container{
+    height: 60px;
+    width: 100%;
+   background-color: white;
+
+    
+    padding-top: 20px;
+    padding-bottom: 13.5px;
+
+}
+.navbar-holder{
+    display: flex;
+    padding-left: 14.5%;
+}
+.dropdown-menu23{
+    margin-top: 25px;
+    border: 1px solid #e6e9e8;
+    background-color:white;
+    position: absolute;
+   margin-left: -14px;
+    width:220px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+   
+}
+.resources1{
+        margin-top: 25px;
+    border: 1px solid #e6e9e8;
+    background-color:white;
+    position: absolute;
+   margin-left: -14px;
+    width:200px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+}
+.fopl:hover{
+background-color: #eeeeee;
+
+}
+
+.fopl{
+    display: flex;
+ 
+}
+.dropdown-menu23 li{
+
+    color:black;
+    margin-bottom: 5px;
+    
+
+    text-decoration: none;
+}
+.navbar-holder img{
+    margin-top: 4px;
+    max-width: 100%;
+    max-height: 100%;
+}
+.navbar-holder ul{
+    margin-left: -35px;
+    margin-top: 19px;
+    margin-bottom: -10px;
+}
+.navbar-holder li{
+    margin-left: 20px;
+    font-weight: 700;
+    padding-bottom: 8px;
+    font-size: medium;
+    font-family: 'Montserrat', sans-serif;
+}
+.navbar-holder li:hover{
+   
+border-bottom: 4px dashed  gold ; 
+
+}
+
+@media (max-width: 1024px) {
+    .Navbar-Container{
+        display: none;
+    }
+}
