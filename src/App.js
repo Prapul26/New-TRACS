@@ -13,8 +13,8 @@ import NewContacts from './Components/NewContacts/NewContacts';
 import Test from './Components/Test';
 import Test2 from './Components/Test2';
 import ViewMessage from './Components/ViewMessage/ViewMessage';
+import AppHelp from './Components/AppHelp/AppHelp';
 
-import Invoice from './Components/Invoice/Invoice';
 
 
 const App = () => {
@@ -35,8 +35,8 @@ const App = () => {
         <Route path='/test' element={<Test/>}/>
         <Route path='/viewMessage/:subject/:user_id/:replies_code' element={<ViewMessage/>} />
           <Route path='/test2' element={<Test2/>}/>
-     
-          <Route path='/invoice/:id' element={<Invoice />}/>
+          <Route path='/appHelp' element={<AppHelp />}/>
+          
       </Routes>
      </Router>
     </div>
