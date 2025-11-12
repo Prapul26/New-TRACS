@@ -81,7 +81,7 @@ const ViewMessage = () => {
 
             <aside className="bg-[#1a202c] w-64 flex-shrink-0 hidden lg:block h-[100%]">
                 <div className="p-6">
-                    <a  href="#" className="text-white text-2xl font-bold">TRACS</a>
+                    <h1 className="text-white text-2xl font-bold">TRACS</h1>
                 </div>
                 <nav className="mt-6">
                     {sections.map(section => <SidebarSection key={section.title} {...section} />)}
@@ -96,12 +96,6 @@ const ViewMessage = () => {
 
     // State for the message body
     const [messageBody, setMessageBody] = useState('');
-
-    // State for the include signature checkbox
-    const [includeSignature] = useState(true);
-
-    // State for the selected template
-    const [selectedTemplate, setSelectedTemplate] = useState('');
 
     // State for the modal
     const [showModal, setShowModal] = useState(false);
@@ -148,12 +142,9 @@ const ViewMessage = () => {
         fetchProfile();
     }, []);
     const { subject, user_id, replies_code } = useParams();
-    const [data, setData] = useState("");
+
     const [sentMail, setSentMails] = useState([]);
-    const [signature, setSignature] = useState([]);
-    const [template1, setTemplate1] = useState([]);
-    const [recivesmails, setrecivedmails] = useState([]);
-    const [selectedTemplateId, setSelectedTemplateId] = useState(null);
+ 
     useEffect(() => {
         const fetchData = async () => {
             const token = "Bearer 36|NUtJgD15eoKNZnQXYgYo5G3cbQdZe2PdeHD16Yy1";
@@ -162,11 +153,10 @@ const ViewMessage = () => {
                     `https://tracsdev.apttechsol.com/api/view_user_inboxhistory_intro/${subject}/${user_id}/${replies_code}`,
                     { headers: { Authorization: token } }
                 );
-                setData(response.data);
+              
                 setSentMails(response.data.sentMails?.data || [])
-                setrecivedmails()
-                setSignature(cleanHTML(response.data.authsignature?.name));
-                setTemplate1(response.data.normal_email_templates)
+      
+            
             } catch (err) {
                 console.error("Error fetching inbox history:", err);
             }
@@ -174,18 +164,7 @@ const ViewMessage = () => {
         fetchData();
     }, [subject, user_id, replies_code]);
 
-    useEffect(() => {
-        if (includeSignature) {
-            // only append signature if it's not already present
-            if (!messageBody.includes(signature)) {
-                setMessageBody(prev => prev + "\n\n" + signature);
-            }
-        } else {
-            // remove signature if unchecked
-            setMessageBody(prev => prev.replace(signature, "").trim());
-        }
-    }, [includeSignature, signature]);
-
+   
     const stripHtmlTags = (html) => {
         const div = document.createElement("div");
         div.innerHTML = html;
@@ -195,23 +174,8 @@ const ViewMessage = () => {
 
 
 
-    const [selectedRecipientEmails, setSelectedRecipientEmails] = useState([]);
 
-    const payload = {
-        user_id: data.userInfo?.id,
-        sent_mail_history_id: data.sentMailsfirst?.id,
-        replies_code,
-    temp_id: selectedTemplateId,
-        subject: data.sentMailsfirst?.subject,
-   selected_emails: selectedRecipientEmails,
-        redirect_to: "https://tracsdev.apttechsol.com/user/view-inbox-list-from-intro",
-        is_bump: data.sentMailsfirst?.is_bump,
-        cc_mail_id: null,
-    emails: selectedRecipientEmails,
-        email_template: selectedTemplate,
- message:messageBody,
-        files: null
-    };
+  
 
  
     return (
@@ -223,7 +187,7 @@ const ViewMessage = () => {
                         <button onClick={() => setSidebarOpen(!isSidebarOpen)} className="text-gray-600 lg:hidden">
                             <Icon name="menu" className="w-6 h-6" />
                         </button>
-                        <h1 className="text-2xl font-semibold text-gray-800 ml-4 lg:ml-0"></h1>
+                     
                     </div>
 
                     <div className="flex items-center space-x-4">
