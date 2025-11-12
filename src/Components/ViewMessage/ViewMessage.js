@@ -99,7 +99,7 @@ const ViewMessage = () => {
 
     // State for the modal
     const [showModal, setShowModal] = useState(false);
-    const [modalMessage, setModalMessage] = useState('');
+    const [modalMessage] = useState('');
 
 
     // Function to handle template selection

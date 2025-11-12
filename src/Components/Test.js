@@ -1,18 +1,13 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+
 
 // --- Icon Components (using Font Awesome classes) ---
 // In a real React app, you'd typically use a library like `react-icons`
 const Icon = ({ className }) => <i className={className}></i>;
 
 // --- Gallery Component ---
-const galleryImages = [
-    { src: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=400&h=400&auto=format&fit=crop", alt: "Team collaborating" },
-    { src: "https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=400&h=400&auto=format&fit=crop", alt: "Business meeting" },
-    { src: "https://images.unsplash.com/photo-1556761175-b413da4baf72?q=80&w=400&h=400&auto=format&fit=crop", alt: "Professionals working" },
-    { src: "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=400&h=400&auto=format&fit=crop", alt: "Team planning session" },
-];
+
 
 const Gallery = ({ profile }) => (
   <div className="p-6 md:p-8 border-t border-gray-200 dark:border-gray-700">
@@ -65,30 +60,6 @@ const AboutSection = ({profile}) => (
 
 
 // --- Layout Switcher Component ---
-const LayoutSwitcher = ({ activeLayout, setActiveLayout }) => {
-    const layouts = ['card', 'two-column', 'banner'];
-    const layoutNames = {
-        card: 'Card View',
-        'two-column': 'Two-Column',
-        banner: 'Banner',
-    };
-    
-    return (
-        <div className="mb-8 flex justify-center items-center bg-white dark:bg-gray-800 p-2 rounded-xl shadow-md">
-            <div className="flex space-x-2 bg-gray-100 dark:bg-gray-700 p-1 rounded-lg">
-                {layouts.map(layout => (
-                    <button 
-                        key={layout}
-                        onClick={() => setActiveLayout(layout)}
-                        className={`px-4 py-2 text-sm font-semibold rounded-md transition-colors duration-300 ${activeLayout === layout ? 'bg-indigo-600 text-white' : ''}`}
-                    >
-                        {layoutNames[layout]}
-                    </button>
-                ))}
-            </div>
-        </div>
-    );
-};
 
 // --- Layout 1: Card Layout Component ---
 const CardLayout = ({profile}) => (
@@ -222,9 +193,10 @@ export default function Test() {
       console.error("Error fetching profile data:", error);
     }
   };
-  useEffect(() => {
-    fetchProfile();
-  }, []);
+useEffect(() => {
+  fetchProfile();
+}, [fetchProfile]);
+
 
     return (
         <div style={{display:"flex"}}><div ></div>
