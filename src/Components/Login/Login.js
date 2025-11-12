@@ -46,7 +46,7 @@ const Login = ({ switchToRegister }) => {
         sessionStorage.setItem("authToken", data.token);
         setMessageType("success");
         setTimeout(() => {
-          navigate("/inbox"); // change "/email" to your actual email page route
+          navigate("/dashboard"); // change "/email" to your actual email page route
         }, 2000);
 
       } else {

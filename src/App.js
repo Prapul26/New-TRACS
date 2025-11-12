@@ -33,7 +33,7 @@ const App = () => {
       <Routes>
         <Route path="/replyMessage/:subject/:user_id/:replies_code" element={<ReplyMessage />} />
         <Route path='/makeIntroduction' element={<MakeIntroduction />}/>
-        <Route path='/' element={<NewMessage />}/>
+        <Route path='/dashboard' element={<NewMessage />}/>
         <Route path='/myMembership' element={<MyMembership />} />
         <Route path='/myContacts' element={<MyContacts />} />
         <Route path='/myProfile' element={<MyProfile />}/>
@@ -46,7 +46,7 @@ const App = () => {
           <Route path='/test2' element={<Test2/>}/>
           <Route path='/appHelp' element={<AppHelp />}/>
           <Route path='/invoice/:id' element={<Invoice />}/>
-            <Route path='/home' element={<Home />}/>
+            <Route path='/' element={<Home />}/>
             <Route path='/pricing' element={<Pricing />}/>
             <Route path='/partner' element={<Partner />}/>
             <Route path='/about_us' element={<About_us />}/>
