@@ -18,7 +18,7 @@ const About_us = () => {
        <Header/>
 
         <Navbar/>
-            <div className='ph1'><div className='p1h1'><h1 style={{fontSize:'35px'}}>About Us</h1></div></div>
+            <div className='ph1'style={{marginTop:"2px",marginBottom:"20px"}}><div className='p1h1'><h1 style={{fontSize:'35px'}}>About Us</h1></div></div>
             <div className='About_us-container'>
 
                 <div className='a_1'>

@@ -111,20 +111,20 @@ const Header = () => {
           <div className="home">
             <div className="Home">
               <Link
-                to="/home"
+                to="/"
                 style={{ textDecoration: "none", color: "inherit" }}
               >
-                <h2 style={{ fontSize: "18px" }}>HOME</h2>
+                <h2 style={{ fontSize: "18px",marginBottom:"4px" }}>HOME</h2>
               </Link>
             </div>
           </div>
-          <div className="aboutUs">
+          <div className="aboutUs" style={{paddingTop:"9px"}}>
             <div>
-              <h2 style={{ fontSize: "18px" }}>ABOUT US</h2>
+              <h2 style={{ fontSize: "18px"}}>ABOUT US</h2>
             </div>
             <div
               onClick={handelAbout}
-              style={{ marginTop: "11px", marginRight: "5pxw" }}
+              style={{}}
             >
               {" "}
               {about ? (
@@ -179,13 +179,13 @@ const Header = () => {
 
 
 
-          <div className="aboutUs">
+          <div className="aboutUs" style={{paddingTop:"9px"}}>
             <div>
-              <h2 style={{ fontSize: "18px" }}>Resources</h2>
+              <h2 style={{ fontSize: "18px" }}>RESOURCES</h2>
             </div>
             <div
               onClick={handelAbout2}
-              style={{ marginTop: "11px", marginRight: "5pxw" }}
+              style={{ }}
             >
               {" "}
               {about2 ? (
@@ -215,7 +215,7 @@ const Header = () => {
 
 
 
-          <div className="pricing">
+          <div className="pricing"style={{padding:"9px"}}>
             <div className="Pricing">
               <Link
                 to="/pricing"
@@ -225,14 +225,14 @@ const Header = () => {
               </Link>
             </div>
           </div>
-          <div className="pricing">
+          <div className="pricing" style={{paddingTop:"9px"}}>
             <Link
               to="/network"
               style={{ textDecoration: "none", color: "inherit" }}
             >
               {" "}
               <div className="Pricing">
-                <h2 style={{ fontSize: "18px" }}>NETWORK 101</h2>
+                <h2 style={{ fontSize: "18px" ,marginBottom:"4px" }}>NETWORK 101</h2>
               </div>
             </Link>
           </div>
@@ -280,14 +280,14 @@ const Header = () => {
             rel="noopener noreferrer">
             <div className="facebook">
               {" "}
-              <FaFacebook size={20} color="white" />
+              <FaFacebook size={23} color="white" />
             </div>
           </a>
 
           <a href="https://www.linkedin.com/company/h7network/" target="_blank"
             rel="noopener noreferrer">
             <div className="LinkedIn">
-              <FaLinkedin size={20} color="white" />
+              <FaLinkedin size={23} color="white" />
             </div>
           </a>
           <a href="https://h7network.blog/" target="_blank"
@@ -302,7 +302,7 @@ const Header = () => {
         {isLoggedIn && (<div className="mobPicPro">
           <div className="mobPic1">
             <img
-              src="https://cdn.motiondesign.school/uploads/2021/05/radik.jpg"
+              src={profileImg}
               style={{ height: "100%", width: "100%", borderRadius: "50%" }}
             />
           </div>
@@ -315,16 +315,16 @@ const Header = () => {
             {drop2 && (
               <div className="dropDown2">
                 <Link
-                  to="/accountSettings"
+                  to="/dashboard"
                   style={{ textDecoration: "none", color: "inherit" }}
                 >
                   <div className="profileDrop">
-                    <div style={{ marginTop: "15px", marginRight: "6px" }}><IoPerson /></div>
+                    <div style={{ marginTop: "3px", marginRight: "6px" }}><IoPerson /></div>
                     <div> <p>Dashboard</p></div>
                   </div>
                 </Link>
                 <div className="dropLogout" onClick={handleLogout}>
-                  <div style={{ marginTop: "15px", marginRight: "6px" }}><IoLogOut /></div>
+                  <div style={{ marginTop: "4px", marginRight: "6px" }}><IoLogOut /></div>
                   <div>    <p>Logout</p></div>
                 </div>
               </div>
@@ -367,7 +367,7 @@ const Header = () => {
             </div> */}
               <div style={{ marginLeft: "10px" }}>
                 <Link to="/login">
-                  <button style={{ background: " #eeba2b", color: "black", padding: "5px 8px 5px 8px" }}>Login</button>
+                  <button style={{ background: " #eeba2b", color: "black", padding: "5px 10px 5px 10px" ,borderRadius:"5px"}}>Login</button>
                 </Link>
               </div>
 
@@ -390,17 +390,17 @@ const Header = () => {
                 {drop2 && (
                   <div className="dropDown2">
                     <Link
-                      to="/inbox"
+                      to="/dashboard"
                       style={{ textDecoration: "none", color: "inherit" }}
                     >
                       <div className="profileDrop">
-                        <div style={{ marginTop: "15px", marginRight: "6px" }}><IoPerson /></div>
+                        <div style={{ marginTop: "2px", marginRight: "6px" }}><IoPerson /></div>
                         <div> <p>Dashboard</p></div>
 
                       </div>
                     </Link>
                     <div className="dropLogout" onClick={handleLogout}>
-                      <div style={{ marginTop: "15px", marginRight: "6px" }}><IoLogOut /></div>
+                      <div style={{ marginTop: "2px", marginRight: "6px" }}><IoLogOut /></div>
                       <div>    <p>Logout</p></div>
 
                     </div>

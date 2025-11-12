@@ -80,7 +80,7 @@ margin-left: 35px;
     width: 100%;
   height: fit-content;
   background-image:url(https://tracs.app/public/user/images/background/dot-left-t-dark.png) ;
-    margin-top: 100px;
+    margin-top: 20px;
 background-color: rgb(15, 18, 33);
     background-size: cover;
     padding: 10px;
@@ -117,7 +117,7 @@ margin-top: 17px;
         display: flex;
         flex-direction: column;
         margin-left: -0%;
-        width: 80%;
+        width: 100%;
     }
     .ci{
         width: 100%;

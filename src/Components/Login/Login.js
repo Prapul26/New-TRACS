@@ -128,7 +128,7 @@ const Login = ({ switchToRegister }) => {
         </div>
 
         <form className='LoginContainer' onSubmit={handleLogin}>
-          <h1>Sign In</h1>
+          <h1 style={{fontSize:"28px"}}>Sign In</h1>
           <div className='loginInputsDiv'>
             <div style={{ marginTop: "5px" }}><IoMdMail /></div>
             <div style={{ width: "90%" }}><input
@@ -155,8 +155,8 @@ const Login = ({ switchToRegister }) => {
           </div>
 
           <br />
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <div style={{ display: "flex" }}><div><input type='checkbox' /></div><div className='forpassd'><p>Keep me Log In</p></div></div>
+          <div style={{ display: "flex", justifyContent: "space-between" ,marginTop:"20px"}}>
+            <div style={{ display: "flex" }}><div style={{marginTop:"-12px",marginBottom:"1px"}}><input type='checkbox' /></div><div className='forpassd'><p>Keep me Log In</p></div></div>
             <Link to='/forgotPassword' style={{ textDecoration: "none" }}> <div className='forpass'><p>Forgot Password ?</p></div></Link>
           </div>
           <button type='submit' style={{color:"black"}}>Login</button>
@@ -169,7 +169,7 @@ const Login = ({ switchToRegister }) => {
           )}
 
           <div className='registerKey'>  <div className='regP'><Link to="/register" style={{ textDecoration: "none" }}><p >Register</p></Link></div>
-            <div style={{ marginTop: "15px", marginLeft: "4px" }} onMouseEnter={() => setPopUp(true)}><FaCircleQuestion color='black' /></div></div>
+            <div style={{ marginTop: "3px", marginLeft: "4px" }} onMouseEnter={() => setPopUp(true)}><FaCircleQuestion color='black' /></div></div>
           
         </form>
       </div>

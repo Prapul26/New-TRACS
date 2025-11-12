@@ -17,7 +17,7 @@ const Footer = () => {
 
             <div className='dlc-holder'>
                 <div className='download-container'>
-                    <h2>Download Our App</h2>
+                    <h1>Download Our App</h1>
                     <div className='store-holder' style={{ display: "flex" }}>
                         <div className='playStore-container'>
                             <a href="https://play.google.com/store/apps/details?id=com.hotspot.tracs&pli=1" target="_blank" rel="noopener noreferrer"><img src="https://tracs.app/public/user/images/google-play-store.png" /></a>
@@ -74,13 +74,13 @@ const Footer = () => {
 
 
                         <div className="conulli" style={{ display: "flex" }}>
-                            <div><IoMailOutline /></div>
-                            <div style={{ marginTop: "-18px" }}>   <ul><li style={{ listStyle: "none", fontWeight: "400", fontSize: "16px" }}> info@tracs.app</li>
+                            <div style={{ marginTop: "14px" }}><IoMailOutline /></div>
+                            <div style={{ marginTop: "9px" }}>   <ul><li style={{ listStyle: "none", fontWeight: "400", fontSize: "16px" }}> info@tracs.app</li>
                             </ul>
                             </div>
                         </div>
-                        <div className="conulli" style={{ display: "flex" }}> <div style={{ marginTop: "0px" }}><FaPhoneAlt /></div>
-                            <div style={{ marginTop: "-16px" }}> <ul>
+                        <div className="conulli" style={{ display: "flex" }}> <div style={{ marginTop: "20px" }}><FaPhoneAlt /></div>
+                            <div style={{ marginTop: "16px" }}> <ul>
                                 <li style={{ listStyle: "none", fontWeight: "400", fontSize: "16px" }}> 513.371.5299</li>
                             </ul></div>
 

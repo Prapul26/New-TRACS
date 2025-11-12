@@ -8,7 +8,7 @@ const Network = () => {
     <div>
       <Header/>
       <Navbar/>
-      <div className="ph1">
+      <div className="ph1" style={{marginTop:"2px"}}>
           <div className="p1h1">
             <h1 style={{fontSize:'35px'}}>Networking101</h1>
           </div>

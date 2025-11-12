@@ -36,7 +36,7 @@ fetchData();},[]);
   <div className="homeHolder">
       <Header />
       <Navbar />
-      <div className="ph1">
+      <div className="ph1"style={{marginTop:"2px"}}>
           <div className="p1h1">
             <h1 style={{fontSize:'35px'}}>Frequently Asked Questions</h1>
           </div>

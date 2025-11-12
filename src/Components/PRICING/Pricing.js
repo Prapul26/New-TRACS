@@ -35,16 +35,16 @@ const Pricing = () => {
       <div className="pricing-container">
         <Header />
         <Navbar />
-        <div className="ph1">
+        <div className="ph1"style={{marginTop:"2px"}}>
           <div className="p1h1">
             <h1 style={{ fontSize: '35px' }}>Pricing</h1>
           </div>
         </div>
         <div className="pricing-holder">
           <div className="cal">
-            <h1>Choose your Package</h1>
+            <h1 style={{fontSize:"30px",fontWeight:"600",margin:"20px"}}>Choose your Package</h1>
             <div className="pridiv"></div>
-            <p>
+            <p style={{color:"#6b7280"}}>
               Discover the perfect plan for your needs with our flexible and
               affordable pricing packages. Whether you're an individual
               professional, a small business, or a growing enterprise, we have
@@ -72,7 +72,7 @@ const Pricing = () => {
               {Standard.map((item, index) => (
               <div key={index} className="pd3">
                 <div className="pd2-button">  <button>Standard</button></div>
-                <h2 style={{ color: "#163b6d" }}>${item.price}</h2>
+                <h2 style={{ color: "#163b6d",fontSize:"30px",margin:"7px" }}>${item.price}</h2>
                 <p style={{ fontWeight: "400" }}>{item.days} Days Trial</p>
                 <ul>
                   {item.details.map((detail, i) => (
@@ -89,7 +89,7 @@ const Pricing = () => {
             {Basic.map((item, index) => (
               <div key={index} className="pd2">
                 <div className="pd2-button">   <button>Basic</button></div>
-                <h2 style={{ color: "#163b6d" }}>${item.price}
+                <h2 style={{ color: "#163b6d",fontSize:"30px",margin:"7px" }}>${item.price}
                 </h2>
                 <p style={{ fontWeight: "400" }}>{item.days} Days Trial</p>
                 <ul>
@@ -110,7 +110,7 @@ const Pricing = () => {
         </div>{" "}
         <div className="pricingSearch">
           <div className="priceData">
-            <h1>Subscribe to Newsletter</h1>
+            <h1 style={{fontSize:"30px"}}>Subscribe to Newsletter</h1>
             <p>
               Subscribe to get update and information. Don't worry, we won't
               send spam!
@@ -121,7 +121,7 @@ const Pricing = () => {
               <input type="text" placeholder="Email" />
             </div>
             <div className="ppbutton">
-              <button >Subscribe Here</button>
+              <button style={{color:"white",marginTop:"-2px"}}>Subscribe Here</button>
             </div>
           </div>
         </div>

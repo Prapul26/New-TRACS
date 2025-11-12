@@ -3,16 +3,16 @@
     width: 45%;
 }
 .heading1 h1{
-    font-size: 60px;
-    font-weight: 1000;
-    font-weight: bolder;
+    font-size: 50px;
+    font-weight: 600 !important;
+
     
 }
 .heading1 p{
     color: #6b7280;
     font-size: 20px !important;
     margin: 24px 0px 0px;
-    margin-top: -20px;
+    margin-top: 17px;
 }
 .heading1 button{
     color: black;
@@ -20,7 +20,7 @@
     padding: 12px 32px;
     font-size: 18px !important;
     border-radius: 20px;
-    margin-top: 20px;
+    margin-top: 17px;
     font-weight: bold;
 
 }
@@ -29,12 +29,13 @@
 }
 .heading2 h2{
             font-size:36px !important;
+            margin-top: 20px;
         line-height: 2.5rem !important;
 }
 .heading2 p{
      color: #6b7280;
     font-size: 18px !important;
-    margin-top: -20px;
+    margin-top: 17px;
     margin-bottom: 40px;
 }
 .hoverCards{
@@ -119,7 +120,7 @@
 .heading3 p{
     font-size: 18px !important;
      color: #6b7280;
-     margin-top: -20px;
+     margin-top: 18px;
 }
 .numberCards{
     display: flex;
@@ -228,16 +229,17 @@ font-family:  "Inter", sans-serif !important;
 }
 .hoverCards{
     flex-direction: column;
+  
 }
 .hover1{
-    width: 80%;
+    width: 100%;
     margin-bottom: 20px;
 }
 .numberCards{
     flex-direction: column;
 }
 .numcard1{
-    width: 80%;
+    width: 100%;
 }
 .heading4 button{
     margin-bottom: 70px;

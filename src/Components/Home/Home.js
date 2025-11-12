@@ -192,7 +192,7 @@ const Home = () => {
       {!isLoggedIn && (
             <div>
               <Link to="/register" style={{ textDecoration: "none", color: "inherit" }}>
-                <button>Register</button>
+                <button style={{padding:"5px 14px 5px 14px",borderRadius:"6px"}}>Register</button>
               </Link>
             </div>
           )}

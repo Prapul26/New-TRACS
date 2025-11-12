@@ -71,11 +71,15 @@
     /* Ensures items take at least 300px width */
     margin: 10px;
     text-align: center;
+
     margin-bottom: 10px;
     /* Centers text for smaller screens */
 }
-.download-container h2{
-    margin-left: -45px;
+.download-container h1{
+    font-size: 23px;
+    font-weight: 600;
+    margin-left: -55px;
+    margin-bottom: 20px;
 }
 .important-links-container
  {
@@ -114,7 +118,7 @@
 }
 .contact ul{
     text-align: left;
-margin-left: -30px;
+margin-left: 10px;
 }
 
 .imp-links p:hover{
@@ -213,7 +217,8 @@ color: #787878;
     }
     .contact ul{
         text-align: left;
-margin-left: -20px;
+margin-left: 10px;
+margin-top: 2px;
     }
     .conulli{
         margin-left: -0px;
@@ -247,7 +252,7 @@ height: 40px;
     display: flex;
     margin-top: 15px;
 }
-.download-container h2{
+.download-container h1{
     margin-left: 0%;
 }
 }

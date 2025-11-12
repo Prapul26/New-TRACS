@@ -66,7 +66,7 @@ const MakeIntroduction = () => {
       {
         title: 'Introductions',
         links: [
-          { icon: 'inbox', text: 'Introduction Messages', active: true, to: '/' },
+          { icon: 'inbox', text: 'Introduction Messages', active: true, to: '/dashboard' },
           { icon: 'users', text: 'My Contacts', to: '/myContacts' },
           { icon: 'mail', text: 'Email Templates', to: '/emailTemplate' },
           { icon: 'pen-square', text: 'Email Signature', to: '/emailSignature' },
@@ -87,8 +87,7 @@ const MakeIntroduction = () => {
 
       <aside className="bg-[#1a202c] w-64 flex-shrink-0 hidden lg:block h-[100%]">
         <div className="p-6">
-          <a href="#" className="text-white text-2xl font-bold">TRACS</a>
-        </div>
+<Link to="/" className="text-white text-2xl font-bold">TRACS</Link>        </div>
         <nav className="mt-6">
           {sections.map(section => <SidebarSection key={section.title} {...section} />)}
         </nav>

@@ -35,6 +35,7 @@
 }
 .oneb h1{
     color: white;
+    margin-top: 12px;
 }
 
 .oneContent{
@@ -65,6 +66,7 @@
 }
 .twob h1{
     color: white;
+    margin-top: 12px;
 }
 .twoContent{
     overflow: hidden;
@@ -155,11 +157,13 @@ font-size: 14px !important;
   
     display: flex;
     border: 2px solid rgb(239, 239, 239);
-height: 31px;
+height: 37px;
 }
 .loginInputsDiv input{
-    width: 95%;
+    width: 100%;
     outline: transparent;
+    margin-top: -px;
+    height: 30px;
     border: transparent;
 }
 .registerKey{

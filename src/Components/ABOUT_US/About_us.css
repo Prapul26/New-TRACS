@@ -43,11 +43,11 @@ font-weight: 700;
 .a_1{
     
 }
-.a_1 h1{
+.a_1 ul{
 margin-top: 40px;
-font-weight: 500;
-margin-bottom: 40px;
-color: rgb(3, 3, 152);
+margin-left: 0px;
+margin-bottom: 20px;
+
 }
 .a_1 p{
     color: black;
@@ -66,11 +66,11 @@ color: rgb(3, 3, 152);
     margin-top: 10px;
    
 }
-.a_3 h1{
+.a_3 ul{
     margin-top: 40px;
-    font-weight: 500;
-    margin-bottom: 40px;
-    color: rgb(3, 3, 152);
+   margin-left: 0px;
+    margin-bottom: 20px;
+ 
 }
 .a_3 p{
     color: black;
@@ -88,6 +88,10 @@ color: rgb(3, 3, 152);
 }
 .a_42 p{
     color: black;
+}
+.a_42 ul{
+    margin-left: 0px;
+    margin-bottom: 15px;
 }
 .a_5{
     display: flex;
@@ -144,13 +148,14 @@ padding: 10px;
     
     margin-top: 60px;
 }
-.a_7 h1{
-    font-weight: 500;
-    margin-bottom: 40px;
-    color: rgb(3, 3, 152);
+.a_7 ul{
+    margin-left: 0px;
+    margin-bottom: 20px;
+    ;
 }
 .a_7 p{
     color: black;
+    margin-bottom: 15px;
 }
 .a_41 img{
     width: 100%;
