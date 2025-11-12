@@ -52,9 +52,9 @@ const ReplyMessage = () => {
             {
                 title: 'Account Settings',
                 links: [
-                    { icon: 'credit-card', text: 'My Membership', to: '/myMembership', to: '/myMembership' },
-                    { icon: 'user', text: 'My Profile', to: '/myProfile', to: '/myProfile' },
-                    { icon: 'lock', text: 'Change Password', to: '/changePassword', to: '/changePassword' },
+                    { icon: 'credit-card', text: 'My Membership', to: '/myMembership' },
+                    { icon: 'user', text: 'My Profile', to: '/myProfile' },
+                    { icon: 'lock', text: 'Change Password', to: '/changePassword' },
             
                 ],
             },
@@ -149,13 +149,7 @@ const ReplyMessage = () => {
     };
 
     // Function to simulate sending a message
-    const simulateSend = () => {
-        setModalMessage('Message sent successfully!');
-        setShowModal(true);
-        // Reset form after sending
-        setMessageBody('');
-        setSelectedTemplate('');
-    };
+
 
     // Function to simulate canceling
     const simulateCancel = () => {
@@ -208,7 +202,7 @@ const ReplyMessage = () => {
     const [signature, setSignature] = useState([]);
     const [template1, setTemplate1] = useState([])
     const [recivesmails, setrecivedmails] = useState([]);
-    const [selectedTemplateId, setSelectedTemplateId] = useState(null);
+    const [selectedTemplateId] = useState(null);
     useEffect(() => {
         const fetchData = async () => {
             const token = "Bearer 36|NUtJgD15eoKNZnQXYgYo5G3cbQdZe2PdeHD16Yy1";
@@ -293,7 +287,6 @@ const ReplyMessage = () => {
                         <button onClick={() => setSidebarOpen(!isSidebarOpen)} className="text-gray-600 lg:hidden">
                             <Icon name="menu" className="w-6 h-6" />
                         </button>
-                        <h1 className="text-2xl font-semibold text-gray-800 ml-4 lg:ml-0"></h1>
                     </div>
 
                     <div className="flex items-center space-x-4">
@@ -424,7 +417,7 @@ const ReplyMessage = () => {
                                 <h2 className="text-xl font-semibold text-gray-700 mb-4">Previous Messages</h2>
                                 {sentMail.map((details, index) => (<div id="MessagesContainer" key={details.id}>
                                     <div id="MessagesContainer1">
-                                        <div className="w-8 h-8 flex-shrink-0 flex items-center justify-center bg-gray-400 text-white rounded-full text-xs font-bold"><img className='newimg1' src={details.user_from.image ? `https://tracsdev.apttechsol.com/public/${details.user_from.image}` : "https://tracsdev.apttechsol.com/public/uploads/user_avatar.jpeg"} /></div>
+                                        <div className="w-8 h-8 flex-shrink-0 flex items-center justify-center bg-gray-400 text-white rounded-full text-xs font-bold"><img className='newimg1' src={details.user_from.image ? `https://tracsdev.apttechsol.com/public/${details.user_from.image}` : "https://tracsdev.apttechsol.com/public/uploads/user_avatar.jpeg"} alt="image"/></div>
                                         <div className='ml-2'><strong>{details.user_from.name}</strong>
                                             <p>{(() => {
                                                 const diffMs = Date.now() - new Date(details.updated_at).getTime();

@@ -95,7 +95,7 @@ const ViewMessage = () => {
 
 
     // State for the message body
-    const [messageBody, setMessageBody] = useState('');
+ 
 
     // State for the modal
     const [showModal, setShowModal] = useState(false);
@@ -103,11 +103,7 @@ const ViewMessage = () => {
 
 
     // Function to handle template selection
-    const cleanHTML = (html) => {
-        if (!html) return "";
-        return html.replace(/<[^>]+>/g, ""); // removes all HTML tags
-    };
-
+ 
 
 
 

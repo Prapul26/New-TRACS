@@ -18,15 +18,7 @@ import {
     PlusCircle,
     Search,
     ChevronDown,
-    MessageSquare,
-    User,
-    Users2,
-    Archive,
-    Reply,
-    ArrowUpRight,
-    Bell,
-    CheckCircle,
-    X,
+
 } from 'lucide-react';
 
 // --- Dummy Data ---
@@ -273,8 +265,8 @@ function Sidebar({ isOpen, currentPage, onSetPage }) {
 // --- 3. SidebarLink Sub-component ---
 function SidebarLink({ Icon, label, isActive, onClick }) {
     return (
-        <a
-            href="#"
+        <h2
+           
             onClick={(e) => {
                 e.preventDefault();
                 onClick();
@@ -287,7 +279,7 @@ function SidebarLink({ Icon, label, isActive, onClick }) {
         >
             <Icon className={`w-5 h-5 ${isActive ? 'font-bold' : ''}`} />
             <span>{label}</span>
-        </a>
+        </h2>
     );
 }
 
@@ -403,7 +395,7 @@ function FilterSection() {
 
 // --- 7. MessageList Component ---
 function MessageList() {
-    const [messages, setMessages] = useState(initialMessages);
+    const [messages] = useState(initialMessages);
 
     // In a real app, you'd filter/sort `messages` based on state
     
