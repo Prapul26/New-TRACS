@@ -81,7 +81,7 @@ const ViewMessage = () => {
 
             <aside className="bg-[#1a202c] w-64 flex-shrink-0 hidden lg:block h-[100%]">
                 <div className="p-6">
-                    <a  className="text-white text-2xl font-bold">TRACS</a>
+                    <a  href="#" className="text-white text-2xl font-bold">TRACS</a>
                 </div>
                 <nav className="mt-6">
                     {sections.map(section => <SidebarSection key={section.title} {...section} />)}
@@ -113,45 +113,10 @@ const ViewMessage = () => {
         if (!html) return "";
         return html.replace(/<[^>]+>/g, ""); // removes all HTML tags
     };
-    const handleTemplateChange = (e) => {
-        const templateId = parseInt(e.target.value);
-        const template = template1.find(t => t.id === templateId);
-        if (template) {
-            const cleanHTML = (html) => {
-                if (!html) return "";
-                return html.replace(/<[^>]+>/g, ""); // removes all HTML tags
-            };
 
-            // then:
-            setMessageBody(cleanHTML(template.email_body));
-            setSelectedTemplate(templateId);
-        }
-    };
 
-    // Function to simulate sending a message
-    const simulateSend = () => {
-        setModalMessage('Message sent successfully!');
-        setShowModal(true);
-        // Reset form after sending
-        setMessageBody('');
-        setSelectedTemplate('');
-    };
 
-    // Function to simulate canceling
-    const simulateCancel = () => {
-        setMessageBody('');
-        setSelectedTemplate('');
-        setModalMessage('Message draft cleared.');
-        setShowModal(true);
-    };
 
-    // Function to simulate creating a new template
-    const simulateCreateTemplate = () => {
-        setModalMessage('Template creation feature would be implemented here.');
-        setShowModal(true);
-    };
-
-    // Function to close the modal
     const closeModal = () => {
         setShowModal(false);
     };
@@ -248,22 +213,7 @@ const ViewMessage = () => {
         files: null
     };
 
-    const handleSendReply = async () => {
-        const token = "Bearer 36|NUtJgD15eoKNZnQXYgYo5G3cbQdZe2PdeHD16Yy1";
-        try {
-            const response = await axios.post(
-                `https://tracsdev.apttechsol.com/api/sendReplyMailtomem_Api`,
-                payload,
-                { headers: { Authorization: token, "Content-Type": "application/json" } }
-            );
-            console.log("Mail Sent Successfully", response.data);
-
-        } catch (error) {
-            console.error("Error sending reply mail:", error);
-
-
-        }
-    };
+ 
     return (
         <div style={{ display: "flex" }}>
             <div><Sidebar /></div>
@@ -306,7 +256,7 @@ const ViewMessage = () => {
                                
                                 {sentMail.map((details, index) => (<div id="MessagesContainer" key={details.id}>
                                     <div id="MessagesContainer1">
-                                        <div className="w-8 h-8 flex-shrink-0 flex items-center justify-center bg-gray-400 text-white rounded-full text-xs font-bold"><img className='newimg1' src={details.user_from.image ? `https://tracsdev.apttechsol.com/public/${details.user_from.image}` : "https://tracsdev.apttechsol.com/public/uploads/user_avatar.jpeg"} /></div>
+                                        <div className="w-8 h-8 flex-shrink-0 flex items-center justify-center bg-gray-400 text-white rounded-full text-xs font-bold"><img className='newimg1' src={details.user_from.image ? `https://tracsdev.apttechsol.com/public/${details.user_from.image}` : "https://tracsdev.apttechsol.com/public/uploads/user_avatar.jpeg"} alt='default'/></div>
                                         <div className='ml-2'><strong>{details.user_from.name}</strong>
                                             <p>{(() => {
                                                 const diffMs = Date.now() - new Date(details.updated_at).getTime();
