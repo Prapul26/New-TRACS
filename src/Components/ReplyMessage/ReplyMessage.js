@@ -252,7 +252,7 @@ const ReplyMessage = () => {
     temp_id: selectedTemplateId,
         subject: data.sentMailsfirst?.subject,
    selected_emails: selectedRecipientEmails,
-        redirect_to: "https://tracsdev.apttechsol.com/user/view-inbox-list-from-intro",
+        redirect_to: "https://tracsrjs.apttechsol.com/tracsReply",
         is_bump: data.sentMailsfirst?.is_bump,
         cc_mail_id: null,
     emails: selectedRecipientEmails,
