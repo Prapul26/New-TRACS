@@ -122,9 +122,9 @@ const NewMessage = () => {
   const [userId, setUserId] = useState("")
   const fetchProfile = async () => {
     try {
-      const token = "Bearer 36|NUtJgD15eoKNZnQXYgYo5G3cbQdZe2PdeHD16Yy1";
+      const token = sessionStorage.getItem("authToken");
       const response = await axios.get("https://tracsdev.apttechsol.com/api/my-profile", {
-        headers: { Authorization: token },
+        headers: { Authorization: `Bearer ${token}` },
       });
 
       const data = response.data;
@@ -145,13 +145,13 @@ const NewMessage = () => {
   }, []);
   useEffect(() => {
     const fetchMessages = async () => {
-      const token = "Bearer 36|NUtJgD15eoKNZnQXYgYo5G3cbQdZe2PdeHD16Yy1";
+      const token = sessionStorage.getItem("authToken");
       try {
         const response = await axios.get(
           "https://tracsdev.apttechsol.com/api/view-inbox-list-from-intro-api",
           {
             headers: {
-              Authorization: token,
+              Authorization: `Bearer ${token}`,
               Accept: "application/json",
             },
             params: {

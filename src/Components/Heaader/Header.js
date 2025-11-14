@@ -240,7 +240,7 @@ const Header = () => {
             <div className="button-H" style={{ display: "flex" }}>
               <div className="login">
                 <Link
-                  to="/login"
+                  to="/tracsSignIn?view=signIn"
                   style={{ textDecoration: "none", color: "inherit" }}
                 >
                   <button >Login</button>
@@ -248,7 +248,7 @@ const Header = () => {
               </div>
               <div className="register">
                 <Link
-                  to="/register"
+                  to="/tracsSignIn?view=register"
                   style={{ textDecoration: "none", color: "inherit" }}
                 >
                   <button >Register</button>
@@ -366,7 +366,7 @@ const Header = () => {
               </Link>
             </div> */}
               <div style={{ marginLeft: "10px" }}>
-                <Link to="/login">
+                <Link to="/tracsSignIn?view=signIn">
                   <button style={{ background: " #eeba2b", color: "black", padding: "5px 10px 5px 10px" ,borderRadius:"5px"}}>Login</button>
                 </Link>
               </div>

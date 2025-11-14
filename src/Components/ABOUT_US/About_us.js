@@ -11,7 +11,7 @@ const About_us = () => {
     const navigate=useNavigate()
     const handelJoin=()=>{
         const token=sessionStorage.getItem("authToken");
-        navigate(token?"/myMembership":"/register")
+        navigate(token?"/myMembership":"/tracsSignIn?view=register")
     }
     return (
         <div>

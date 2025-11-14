@@ -107,7 +107,7 @@ const Home = () => {
           </p>
           {!isLoggedIn && (
             <div>
-              <Link to="/register" style={{ textDecoration: "none", color: "inherit" }}>
+              <Link to="/tracsSignIn?view=register" style={{ textDecoration: "none", color: "inherit" }}>
                 <button style={{background:"#eeba2b"}}>Register</button>
               </Link>
             </div>
@@ -191,7 +191,7 @@ const Home = () => {
       <div><strong>Join TRACS and start making powerful introductions today.</strong></div>
       {!isLoggedIn && (
             <div>
-              <Link to="/register" style={{ textDecoration: "none", color: "inherit" }}>
+              <Link to="/tracsSignIn?view=register" style={{ textDecoration: "none", color: "inherit" }}>
                 <button style={{padding:"5px 14px 5px 14px",borderRadius:"6px"}}>Register</button>
               </Link>
             </div>

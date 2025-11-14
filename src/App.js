@@ -24,6 +24,8 @@ import Faq from './Components/Faq/Faq';
 import  Network  from './Components/Network/Network';
 import Login from './Components/Login/Login';
 import Register from './Components/Register/Register'
+import TracsReply from './Components/TracsReply';
+import TracsSignIn from './Components/TracsSignIn';
 
 
 const App = () => {
@@ -54,7 +56,9 @@ const App = () => {
             <Route path='/faq' element={<Faq />}/>
             <Route path='/network' element={<Network />}/>
             <Route path='/login' element={<Login />}/>
+            <Route path='/tracsReply' element={<TracsReply />}/>
             <Route path='/register' element={<Register />}/>
+            <Route path='/tracsSignIn' element={<TracsSignIn />}/>
       </Routes>
      </Router>
     </div>
