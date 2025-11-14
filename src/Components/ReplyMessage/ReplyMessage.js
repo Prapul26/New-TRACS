@@ -252,7 +252,7 @@ const ReplyMessage = () => {
     temp_id: selectedTemplateId,
         subject: data.sentMailsfirst?.subject,
    selected_emails: selectedRecipientEmails,
-        redirect_to: "https://tracsrjs.apttechsol.com/tracsReply",
+        redirect_to: "https://new-tracs.vercel.app/tracsReply",
         is_bump: data.sentMailsfirst?.is_bump,
         cc_mail_id: null,
     emails: selectedRecipientEmails,
