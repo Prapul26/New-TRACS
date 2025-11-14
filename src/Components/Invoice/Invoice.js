@@ -94,12 +94,12 @@ const Invoice = () => {
     const [order, setOrder] = useState(null);
 
     useEffect(() => {
-        const token = "Bearer 36|NUtJgD15eoKNZnQXYgYo5G3cbQdZe2PdeHD16Yy1";
+        const token = sessionStorage.getItem("authToken");
         const fetchOrder = async () => {
             try {
                 const res = await axios.get(
                     `https://tracsdev.apttechsol.com/api/order-details/${id}`,
-                    { headers: { Authorization: token } }
+                    { headers: { Authorization: `Bearer ${token}` } }
                 );
                 setOrder(res.data?.order);
             } catch (error) {
@@ -117,9 +117,9 @@ const Invoice = () => {
 
     const fetchProfile = async () => {
         try {
-            const token = "Bearer 36|NUtJgD15eoKNZnQXYgYo5G3cbQdZe2PdeHD16Yy1";
+            const token = sessionStorage.getItem("authToken");
             const response = await axios.get("https://tracsdev.apttechsol.com/api/my-profile", {
-                headers: { Authorization: token },
+                headers: { Authorization: `Bearer ${token}` },
             });
 
             const data = response.data;

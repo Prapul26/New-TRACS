@@ -134,14 +134,14 @@ export default function MyMembership() {
   
     const [data, setData] = useState([]);
     const [msg, setMsg] = useState("");
-    const token = "Bearer 36|NUtJgD15eoKNZnQXYgYo5G3cbQdZe2PdeHD16Yy1";
+    const token = sessionStorage.getItem("authToken");
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const response = await axios.get(
                     `https://tracsdev.apttechsol.com/api/dashboard`,
                     {
-                        headers: { Authorization: token },
+                        headers: { Authorization: `Bearer ${token}` },
                     }
                 );
 
@@ -180,9 +180,9 @@ formatDate("2025-02-27"); // "Feb 27, 2025"
   
   const fetchProfile = async () => {
     try {
-      const token = "Bearer 36|NUtJgD15eoKNZnQXYgYo5G3cbQdZe2PdeHD16Yy1";
+      const token = sessionStorage.getItem("authToken");
       const response = await axios.get("https://tracsdev.apttechsol.com/api/my-profile", {
-        headers: { Authorization: token },
+        headers: { Authorization: `Bearer ${token}` },
       });
 
       const data = response.data;

@@ -178,14 +178,14 @@ export default function MyProfile() {
 
   const fetchProfile = async () => {
     try {
-      const token = "Bearer 36|NUtJgD15eoKNZnQXYgYo5G3cbQdZe2PdeHD16Yy1";
+      const token = sessionStorage.getItem("authToken");
       const response = await axios.get("https://tracsdev.apttechsol.com/api/my-profile", {
-        headers: { Authorization: token },
+        headers: { Authorization: `Bearer ${token}` },
       });
 
       const data = response.data;
         if (data.user?.id) {
-            localStorage.setItem("userId", data.user.id);
+            sessionStorage.setItem("userId", data.user.id);
           }
 
       if (data.user?.id) sessionStorage.setItem("userId", data.user.id);
@@ -333,7 +333,7 @@ const handleUpdateProfile = async (e) => {
   setIsUpdating(true);
 
   try {
-    const token = "Bearer 36|NUtJgD15eoKNZnQXYgYo5G3cbQdZe2PdeHD16Yy1";
+    const token = sessionStorage.getItem("authToken");
 
     const formData = new FormData();
     formData.append("first_name", firstName);
@@ -364,7 +364,7 @@ const handleUpdateProfile = async (e) => {
       formData,
       {
         headers: {
-          Authorization: token,
+          Authorization: `Bearer ${token}`,
        
         },
       }

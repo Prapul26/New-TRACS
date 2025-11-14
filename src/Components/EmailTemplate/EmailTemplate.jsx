@@ -17,11 +17,11 @@ export default function EmailTemplate() {
       if (isCalled) return;
       isCalled = true;
 
-      const token = "Bearer 36|NUtJgD15eoKNZnQXYgYo5G3cbQdZe2PdeHD16Yy1";
+      const token = sessionStorage.getItem("authToken");
       try {
         const response = await axios.get(`https://tracsdev.apttechsol.com/api/view-template-list`, {
           headers: {
-            Authorization: token,
+            Authorization: `Bearer ${token}`,
           },
         });
 
@@ -49,9 +49,9 @@ export default function EmailTemplate() {
 
   const fetchProfile = async () => {
     try {
-      const token = "Bearer 36|NUtJgD15eoKNZnQXYgYo5G3cbQdZe2PdeHD16Yy1";
+      const token = sessionStorage.getItem("authToken");
       const response = await axios.get("https://tracsdev.apttechsol.com/api/my-profile", {
-        headers: { Authorization: token },
+        headers: { Authorization: `Bearer ${token}` },
       });
 
       const data = response.data;
@@ -86,7 +86,7 @@ export default function EmailTemplate() {
   };
 
   const handleDelete = async (id) => {
-    const token = "Bearer 36|NUtJgD15eoKNZnQXYgYo5G3cbQdZe2PdeHD16Yy1";
+    const token = sessionStorage.getItem("authToken");
 
     try {
       await axios.get(
@@ -94,7 +94,7 @@ export default function EmailTemplate() {
 
         {
           headers: {
-            Authorization: token,
+            Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -343,13 +343,13 @@ const AddTemplateFormView = ({ onBack, onCancel, onSubmit }) => {
 
   useEffect(() => {
     const fetchAdminTemplates = async () => {
-      const token = "Bearer 36|NUtJgD15eoKNZnQXYgYo5G3cbQdZe2PdeHD16Yy1";
+      const token = sessionStorage.getItem("authToken");
       try {
         const response = await axios.get(
           "https://tracsdev.apttechsol.com/api/create-template",
           {
             headers: {
-              Authorization: token,
+              Authorization: `Bearer ${token}`,
             },
           }
         );
@@ -377,7 +377,7 @@ const AddTemplateFormView = ({ onBack, onCancel, onSubmit }) => {
     formData.append("admin_template_id", adminTemplate);
     formData.append("description", description);
 
-    const token = "Bearer 36|NUtJgD15eoKNZnQXYgYo5G3cbQdZe2PdeHD16Yy1";
+    const token = sessionStorage.getItem("authToken");
 
     try {
       const response = await axios.post(
@@ -385,7 +385,7 @@ const AddTemplateFormView = ({ onBack, onCancel, onSubmit }) => {
         formData,
         {
           headers: {
-            Authorization: token,
+            Authorization: `Bearer ${token}`,
           },
         }
       );

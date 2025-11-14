@@ -117,9 +117,9 @@ const ViewMessage = () => {
 
     const fetchProfile = async () => {
         try {
-            const token = "Bearer 36|NUtJgD15eoKNZnQXYgYo5G3cbQdZe2PdeHD16Yy1";
+            const token = sessionStorage.getItem("authToken");
             const response = await axios.get("https://tracsdev.apttechsol.com/api/my-profile", {
-                headers: { Authorization: token },
+                headers: { Authorization: `Bearer ${token}` },
             });
 
             const data = response.data;
@@ -142,11 +142,11 @@ const ViewMessage = () => {
  
     useEffect(() => {
         const fetchData = async () => {
-            const token = "Bearer 36|NUtJgD15eoKNZnQXYgYo5G3cbQdZe2PdeHD16Yy1";
+            const token = sessionStorage.getItem("authToken");
             try {
                 const response = await axios.get(
                     `https://tracsdev.apttechsol.com/api/view_user_inboxhistory_intro/${subject}/${user_id}/${replies_code}`,
-                    { headers: { Authorization: token } }
+                    { headers: { Authorization: `Bearer ${token}` } }
                 );
               
                 setSentMails(response.data.sentMails?.data || [])

@@ -240,9 +240,9 @@ const MakeIntroduction = () => {
 
   const fetchProfile = async () => {
     try {
-      const token = "Bearer 36|NUtJgD15eoKNZnQXYgYo5G3cbQdZe2PdeHD16Yy1";
+      const token = sessionStorage.getItem("authToken");
       const response = await axios.get("https://tracsdev.apttechsol.com/api/my-profile", {
-        headers: { Authorization: token },
+        headers: { Authorization: `Bearer ${token}` },
       });
 
       const data = response.data;
@@ -264,12 +264,12 @@ const MakeIntroduction = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const token = "Bearer 36|NUtJgD15eoKNZnQXYgYo5G3cbQdZe2PdeHD16Yy1";
+        const token = sessionStorage.getItem("authToken");
         const response = await axios.get(
           `https://tracsdev.apttechsol.com/api/sendmailintro/introduction_email`,
           {
             headers: {
-              Authorization: token,
+              Authorization: `Bearer ${token}`,
             },
           }
         );
@@ -313,7 +313,7 @@ const MakeIntroduction = () => {
   }
 
   try {
-    const token = "Bearer 36|NUtJgD15eoKNZnQXYgYo5G3cbQdZe2PdeHD16Yy1";
+    const token = sessionStorage.getItem("authToken");
 
     // 🔹 Create FormData
     const formData = new FormData();
@@ -341,7 +341,7 @@ const MakeIntroduction = () => {
       formData,
       {
         headers: {
-          Authorization: token,
+          Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",
         },
       }

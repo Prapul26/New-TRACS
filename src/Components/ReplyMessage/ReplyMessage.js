@@ -176,9 +176,9 @@ const ReplyMessage = () => {
 
     const fetchProfile = async () => {
         try {
-            const token = "Bearer 36|NUtJgD15eoKNZnQXYgYo5G3cbQdZe2PdeHD16Yy1";
+            const token = sessionStorage.getItem("authToken");
             const response = await axios.get("https://tracsdev.apttechsol.com/api/my-profile", {
-                headers: { Authorization: token },
+                headers: { Authorization: `Bearer ${token}` },
             });
 
             const data = response.data;
@@ -204,11 +204,11 @@ const ReplyMessage = () => {
     const [selectedTemplateId] = useState(null);
     useEffect(() => {
         const fetchData = async () => {
-            const token = "Bearer 36|NUtJgD15eoKNZnQXYgYo5G3cbQdZe2PdeHD16Yy1";
+            const token =sessionStorage.getItem("authToken");
             try {
                 const response = await axios.get(
                     `https://tracsdev.apttechsol.com/api/view_user_inboxhistory_intro/${subject}/${user_id}/${replies_code}`,
-                    { headers: { Authorization: token } }
+                    { headers: { Authorization: `Bearer ${token}` } }
                 );
                 setData(response.data);
                 setSentMails(response.data.sentMails?.data || [])
@@ -262,12 +262,12 @@ const ReplyMessage = () => {
     };
 
     const handleSendReply = async () => {
-        const token = "Bearer 36|NUtJgD15eoKNZnQXYgYo5G3cbQdZe2PdeHD16Yy1";
+        const token = sessionStorage.getItem("authToken");
         try {
             const response = await axios.post(
                 `https://tracsdev.apttechsol.com/api/sendReplyMailtomem_Api`,
                 payload,
-                { headers: { Authorization: token, "Content-Type": "application/json" } }
+                { headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" } }
             );
             console.log("Mail Sent Successfully", response.data);
 

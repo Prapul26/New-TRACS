@@ -133,7 +133,9 @@ const NewMessage = () => {
 
       setImagePreview(`https://tracsdev.apttechsol.com/public/${data.user.image}`);
 
-      setUserId(data.user.id)
+      setUserId(data.user.id);
+          sessionStorage.setItem("userId", data.user.id);
+
     } catch (error) {
       console.error("Error fetching profile data:", error);
     }

@@ -29,14 +29,14 @@ export default function EmailSignaature() {
     const [loading, setLoading] = useState(false);
 
     const handleSave = async () => {
-        const token = "Bearer 36|NUtJgD15eoKNZnQXYgYo5G3cbQdZe2PdeHD16Yy1";
-        const userID = localStorage.getItem("userId")
+        const token = sessionStorage.getItem("authToken");
+        const userID = sessionStorage.getItem("userId")
         setLoading(true);
         try {
             await axios.post("https://tracsdev.apttechsol.com/api/signature_store_form", {
                 name: signature, user_id: userID,
             }, {
-                headers: { Authorization: token },
+                headers: { Authorization: `Bearer ${token}` },
             });
             setShowToast(true);
         } catch (err) {
@@ -49,12 +49,12 @@ export default function EmailSignaature() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const token = "Bearer 36|NUtJgD15eoKNZnQXYgYo5G3cbQdZe2PdeHD16Yy1";
+                const token = sessionStorage.getItem("authToken");
                 const response = await axios.get(
                     `https://tracsdev.apttechsol.com/api/sendmailintro/introduction_email`,
                     {
                         headers: {
-                            Authorization: token,
+                            Authorization: `Bearer ${token}`,
                         },
                     }
                 );
@@ -83,9 +83,9 @@ export default function EmailSignaature() {
 
     const fetchProfile = async () => {
         try {
-            const token = "Bearer 36|NUtJgD15eoKNZnQXYgYo5G3cbQdZe2PdeHD16Yy1";
+            const token = sessionStorage.getItem("authToken");
             const response = await axios.get("https://tracsdev.apttechsol.com/api/my-profile", {
-                headers: { Authorization: token },
+                headers: { Authorization: `Bearer ${token}` },
             });
 
             const data = response.data;

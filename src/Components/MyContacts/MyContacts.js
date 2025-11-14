@@ -153,7 +153,7 @@ const AddContactForm = ({ onSave, onCancel }) => {
     setMessage("");
 
     try {
-      const token = "Bearer 36|NUtJgD15eoKNZnQXYgYo5G3cbQdZe2PdeHD16Yy1";
+      const token = sessionStorage.getItem("authToken");
 
       const response = await axios.post(
         `https://tracsdev.apttechsol.com/api/contact_store_form`,
@@ -165,7 +165,7 @@ const AddContactForm = ({ onSave, onCancel }) => {
         },
         {
           headers: {
-            Authorization: token,
+            Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -295,7 +295,7 @@ const EditContact = ({ contactToEdit, onSave2, onCancel2 }) => {
     setMessage("");
 
     try {
-      const token = "Bearer 36|NUtJgD15eoKNZnQXYgYo5G3cbQdZe2PdeHD16Yy1";
+      const token = sessionStorage.getItem("authToken");
       await axios.post(
         `https://tracsdev.apttechsol.com/api/contact_edit_form/${contactToEdit.id}`,
         {
@@ -304,7 +304,7 @@ const EditContact = ({ contactToEdit, onSave2, onCancel2 }) => {
           email,
           group_name: groupName,
         },
-        { headers: { Authorization: token } }
+        { headers: { Authorization: `Bearer ${token}` } }
       );
 
       setMessage("Contact updated successfully!");
@@ -413,13 +413,13 @@ const MyContacts = () => {
   const [error, setError] = useState("");
 
   const fetchContacts = async () => {
-    const token = "Bearer 36|NUtJgD15eoKNZnQXYgYo5G3cbQdZe2PdeHD16Yy1";
+    const token = sessionStorage.getItem("authToken");
     try {
       const response = await axios.get(
         `https://tracsdev.apttechsol.com/api/view-introduction-email-list`,
         {
           headers: {
-            Authorization: token,
+            Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -442,9 +442,9 @@ const MyContacts = () => {
 
   const fetchProfile = async () => {
     try {
-      const token = "Bearer 36|NUtJgD15eoKNZnQXYgYo5G3cbQdZe2PdeHD16Yy1";
+      const token = sessionStorage.getItem("authToken");
       const response = await axios.get("https://tracsdev.apttechsol.com/api/my-profile", {
-        headers: { Authorization: token },
+        headers: { Authorization: `Bearer ${token}` },
       });
 
       const data = response.data;
@@ -462,7 +462,7 @@ const MyContacts = () => {
     fetchProfile();
   }, []);
   const handleDelete = async (id) => {
-    const token = "Bearer 36|NUtJgD15eoKNZnQXYgYo5G3cbQdZe2PdeHD16Yy1";
+    const token = sessionStorage.getItem("authToken");
 
     try {
       await axios.get(
@@ -470,7 +470,7 @@ const MyContacts = () => {
 
         {
           headers: {
-            Authorization: token,
+            Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -513,7 +513,7 @@ const MyContacts = () => {
     return;
   }
 
-  const token = "Bearer 36|NUtJgD15eoKNZnQXYgYo5G3cbQdZe2PdeHD16Yy1";
+  const token = sessionStorage.getItem("authToken");
 
   const reader = new FileReader();
 
@@ -569,7 +569,7 @@ const MyContacts = () => {
             email,
             group_name: groupName,
           },
-          { headers: { Authorization: token } }
+          { headers: { Authorization: `Bearer ${token}` } }
         );
 
         imported++;
