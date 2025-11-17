@@ -326,6 +326,7 @@ const navigate=useNavigate();
             </div>
           </div>
         </header>
+       
 
         <div className='containerFilter'>
           <div className="mb-8">
@@ -349,6 +350,7 @@ const navigate=useNavigate();
 
                   </div>
                 </div>
+                
 
                 {/* Filter for Status (Dropdown) */}
                 <div className="w-full sm:w-auto">
@@ -392,8 +394,11 @@ const navigate=useNavigate();
                   </div>
                 </div>
               </div>
+              
             </div>
+            
           </div>
+           <div className='makeIntoButton'> <Link to="/makeIntroduction"><button>Make a Introduction</button></Link></div>
         </div>
 
 

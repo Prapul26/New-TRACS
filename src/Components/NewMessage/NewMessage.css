@@ -32,6 +32,12 @@
     font-weight: 500 !important;
     font-size: 15px !important;
 }
+.makeIntoButton button{
+    padding: 14px 24px 14px 24px;
+    border-radius: 10px;
+    background-color: rgb(252, 219, 49);
+    color: black;
+}
 @media(max-width: 1024px){
 .senderpicHolder{
     flex-direction: column;
