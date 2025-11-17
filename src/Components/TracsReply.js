@@ -184,11 +184,7 @@ export default function TracsReply() {
         const fetchData = async () => {
             const token = sessionStorage.getItem("authToken");
             
-if (!token) {
-  alert("Your session expired. Please log in again.");
-  window.location.href = "/login";
-  return;
-}
+
 
             try {
                 const response = await axios.get(
@@ -206,7 +202,7 @@ if (!token) {
                 setSignature(response.data?.signature?.name);
                 setTemplate1(response.data?.templates || []);
                 setUserDetails(response.data?.data?.usersData || []);
-
+console.log("userId :", user_id, "subject :",subject ,"messageCode:" ,replies_code) 
                 if (response.data?.data?.sentMailsfirst?.body) {
                     let clean = cleanHTML(response.data.data.sentMailsfirst.body);
                     setMessageBody(clean);

@@ -49,7 +49,7 @@ const SidebarSection = ({ title, links }) => (
     </div>
 );
 
-const Sidebar = () => {
+const Sidebar = ({ isSidebarOpen, setSidebarOpen }) => {
     const sections = [
         {
             title: 'Account Settings',
@@ -80,15 +80,36 @@ const Sidebar = () => {
         },
     ];
 
-    return (
-        <aside className="bg-[#1a202c] w-64 flex-shrink-0 hidden lg:block h-[100%]">
-            <div className="p-6">
-<Link to="/" className="text-white text-2xl font-bold">TRACS</Link>            </div>
-            <nav className="mt-6">
-                {sections.map(section => <SidebarSection key={section.title} {...section} />)}
-            </nav>
-        </aside>
-    );
+   return (
+           <>  {/* Overlay for mobile */}
+               <div
+                   className={`fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden transition-opacity
+           ${isSidebarOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`}
+                   onClick={() => setSidebarOpen(false)}
+               ></div>
+   
+               {/* Sidebar Drawer */}
+               <aside className={`
+           fixed top-0 left-0 h-full bg-[#1a202c] w-64 z-50 transform transition-transform duration-300 
+           ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"} 
+           lg:relative lg:translate-x-0 lg:block
+         `}>
+                   <div className="p-6">
+                       <Link to="/" className="text-white text-2xl font-bold">TRACS</Link>
+                       {/* Close button in mobile view */}
+                       <button className="lg:hidden text-white ml-20 "
+                           onClick={() => setSidebarOpen(false)}>
+                           <Icon name="x" />
+                       </button>
+                   </div>
+   
+   
+                   <nav className="mt-6">
+                       {sections.map(section => <SidebarSection key={section.title} {...section} />)}
+                   </nav>
+               </aside>
+           </>
+       );
 };
 
 
@@ -400,7 +421,7 @@ const navigate=useNavigate();
     <>
       <GlobalStyles />
       <div className="flex  bg-gray-100">
-          <Sidebar />
+         <Sidebar isSidebarOpen={isSidebarOpen} setSidebarOpen={setSidebarOpen} />
 
           {/* Main content */}
             <div className="flex flex-col flex-1 h-screen overflow-y-auto">

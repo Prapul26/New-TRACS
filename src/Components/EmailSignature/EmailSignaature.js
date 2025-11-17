@@ -158,7 +158,7 @@ export default function EmailSignaature() {
         </div>
     );
 
-    const Sidebar = () => {
+    const Sidebar = ({ isSidebarOpen, setSidebarOpen }) => {
         const sections = [
             {
                 title: 'Account Settings',
@@ -189,15 +189,37 @@ export default function EmailSignaature() {
             },
         ];
 
-        return (
-            <aside className="bg-[#1a202c] w-64 flex-shrink-0 hidden lg:block h-[100%]">
-                <div className="p-6">
-<Link to="/" className="text-white text-2xl font-bold">TRACS</Link>                </div>
-                <nav className="mt-6">
-                    {sections.map(section => <SidebarSection key={section.title} {...section} />)}
-                </nav>
-            </aside>
-        );
+       
+           return (
+                  <>  {/* Overlay for mobile */}
+                      <div
+                          className={`fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden transition-opacity
+                  ${isSidebarOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`}
+                          onClick={() => setSidebarOpen(false)}
+                      ></div>
+          
+                      {/* Sidebar Drawer */}
+                      <aside className={`
+                  fixed top-0 left-0 h-full bg-[#1a202c] w-64 z-50 transform transition-transform duration-300 
+                  ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"} 
+                  lg:relative lg:translate-x-0 lg:block
+                `}>
+                          <div className="p-6">
+                              <Link to="/" className="text-white text-2xl font-bold">TRACS</Link>
+                              {/* Close button in mobile view */}
+                              <button className="lg:hidden text-white ml-20 "
+                                  onClick={() => setSidebarOpen(false)}>
+                                  <Icon name="x" />
+                              </button>
+                          </div>
+          
+          
+                          <nav className="mt-6">
+                              {sections.map(section => <SidebarSection key={section.title} {...section} />)}
+                          </nav>
+                      </aside>
+                  </>
+              );
     };
 const[Heasderdropdown,setHeaderdropdown]=useState(null);
 const showDropDown=()=>{
@@ -215,7 +237,7 @@ const navigate=useNavigate();
   };
 
     return (
-        <div style={{ display: "flex" }}><div><Sidebar /></div>
+        <div style={{ display: "flex" }}><div><Sidebar isSidebarOpen={isSidebarOpen} setSidebarOpen={setSidebarOpen} /></div>
 <div style={{width:'100%'}}>
  <header className="bg-white shadow-sm flex items-center justify-between p-4 border-b">
           <div className="flex items-center">

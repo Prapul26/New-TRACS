@@ -1,5 +1,8 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import Header from './Heaader/Header';
+import Footer from './Footer/Footer';
+import Navbar from './Navbar/Navbar';
 
 
 // --- Icon Components (using Font Awesome classes) ---
@@ -199,6 +202,9 @@ useEffect(() => {
 
 
     return (
+      <div>
+        <Header />
+        <Navbar />
         <div style={{display:"flex"}}><div ></div>
         <div style={{width:"100%"}}>
             <div>  </div>
@@ -211,5 +217,6 @@ useEffect(() => {
                 {renderLayout()}
             </div>
         </div></div></div>
+        <Footer /></div>
     );
 }
