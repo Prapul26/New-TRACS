@@ -183,6 +183,12 @@ export default function TracsReply() {
     useEffect(() => {
         const fetchData = async () => {
             const token = sessionStorage.getItem("authToken");
+            
+if (!token) {
+  alert("Your session expired. Please log in again.");
+  window.location.href = "/login";
+  return;
+}
 
             try {
                 const response = await axios.get(
