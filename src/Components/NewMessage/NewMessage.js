@@ -6,12 +6,13 @@ import { IoIosArrowDown } from 'react-icons/io';
 import { TiArrowBack } from "react-icons/ti";
 import { GrFormView } from "react-icons/gr";
 import { FaArchive } from "react-icons/fa";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   Search,
   ChevronDown,
 } from 'lucide-react';
 import { RiArrowDropDownLine } from 'react-icons/ri';
+import { IoLogOut, IoPerson } from 'react-icons/io5';
 const Icon = ({ name, className = "w-6 h-6" }) => {
   const icons = {
     'credit-card': <><path d="M2 9a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9Z" /><path d="M2 14h20" /></>,
@@ -248,7 +249,20 @@ if (mails.length > 0) {
       return dateA - dateB; // oldest first
     }
   });;
+const[Heasderdropdown,setHeaderdropdown]=useState(null);
+const showDropDown=()=>{
+  setHeaderdropdown(prev=>!prev)
+}
+const navigate=useNavigate();
+  const handleLogout = () => {
+    sessionStorage.removeItem("authToken");
+        sessionStorage.removeItem("userId")
 
+    sessionStorage.removeItem("profileImageUrl")
+
+    navigate("/"); // Redirect to login page
+    window.location.reload();
+  };
 
   return (
     <div style={{ display: 'flex' }}><div ><Sidebar /></div>
@@ -266,11 +280,28 @@ if (mails.length > 0) {
               View Profile
             </Link>
             <div className="relative">
-              <button className="flex items-center space-x-2">
+              <button className="flex items-center space-x-2"onClick={showDropDown}>
                 <img src={imagePreview} alt="User Avatar" className="h-10 w-10 rounded-full" />
                 <span className="hidden md:block">{name}</span>
                 <Icon name="chevron-down" className="w-4 h-4" />
               </button>
+              {Heasderdropdown &&  <div className="dropDown3" >
+                                  <Link
+                                    to="/dashboard"
+                                    style={{ textDecoration: "none", color: "inherit" }}
+                                  >
+                                    <div className="profileDrop">
+                                      <div style={{ marginTop: "2px", marginRight: "6px" }}><IoPerson /></div>
+                                      <div> <p>Dashboard</p></div>
+              
+                                    </div>
+                                  </Link>
+                                  <div className="dropLogout" onClick={handleLogout}>
+                                    <div style={{ marginTop: "2px", marginRight: "6px" }}><IoLogOut /></div>
+                                    <div>    <p>Logout</p></div>
+              
+                                  </div>
+                                </div>}
             </div>
           </div>
         </header>

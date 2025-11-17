@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
+import { IoLogOut, IoPerson } from 'react-icons/io5';
 const ViewMessage = () => {
     const Icon = ({ name, className = "w-6 h-6" }) => {
         const icons = {
@@ -170,34 +171,64 @@ const ViewMessage = () => {
 
 
 
-  
+  const[Heasderdropdown,setHeaderdropdown]=useState(null);
+const showDropDown=()=>{
+  setHeaderdropdown(prev=>!prev)
+}
+const navigate=useNavigate();
+  const handleLogout = () => {
+    sessionStorage.removeItem("authToken");
+        sessionStorage.removeItem("userId")
+
+    sessionStorage.removeItem("profileImageUrl")
+
+    navigate("/"); // Redirect to login page
+    window.location.reload();
+  };
 
  
     return (
         <div style={{ display: "flex" }}>
             <div><Sidebar /></div>
             <div style={{ width: "100%" }}>
-                <header className="bg-white shadow-sm flex items-center justify-between p-4 border-b">
-                    <div className="flex items-center">
-                        <button onClick={() => setSidebarOpen(!isSidebarOpen)} className="text-gray-600 lg:hidden">
-                            <Icon name="menu" className="w-6 h-6" />
-                        </button>
-                     
-                    </div>
-
-                    <div className="flex items-center space-x-4">
-                        <Link to="/test" className="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-full font-semibold text-sm">
-                            View Profile
-                        </Link>
-                        <div className="relative">
-                            <button className="flex items-center space-x-2">
+                  <header className="bg-white shadow-sm flex items-center justify-between p-4 border-b">
+                          <div className="flex items-center">
+                            <button onClick={() => setSidebarOpen(!isSidebarOpen)} className="text-gray-600 lg:hidden">
+                              <Icon name="menu" className="w-6 h-6" />
+                            </button>
+                            <h1 className="text-2xl font-semibold text-gray-800 ml-4 lg:ml-0"></h1>
+                          </div>
+                
+                          <div className="flex items-center space-x-4">
+                            <Link to="/test"className="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-full font-semibold text-sm">
+                              View Profile
+                            </Link>
+                            <div className="relative">
+                              <button className="flex items-center space-x-2"onClick={showDropDown}>
                                 <img src={imagePreview} alt="User Avatar" className="h-10 w-10 rounded-full" />
                                 <span className="hidden md:block">{name}</span>
                                 <Icon name="chevron-down" className="w-4 h-4" />
-                            </button>
-                        </div>
-                    </div>
-                </header>
+                              </button>
+                              {Heasderdropdown &&  <div className="dropDown3" >
+                                                  <Link
+                                                    to="/dashboard"
+                                                    style={{ textDecoration: "none", color: "inherit" }}
+                                                  >
+                                                    <div className="profileDrop">
+                                                      <div style={{ marginTop: "2px", marginRight: "6px" }}><IoPerson /></div>
+                                                      <div> <p>Dashboard</p></div>
+                              
+                                                    </div>
+                                                  </Link>
+                                                  <div className="dropLogout" onClick={handleLogout}>
+                                                    <div style={{ marginTop: "2px", marginRight: "6px" }}><IoLogOut /></div>
+                                                    <div>    <p>Logout</p></div>
+                              
+                                                  </div>
+                                                </div>}
+                            </div>
+                          </div>
+                        </header>
                 <div className="p-4 md:p-8" style={{ width: "100%" }}>
                     <div className="max-w-1xl mx-auto">
                         <h1 className="text-3xl font-bold text-gray-800 mb-6 border-b pb-2">Previous Messages</h1>

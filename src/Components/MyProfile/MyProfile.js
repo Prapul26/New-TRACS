@@ -1,7 +1,8 @@
 import axios from 'axios';
 import React, { memo, useEffect, useState } from 'react';
+import { IoLogOut, IoPerson } from 'react-icons/io5';
 import { MdEmail } from 'react-icons/md';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 // Icon components to replace lucide icons
 const Icon = ({ name, className = "w-6 h-6" }) => {
@@ -380,6 +381,20 @@ console.log("FormData entries:", [...formData.entries()]);
     setIsUpdating(false);
   }
 };
+const[Heasderdropdown,setHeaderdropdown]=useState(null);
+const showDropDown=()=>{
+  setHeaderdropdown(prev=>!prev)
+}
+const navigate=useNavigate();
+  const handleLogout = () => {
+    sessionStorage.removeItem("authToken");
+        sessionStorage.removeItem("userId")
+
+    sessionStorage.removeItem("profileImageUrl")
+
+    navigate("/"); // Redirect to login page
+    window.location.reload();
+  };
 
   return (
     <>
@@ -389,27 +404,44 @@ console.log("FormData entries:", [...formData.entries()]);
 
           {/* Main content */}
             <div className="flex flex-col flex-1 h-screen overflow-y-auto">
-              <header className="bg-white shadow-sm flex items-center justify-between p-4 border-b">
-                  <div className="flex items-center">
+            <header className="bg-white shadow-sm flex items-center justify-between p-4 border-b">
+                    <div className="flex items-center">
                       <button onClick={() => setSidebarOpen(!isSidebarOpen)} className="text-gray-600 lg:hidden">
-                          <Icon name="menu" className="w-6 h-6" />
+                        <Icon name="menu" className="w-6 h-6" />
                       </button>
-                      <h1 className="text-2xl font-semibold text-gray-800 ml-4 lg:ml-0">Edit Profile</h1>
-                  </div>
-
-                  <div className="flex items-center space-x-4">
-                      <Link to="/test" className="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-full font-semibold text-sm">
-                          View Profile
+                      <h1 className="text-2xl font-semibold text-gray-800 ml-4 lg:ml-0"></h1>
+                    </div>
+          
+                    <div className="flex items-center space-x-4">
+                      <Link to="/test"className="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-full font-semibold text-sm">
+                        View Profile
                       </Link>
                       <div className="relative">
-                          <button className="flex items-center space-x-2">
-                              <img src={imagePreview} alt="User Avatar" className="h-10 w-10 rounded-full" />
-                              <span className="hidden md:block">{name}</span>
-                              <Icon name="chevron-down" className="w-4 h-4" />
-                          </button>
+                        <button className="flex items-center space-x-2"onClick={showDropDown}>
+                          <img src={imagePreview} alt="User Avatar" className="h-10 w-10 rounded-full" />
+                          <span className="hidden md:block">{name}</span>
+                          <Icon name="chevron-down" className="w-4 h-4" />
+                        </button>
+                        {Heasderdropdown &&  <div className="dropDown3" >
+                                            <Link
+                                              to="/dashboard"
+                                              style={{ textDecoration: "none", color: "inherit" }}
+                                            >
+                                              <div className="profileDrop">
+                                                <div style={{ marginTop: "2px", marginRight: "6px" }}><IoPerson /></div>
+                                                <div> <p>Dashboard</p></div>
+                        
+                                              </div>
+                                            </Link>
+                                            <div className="dropLogout" onClick={handleLogout}>
+                                              <div style={{ marginTop: "2px", marginRight: "6px" }}><IoLogOut /></div>
+                                              <div>    <p>Logout</p></div>
+                        
+                                            </div>
+                                          </div>}
                       </div>
-                  </div>
-              </header>
+                    </div>
+                  </header>
 
               <main className="p-4 md:p-8">
                   <div className="bg-white rounded-lg shadow p-6 md:p-8">

@@ -16,9 +16,29 @@
     display: flex;
     justify-content: space-between;
 }
+.dropDown3{
+    height: fit-content;
+    width: 160px;
+    margin-left: 0px;
+    position: absolute;
+    margin-top: 12px;
+  border-radius: 5px;
+    background-color: #ffffff;
+ border:1px solid rgb(163, 163, 163);
+    cursor: pointer;
+ 
+}
+.dropDown3 p{
+    font-weight: 500 !important;
+    font-size: 15px !important;
+}
 @media(max-width: 1024px){
 .senderpicHolder{
     flex-direction: column;
     margin-bottom: 15px;
+}
+.dropDown3{
+    margin-left: -54px;
+    width: 120px !important;
 }
 }

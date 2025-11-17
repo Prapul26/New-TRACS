@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import Header from './Heaader/Header';
 import Footer from './Footer/Footer';
 import Navbar from './Navbar/Navbar';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import axios from 'axios';
 
 /**
@@ -166,52 +166,56 @@ export default function TracsReply() {
         }
     };
 
-    const { subject, user_id, replies_code } = useParams();
+     const { subject, user_id, replies_code } = useParams();
+    const location = useLocation();
     const [data, setData] = useState({});
     const [sentMail, setSentMails] = useState({});
     const [signature, setSignature] = useState([]);
-    const [template1, setTemplate1] = useState([])
+    const [template1, setTemplate1] = useState([]);
     const [recivesmails, setrecivedmails] = useState([]);
-    const [selectedTemplateId] = useState(null);
-    const [userDetails, setUserDetails] = useState([])
+
+    const [userDetails, setUserDetails] = useState([]);
+
+    const searchParams = new URLSearchParams(location.search);
+    const femail = searchParams.get("femail");
+    const auemail = searchParams.get("auemail");
+
     useEffect(() => {
         const fetchData = async () => {
             const token = sessionStorage.getItem("authToken");
+
             try {
                 const response = await axios.get(
-                    `https://tracsdev.apttechsol.com/api/IntroMessageReply-plans?user_id=1580&replies_code=693f7040-4bcb-49ab-8ace-098e1924925d&subject=Introduction%3A%20santhosh%20kuma%20%3C%3E%20manohar%20chaithu%20%26%20manu%20porthi`,
-                    { headers: { Authorization: `Bearer ${token}` } }
+                    `https://tracsdev.apttechsol.com/api/IntroMessageReply-plans?user_id=${user_id}&replies_code=${replies_code}&subject=${encodeURIComponent(subject)}`,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    }
                 );
+
                 setData(response.data);
-                setSentMails(response.data?.data?.sentMailsfirst)
-                setrecivedmails()
-                setSignature(cleanHTML(response.data.signature?.name));
-                setTemplate1(response.data.templates)
-                setUserDetails(response.data?.data?.usersData || [])
-                console.log("subject:", response.data?.data?.sentMailsfirst?.subject);
-                console.log("RAW API:", response.data);
-                console.log("userDetails", response.data?.data?.usersData || [])
-  if (sentMail?.body) {
-    setMessageBody(cleanHTML(sentMail.body));
-  }
+                setSentMails(response.data?.data?.sentMailsfirst);
+                setrecivedmails(response.data?.data?.recivedMailsfirst || []);
+                setSignature(response.data?.signature?.name);
+                setTemplate1(response.data?.templates || []);
+                setUserDetails(response.data?.data?.usersData || []);
+
+                if (response.data?.data?.sentMailsfirst?.body) {
+                    let clean = cleanHTML(response.data.data.sentMailsfirst.body);
+                    setMessageBody(clean);
+                }
+
+                console.log("API response:", response.data);
             } catch (err) {
                 console.error("Error fetching inbox history:", err);
             }
         };
-        fetchData();
-    }, []);
 
-    useEffect(() => {
-        if (includeSignature) {
-            // only append signature if it's not already present
-            if (!messageBody.includes(signature)) {
-                setMessageBody(prev => prev + "\n\n" + signature);
-            }
-        } else {
-            // remove signature if unchecked
-            setMessageBody(prev => prev.replace(signature, "").trim());
-        }
-    }, [includeSignature, signature]);
+        fetchData();
+    }, [subject, user_id, replies_code]);
+
+   
 
     const stripHtmlTags = (html) => {
         const div = document.createElement("div");
@@ -228,7 +232,7 @@ export default function TracsReply() {
         user_id: data.userInfo?.id,
         sent_mail_history_id: data.sentMailsfirst?.id,
         replies_code,
-        temp_id: selectedTemplateId,
+     
         subject: data.sentMailsfirst?.subject,
         selected_emails: selectedRecipientEmails,
         redirect_to: "https://tracsdev.apttechsol.com/user/view-inbox-list-from-intro",
