@@ -182,18 +182,14 @@ export default function TracsReply() {
 
     useEffect(() => {
         const fetchData = async () => {
-            const token = sessionStorage.getItem("authToken");
+        
             
 
 
             try {
                 const response = await axios.get(
                     `https://tracsdev.apttechsol.com/api/IntroMessageReply-plans?user_id=${user_id}&replies_code=${replies_code}&subject=${encodeURIComponent(subject)}`,
-                    {
-                        headers: {
-                            Authorization: `Bearer ${token}`,
-                        },
-                    }
+                   
                 );
 
                 setData(response.data);
