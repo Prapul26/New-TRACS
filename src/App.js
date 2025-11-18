@@ -26,6 +26,7 @@ import Login from './Components/Login/Login';
 import Register from './Components/Register/Register'
 import TracsReply from './Components/TracsReply';
 import TracsSignIn from './Components/TracsSignIn';
+import FaqIem from './Components/FaqItem';
 
 
 const App = () => {
@@ -59,6 +60,7 @@ const App = () => {
             <Route path='/tracsReply' element={<TracsReply />}/>
             <Route path='/register' element={<Register />}/>
             <Route path='/tracsSignIn' element={<TracsSignIn />}/>
+            <Route path='/faqIem' element={<FaqIem />}/>
       </Routes>
      </Router>
     </div>
