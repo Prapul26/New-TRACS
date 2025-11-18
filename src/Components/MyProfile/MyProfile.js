@@ -234,6 +234,7 @@ setAbout(cleanHTML(data.user.about || ""));
       setWebsite(data.user.website || "");
       setLinkedIn(data.user.linkedin || "");
       setStates(data.states || []);
+        
       setMemberType(data.user.member_type || "");
       setImagePreview(`https://tracsdev.apttechsol.com/public/${data.user.image}`);
 
@@ -298,14 +299,25 @@ const AdditionalImageUpload = () => (
     <div className="grid grid-cols-2 gap-4">
 
       {/* Existing images from API */}
-      {totalPhotos.length > 0 && totalPhotos.map((photo) => (
-        <img
-          key={photo.id}
-          src={`https://tracsdev.apttechsol.com/public/${photo.image}`}
-          className="rounded-lg h-full w-full object-cover"
-          alt=""
-        />
-      ))}
+    {totalPhotos.length > 0 && totalPhotos.map((photo) => (
+  <div key={photo.id} className="relative group">
+    <img
+      src={`https://tracsdev.apttechsol.com/public/${photo.image}`}
+      className="rounded-lg h-full w-full object-cover"
+      alt=""
+    />
+
+    {/* Delete Button */}
+    <button
+      onClick={() => handleDeleteAdditionalImage(photo.id)}
+      className="absolute top-1 right-1 bg-red-600 text-white rounded-full p-1 opacity-80 hover:opacity-100"
+      title="Delete Image"
+    >
+      <Icon name="x" className="w-4 h-4" />
+    </button>
+  </div>
+))}
+
 
       {/* Newly added images (local previews) */}
       {addImg.length > 0 && addImg.map((file, index) => (
@@ -387,7 +399,7 @@ const handleUpdateProfile = async (e) => {
       {
         headers: {
           Authorization: `Bearer ${token}`,
-       
+        "Content-Type": "multipart/form-data",
         },
       }
     );
@@ -416,6 +428,36 @@ const navigate=useNavigate();
     navigate("/"); // Redirect to login page
     window.location.reload();
   };
+  
+const handleDeleteAdditionalImage = async (photoId) => {
+  try {
+     const token = sessionStorage.getItem("authToken");
+
+      let url = "";
+      if (memberType == 1) {
+        url = `https://tracsdev.apttechsol.com/api/delete-listing-image/${photoId}`;
+      } else if (memberType == 2) {
+        url = `https://tracsdev.apttechsol.com/api/delete_additional_image/${photoId}`;
+      } else {
+        alert("Invalid member type");
+        return;
+      }
+
+      const response = await axios.get(url, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+    // Remove from UI
+    setTotalPhotos(prev => prev.filter(photo => photo.id !== photoId));
+    alert("delted successfully")
+
+  } catch (error) {
+    console.log("Delete error:", error);
+  }
+};
+
+
 
   return (
     <>
