@@ -56,7 +56,7 @@ const App = () => {
             <Route path='/faq' element={<Faq />}/>
             <Route path='/network' element={<Network />}/>
             <Route path='/login' element={<Login />}/>
-            <Route path='/tracsReply/:user_id/:replies_code/:subject' element={<TracsReply />}/>
+            <Route path='/tracsReply' element={<TracsReply />}/>
             <Route path='/register' element={<Register />}/>
             <Route path='/tracsSignIn' element={<TracsSignIn />}/>
       </Routes>
