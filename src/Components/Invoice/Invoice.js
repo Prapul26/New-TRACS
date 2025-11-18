@@ -1,7 +1,8 @@
 import axios from 'axios';
 import "./Invoice.css"
 import React, { useEffect, useRef, useState } from 'react'
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { IoLogOut, IoPerson } from 'react-icons/io5';
 
 const Invoice = () => {
     const Icon = ({ name, className = "w-6 h-6" }) => {
@@ -73,22 +74,42 @@ const Invoice = () => {
                 links: [
                     { icon: 'help-circle', text: 'App Help', to: '/appHelp' },
                     { icon: 'thumbs-up', text: 'Feedback' },
-                    { icon: 'message-square', text: 'Contact Us' },
-                    { icon: 'book-open', text: 'Networking 101' },
+                     { icon: 'message-square', text: 'Contact Us',to:'/contact' },
+                { icon: 'book-open', text: 'Networking 101',to:'/network' },
                 ],
             },
         ];
 
         return (
-
-            <aside className="bg-[#1a202c] w-64 flex-shrink-0 hidden lg:block h-[100%]">
-                <div className="p-6">
-<Link to="/" className="text-white text-2xl font-bold">TRACS</Link>                </div>
-                <nav className="mt-6">
-                    {sections.map(section => <SidebarSection key={section.title} {...section} />)}
-                </nav>
-            </aside>
-        );
+               <>  {/* Overlay for mobile */}
+                   <div
+                       className={`fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden transition-opacity
+               ${isSidebarOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`}
+                       onClick={() => setSidebarOpen(false)}
+                   ></div>
+       
+                   {/* Sidebar Drawer */}
+                   <aside className={`
+               fixed top-0 left-0 h-full bg-[#1a202c] w-64 z-50 transform transition-transform duration-300 
+               ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"} 
+               lg:relative lg:translate-x-0 lg:block
+             `}>
+                       <div className="p-6">
+                           <Link to="/" className="text-white text-2xl font-bold">TRACS</Link>
+                           {/* Close button in mobile view */}
+                           <button className="lg:hidden text-white ml-20 "
+                               onClick={() => setSidebarOpen(false)}>
+                               <Icon name="x" />
+                           </button>
+                       </div>
+       
+       
+                       <nav className="mt-6">
+                           {sections.map(section => <SidebarSection key={section.title} {...section} />)}
+                       </nav>
+                   </aside>
+               </>
+           );
     };
     const { id } = useParams();
     const [order, setOrder] = useState(null);
@@ -165,31 +186,62 @@ const Invoice = () => {
         printWindow.print();
         printWindow.close();
     };
+    const[Heasderdropdown,setHeaderdropdown]=useState(null);
+const showDropDown=()=>{
+  setHeaderdropdown(prev=>!prev)
+}
+const navigate=useNavigate();
+  const handleLogout = () => {
+    sessionStorage.removeItem("authToken");
+        sessionStorage.removeItem("userId")
+
+    sessionStorage.removeItem("profileImageUrl")
+
+    navigate("/"); // Redirect to login page
+    window.location.reload();
+  };
     return (
         <div style={{ display: "flex" }}>
             <div><Sidebar /></div>
             <div style={{ width: "100%" }}>
                 <header className="bg-white shadow-sm flex items-center justify-between p-4 border-b">
-                    <div className="flex items-center">
-                        <button onClick={() => setSidebarOpen(!isSidebarOpen)} className="text-gray-600 lg:hidden">
-                            <Icon name="menu" className="w-6 h-6" />
-                        </button>
-                        <h1 className="text-2xl font-semibold text-gray-800 ml-4 lg:ml-0"></h1>
-                    </div>
-
-                    <div className="flex items-center space-x-4">
-                        <Link to="/test" className="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-full font-semibold text-sm">
-                            View Profile
-                        </Link>
-                        <div className="relative">
-                            <button className="flex items-center space-x-2">
-                                <img src={imagePreview} alt="User Avatar" className="h-10 w-10 rounded-full" />
-                                <span className="hidden md:block">{name}</span>
-                                <Icon name="chevron-down" className="w-4 h-4" />
-                            </button>
-                        </div>
-                    </div>
-                </header>
+                               <div className="flex items-center">
+                                 <button onClick={() => setSidebarOpen(!isSidebarOpen)} className="text-gray-600 lg:hidden">
+                                   <Icon name="menu" className="w-6 h-6" />
+                                 </button>
+                                 <h1 className="text-2xl font-semibold text-gray-800 ml-4 lg:ml-0"></h1>
+                               </div>
+                     
+                               <div className="flex items-center space-x-4">
+                                 <Link to="/test"className="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-full font-semibold text-sm">
+                                   View Profile
+                                 </Link>
+                                 <div className="relative">
+                                   <button className="flex items-center space-x-2"onClick={showDropDown}>
+                                     <img src={imagePreview} alt="User Avatar" className="h-10 w-10 rounded-full" />
+                                     <span className="hidden md:block">{name}</span>
+                                     <Icon name="chevron-down" className="w-4 h-4" />
+                                   </button>
+                                   {Heasderdropdown &&  <div className="dropDown3" >
+                                                       <Link
+                                                         to="/dashboard"
+                                                         style={{ textDecoration: "none", color: "inherit" }}
+                                                       >
+                                                         <div className="profileDrop">
+                                                           <div style={{ marginTop: "2px", marginRight: "6px" }}><IoPerson /></div>
+                                                           <div> <p>Dashboard</p></div>
+                                   
+                                                         </div>
+                                                       </Link>
+                                                       <div className="dropLogout" onClick={handleLogout}>
+                                                         <div style={{ marginTop: "2px", marginRight: "6px" }}><IoLogOut /></div>
+                                                         <div>    <p>Logout</p></div>
+                                   
+                                                       </div>
+                                                     </div>}
+                                 </div>
+                               </div>
+                             </header>
                 <div className="p-4 md:p-8" style={{ width: "100%" }} ref={printRef}>
                     <div className="max-w-1xl mx-auto">
                         <h1 className="text-3xl font-bold text-gray-800 mb-6 border-b pb-2">My Invoice</h1>

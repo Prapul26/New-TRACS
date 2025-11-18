@@ -105,8 +105,8 @@ const Sidebar = ({ isSidebarOpen, setSidebarOpen }) => {
       links: [
         { icon: 'help-circle', text: 'App Help',to:'/appHelp' },
         { icon: 'thumbs-up', text: 'Feedback' },
-        { icon: 'message-square', text: 'Contact Us' },
-        { icon: 'book-open', text: 'Networking 101' },
+        { icon: 'message-square', text: 'Contact Us',to:'/contact' },
+                { icon: 'book-open', text: 'Networking 101',to:'/network' },
       ],
     },
   ];
