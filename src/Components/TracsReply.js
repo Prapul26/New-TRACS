@@ -166,7 +166,8 @@ export default function TracsReply() {
         }
     };
 
-     const { subject, user_id, replies_code } = useParams();
+
+
     const location = useLocation();
     const [data, setData] = useState({});
     const [sentMail, setSentMails] = useState({});
@@ -177,6 +178,11 @@ export default function TracsReply() {
     const [userDetails, setUserDetails] = useState([]);
 
     const searchParams = new URLSearchParams(location.search);
+
+const user_id = searchParams.get("user_id");
+const subject = searchParams.get("subject");
+const replies_code = searchParams.get("replies_code");
+
     const femail = searchParams.get("femail");
     const auemail = searchParams.get("auemail");
 
@@ -188,7 +194,7 @@ export default function TracsReply() {
 
             try {
                 const response = await axios.get(
-                    `https://tracsdev.apttechsol.com/api/IntroMessageReply-plans?user_id=${user_id}&replies_code=${replies_code}&subject=${encodeURIComponent(subject)}`,
+                 `https://tracsdev.apttechsol.com/api/IntroMessageReply-plans?user_id=${user_id}&replies_code=${replies_code}&subject=${encodeURIComponent(subject)}`,
                    
                 );
 
@@ -203,6 +209,7 @@ console.log("userId :", user_id, "subject :",subject ,"messageCode:" ,replies_co
                     let clean = cleanHTML(response.data.data.sentMailsfirst.body);
                     setMessageBody(clean);
                 }
+console.log("Fetched From URL Params:", { user_id, subject, replies_code });
 
                 console.log("API response:", response.data);
             } catch (err) {
