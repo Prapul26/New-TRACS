@@ -196,7 +196,7 @@ const replies_code = searchParams.get("replies_code");
             const token = sessionStorage.getItem("authToken");
 
 const response = await axios.get(
-  `https://tracsdev.apttechsol.com/api/IntroMessageReply-plans-Api?user_id=${user_id}&replies_code=${replies_code}&subject=${encodeURIComponent(subject)}`,
+  `https://tracsdev.apttechsol.com/api/IntroMessageReply-plans?user_id=${user_id}&replies_code=${replies_code}&subject=${encodeURIComponent(subject)}`,
   {
     headers: {
       Authorization: `Bearer ${token}`,
