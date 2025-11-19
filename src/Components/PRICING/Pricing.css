@@ -157,17 +157,29 @@ display: flex;
 }
 .searchdiv{
     width: 75%;
-
+    display: flex;
+    background-color: rgb(252, 249, 245);
+margin-left: 6px;
+border-top-left-radius: 6px;
+border-bottom-left-radius: 6px;
 }
 .searchdiv input{
     width: 99%;
+    padding-left: 10px;
+    margin-left: 9px;
+    border-left: 1px solid black;
     height: 100%;
 }
 .ppbutton{
     width: 24%;
+    margin-top:2px ;
+    border-top-right-radius: 6px !important;
+    height: 36px !important;
 }
 .ppbutton button{
     width: 100%;
+     border-top-right-radius: 6px !important;
+       border-bottom-right-radius: 6px !important;
     height: 110%;
     background-color: rgb(0, 0, 0);
     margin-top: -0%;
