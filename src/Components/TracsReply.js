@@ -362,11 +362,11 @@ console.log("Fetched From URL Params:", { user_id, subject, replies_code });
                 <div className="text-center text-muted small mt-4 d-sm-flex justify-content-center">
                     <p className="mb-1 mb-sm-0 me-sm-4">
                         Not Signed into TRACS?
-                        <a href="#" className="fw-medium text-decoration-none">Sign In</a>
+                  <Link to="/tracsSignIn">      <a href="#" className="fw-medium text-decoration-none">Sign In</a></Link>
                     </p>
                     <p className="mb-0">
                         New to TRACS?
-                        <a href="#" className="fw-medium text-decoration-none">Learn more.</a>
+                       <Link to="/faqIem">  <a href="#" className="fw-medium text-decoration-none">Learn more.</a></Link>
                     </p>
                 </div>
 
