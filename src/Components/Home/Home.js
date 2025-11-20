@@ -124,7 +124,7 @@ const Home = () => {
         <div className="hoverCards">
           <div className="hover1">
             <div className="hoverCenrterimg">
-              <div className="hoverImg"> <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <div className="hoverImg"> <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /><path d="M22 17v-2a4 4 0 0 0-3-3.87" /><path d="M5 11v-1a4 4 0 0 1 4-4h.5" /><path d="M15 7v-1a4 4 0 0 0-4-4h-.5" />
               </svg></div></div>
             <h3 class="">Seamless Networking</h3>
@@ -132,7 +132,7 @@ const Home = () => {
           </div>
           <div className="hover1">
             <div className="hoverCenrterimg">
-              <div className="hoverImg2"> <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <div className="hoverImg2"> <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M18 8a3 3 0 0 0-3 3v2a3 3 0 0 0 3 3h2a3 3 0 0 0 3-3V9a3 3 0 0 0-3-3h-2zM6 8a3 3 0 0 0-3 3v2a3 3 0 0 0 3 3h2a3 3 0 0 0 3-3V9a3 3 0 0 0-3-3H6z" />
                 <line x1="12" y1="12" x2="12" y2="17" />
                 <line x1="12" y1="7" x2="12" y2="7" />
@@ -142,7 +142,7 @@ const Home = () => {
           </div>
           <div className="hover1">
             <div className="hoverCenrterimg">
-              <div className="hoverImg3">  <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <div className="hoverImg3">  <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
               </svg></div></div>
             <h3 class="">Drive Referrals</h3>
