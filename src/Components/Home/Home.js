@@ -5,7 +5,7 @@ import Slider from "react-slick";
 import imgage from "../../assets/image.png"
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
-
+import '../global.css'
 
 
 import "slick-carousel/slick/slick.css";
@@ -99,7 +99,7 @@ const Home = () => {
         <div className="heading1Holder">
        
         <div className="heading1">
-          <h1 >
+          <h1  >
             Turn Connections into Relationships Effortlessly.
           </h1>
           <p class="">
@@ -113,7 +113,7 @@ const Home = () => {
             </div>
           )}
         </div>
-           <div className="tracsPic"><img src={image2}/></div>
+           <div className="tracsPic"><img src="https://tracsdev.apttechsol.com/public/uploads/website-images/TRACS_Process_Diagram.png"/></div>
         </div>
         <div className="heading2">
           <h2 class="">What TRACS Can Do for You</h2>

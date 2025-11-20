@@ -1,0 +1,113 @@
+.helpcurb1{
+        text-align: center;
+    padding-top:-10px;
+    display: flex;
+    padding-bottom: -10px;
+background-color: #f4f3f3;
+color: white;
+}
+.helpcurb1 p{
+    color: black;
+}
+.ppffg{
+  margin-left: 15%;
+  color: rgb(25, 144, 249) !important;
+  font-weight: 600;
+  margin-right: 10px;
+  cursor: pointer;
+}
+.ppffg:hover{
+  color: rgb(1, 78, 233) !important;
+}
+.helpContainer h2{
+        font-family: "Lucida Grande" !important;
+        font-size: 30px !important;
+
+}
+.helpContainer p{
+        font-family: Montserrat, sans-serif !important;
+    font-size: 18px !important;
+}
+.helpContainer{
+    width: 70%;
+    margin-left: 15%;
+    margin-bottom: 100px;
+   
+}
+.helpContainer h5{
+    font-size: 18px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+.makeIntoButtonContainer{
+    width: 100%;
+background-color: #f4f3f3;
+    display: flex;
+    justify-content: space-between;
+   border:2px solid rgb(226, 224, 224);
+   border-radius: 10px;
+    padding: 20px;
+    margin-top: 40px;
+}
+.makeIntoButtonContainer:hover{
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+}
+.titles{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    background-color: rgb(255, 255, 255);
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+    border: 1px solid rgb(175, 175, 175);
+    border-radius: 10px;
+    margin-top: 10px;
+    
+}
+.titles:hover{
+background-color: #f4f3f3;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width:1024px) {
+
+.helpContainer{
+    width: 100%;
+    margin-left: 0%;
+
+  margin-left: 5%;
+  margin-top: 50px;
+}
+.helpcurb1{
+        
+   width: 99%;
+
+}
+.ppffg{
+    margin-right: -5px;
+}
+.helpcurb1 p{
+    margin-left: 20px;
+}
+.makeIntoButtonContainer{
+    width: 80%;
+    margin-left: 0%;
+}
+.titles{
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    background-color: rgb(255, 255, 255);
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+    border: 1px solid rgb(175, 175, 175);
+    border-radius: 10px;
+    margin-top: 10px;
+    
+}
+}

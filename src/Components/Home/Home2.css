@@ -3,8 +3,8 @@
     width: 45%;
 }
 .heading1 h1{
-    font-size: 50px;
-    font-weight: 600 !important;
+    font-size: 50px !important;
+    font-weight: 800 !important;
 
     
 }
@@ -209,9 +209,11 @@ font-weight: bold;
     margin-bottom: 40px;
     border-radius: 30px;
 }
-.homeHolder h1,p,h2,button,h3{
-font-family:  "Inter", sans-serif !important;
+.homeHolder h1{
+font-size: 57px !important;
+font-weight: 800  !important;
 }
+
 @media (max-width: 1024px) {
     .heading1{
     margin-top: 60px;

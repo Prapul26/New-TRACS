@@ -1,0 +1,21 @@
+.holderHelp2{
+    padding: 20px;
+    height: 600px;
+     overflow-x: auto !important;
+      overflow-y: auto !important;
+}
+.wdwokm{
+    overflow-x: auto !important;
+}
+.helpdep{
+    width: 70%;
+    margin-left: 15%;
+}
+
+@media(max-width:1024px){
+  .helpdep{
+  
+    width: 100%;
+    margin-left: 0%;
+}
+}

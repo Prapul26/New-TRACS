@@ -24,9 +24,15 @@ import Faq from './Components/Faq/Faq';
 import  Network  from './Components/Network/Network';
 import Login from './Components/Login/Login';
 import Register from './Components/Register/Register'
+import HelpSection2 from './Components/Help2/HelpSection2'
+import Help2 from './Components/Help2/Help2'
+import HelpDescription2 from './Components/Help2/HelpDescription2'
 import TracsReply from './Components/TracsReply';
 import TracsSignIn from './Components/TracsSignIn';
 import FaqIem from './Components/FaqItem';
+import Help from './Components/Help/Help';
+import TracsContactUS from './Components/TracsContactUs';
+import { HelpCircle } from 'lucide-react';
 
 
 const App = () => {
@@ -53,7 +59,9 @@ const App = () => {
             <Route path='/pricing' element={<Pricing />}/>
             <Route path='/partner' element={<Partner />}/>
             <Route path='/about_us' element={<About_us />}/>
-            <Route path='/contact' element={<Contact />}/>
+       <Route path='/help2' element={<Help2 />}/>
+       <Route path="/helpSection2/:id" element={<HelpSection2 />}/>
+<Route path="/helpDescription2/:id" element={<HelpDescription2 />}/>
             <Route path='/faq' element={<Faq />}/>
             <Route path='/network' element={<Network />}/>
             <Route path='/login' element={<Login />}/>
@@ -61,6 +69,7 @@ const App = () => {
             <Route path='/register' element={<Register />}/>
             <Route path='/tracsSignIn' element={<TracsSignIn />}/>
             <Route path='/faqIem' element={<FaqIem />}/>
+            <Route path='/contact' element={<TracsContactUS />}/>
       </Routes>
      </Router>
     </div>

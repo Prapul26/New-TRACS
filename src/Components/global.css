@@ -1,0 +1,43 @@
+h2{
+ font-family:"Quattrocento Sans", sans-serif !important;
+font-size: 25px !important;
+}
+p{
+     font-family:"Quattrocento Sans", sans-serif   !important;
+font-size: 20px !important;
+}
+h3{
+ font-family:"Quattrocento Sans", sans-serif   !important;
+font-size: 22px !important;
+}
+button{
+      font-family:"Quattrocento Sans", sans-serif   !important;
+}
+input{
+     font-family:"Quattrocento Sans", sans-serif   !important; 
+}
+h4{
+ font-family: "Quattrocento Sans", sans-serif  !important;
+
+}
+h1{
+     font-family: "Quattrocento Sans", sans-serif   !important;
+
+}
+p{
+     font-size: 18px !important;
+}
+label{
+     font-weight: 700;
+     font-size: 18px;
+     font-family:"Quattrocento Sans", sans-serif  !important;
+}
+table thead td {
+    color: #fff !important;
+    padding: 12px 8px !important;
+    background-color: #000 !important; 
+}
+li{
+         font-family:"Quattrocento Sans", sans-serif  !important;
+ 
+}

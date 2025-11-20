@@ -1,0 +1,51 @@
+.makeIntroHelp{
+    border: 1px solid blue ;
+    width: 60%;
+    margin-left: 20%;
+    margin-right: 20%;
+    margin-top: 30px;
+    border-radius: 6px;
+    margin-bottom: 40px;
+}
+.makeIntroHelp h2{
+    margin-left: 20px;
+}
+.selectM{
+   background-color: #f4f3f3;
+    display: flex;
+    justify-content: space-between;
+   border:2px solid rgb(226, 224, 224);
+   border-radius: 10px;
+    padding: 20px;
+    margin-top: 15px;
+    width: 90%;
+    margin-left: 2.5%;
+}
+.selectM h5{
+     font-size: 15px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+.selectM:hover{
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+}
+.helppe{
+     color: rgb(25, 144, 249) !important;
+  font-weight: 600;
+  cursor: pointer;
+}
+.helppe:hover{
+     color: rgb(1, 78, 233) !important;
+ 
+}
+@media(max-width:1024px){
+    .makeIntroHelp{
+        width: 90%;
+        margin-left: 5%;
+    }
+    .selectM{
+        width: 83.5%;
+    }
+    
+}

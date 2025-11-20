@@ -456,6 +456,9 @@ border-radius: 20px;
   
     color: black;
 }
+.homeHolder{
+    background-color: rgb(255, 255, 255) !important;
+}
 @media (max-width: 1024px) {
 .heading1Holder{
 flex-direction: column;

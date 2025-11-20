@@ -1,0 +1,40 @@
+    .helpContainer2
+    {
+      width: 70%;
+    margin-left: 15%;
+    margin-bottom: 100px;
+  }
+@media(max-width:1024px){
+    .helpcurb1 {
+  display: flex;
+  width: 94%;
+  flex-wrap: wrap;
+  gap: 5px;
+  word-break: break-word;
+  padding: 10px;
+}
+    .helpContainer2
+    {
+      width: 95%;
+    margin-left: 2.5%;
+    margin-bottom: 100px;
+  }
+
+.helpcurb1 p {
+  margin: 0;
+  font-size: 14px;
+  white-space: normal;
+  word-break: break-word;
+}
+.makeIntroHelp2{
+    width: 80% !important;
+    margin-left: 0%;
+    border: transparent;
+    margin-left: 5%;
+    
+}
+
+.responsive-image{
+width: 100% !important;
+}
+}
