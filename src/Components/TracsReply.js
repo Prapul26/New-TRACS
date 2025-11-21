@@ -107,36 +107,7 @@ export default function TracsReply() {
      * Handles the form submission.
      * Validates input and shows the appropriate modal.
      */
-    const handleSubmit = (e) => {
-        e.preventDefault(); // Stop form from actually submitting
-
-        // Check if at least one receiver is selected
-        const receivers = [receiver1Ref.current, receiver2Ref.current]
-            .filter(cb => cb && cb.checked);
-
-        if (receivers.length === 0) {
-            // Show an error modal
-            setModalConfig({
-                title: 'Selection Required',
-                text: 'Please select at least one receiver.',
-                icon: errorIcon,
-                iconBg: 'bg-danger-subtle'
-            });
-        } else {
-            // If validation passes, show success modal
-            setModalConfig({
-                title: 'Message Sent!',
-                text: 'Your secure message has been sent (simulation).',
-                icon: successIcon,
-                iconBg: 'bg-success-subtle'
-            });
-        }
-
-        // Show the modal
-        if (modalInstanceRef.current) {
-            modalInstanceRef.current.show();
-        }
-    };
+  
 
 
 
@@ -240,38 +211,97 @@ console.log("Fetched From URL Params:", { user_id, subject, replies_code });
 
     const [selectedRecipientEmails, setSelectedRecipientEmails] = useState([]);
 
-    const payload = {
-        user_id: data.userInfo?.id,
-        sent_mail_history_id: data.sentMailsfirst?.id,
-        replies_code,
-     
-        subject: data.sentMailsfirst?.subject,
-        selected_emails: selectedRecipientEmails,
-        redirect_to: "https://tracsdev.apttechsol.com/user/view-inbox-list-from-intro",
-        is_bump: data.sentMailsfirst?.is_bump,
-        cc_mail_id: null,
-        emails: selectedRecipientEmails,
-        email_template: selectedTemplate,
-        message: messageBody,
-        files: null
-    };
-
-    const handleSendReply = async () => {
-        const token = sessionStorage.getItem("authToken");
-        try {
-            const response = await axios.post(
-                `https://tracsdev.apttechsol.com/api/sendReplyMailtomem_Api`,
-                payload,
-                { headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" } }
-            );
-            console.log("Mail Sent Successfully", response.data);
-
-        } catch (error) {
-            console.error("Error sending reply mail:", error);
+const payload = {
+     // If token required, else empty
+  user_id: data.userInfo?.id,
+  sent_mail_history_id: data.sentMailsfirst?.id,
+  replies_code:data.sentMailsfirst?.replies_code,
+  temp_id: selectedTemplate || null,
+  subject: sentMail?.subject,
+  selected_emails: JSON.stringify(selectedRecipientEmails), 
+  redirect_to: null,
+  is_bump: data.sentMailsfirst?.is_bump,
+  femail, 
+  contact_check_from_website_url: "1",
+  emails: selectedRecipientEmails,
+  message: messageBody,
+  files: null,
+  source: "api"
+};
 
 
+   const handleSendReply = async () => {
+ 
+
+  try {
+    const response = await axios.post(
+      "https://tracsdev.apttechsol.com/api/ReplysendMailtomemapi",
+      payload,
+      {
+        headers: {
+       
+          "Content-Type": "application/json"
         }
-    };
+      }
+    );
+
+    console.log("Reply Sent Successfully:", response.data);
+
+    // Show success modal
+    setModalConfig({
+      title: "Reply Sent!",
+      text: "Your reply has been sent successfully.",
+      icon: successIcon,
+      iconBg: "bg-success-subtle"
+    });
+    modalInstanceRef.current?.show();
+
+  } catch (error) {
+    console.error("Error sending reply:", error);
+
+    // Show error modal
+    setModalConfig({
+      title: "Sending Failed",
+      text: "Unable to send your reply. Try again.",
+      icon: errorIcon,
+      iconBg: "bg-danger-subtle"
+    });
+    modalInstanceRef.current?.show();
+  }
+};
+const handleSubmit = (e) => {
+  e.preventDefault();
+
+  const receivers = [receiver1Ref.current, receiver2Ref.current].filter(
+    cb => cb?.checked
+  );
+
+  // Collect selected emails
+  const emails = [];
+  userDetails.forEach((user, i) => {
+    const checkbox = document.getElementsByName("receivers")[i];
+    if (checkbox?.checked) emails.push(user.email);
+  });
+
+  setSelectedRecipientEmails(emails);
+
+  if (emails.length === 0) {
+    // error modal
+    setModalConfig({
+      title: "Selection Required",
+      text: "Please select at least one receiver.",
+      icon: errorIcon,
+      iconBg: "bg-danger-subtle"
+    });
+    modalInstanceRef.current?.show();
+    return;
+  }
+
+  // Call POST API
+  handleSendReply();
+};
+
+
 
     return (
         <div className="bg-light text-dark">
