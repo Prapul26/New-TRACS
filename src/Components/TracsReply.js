@@ -107,7 +107,7 @@ export default function TracsReply() {
      * Handles the form submission.
      * Validates input and shows the appropriate modal.
      */
-  
+
 
 
 
@@ -150,30 +150,30 @@ export default function TracsReply() {
 
     const searchParams = new URLSearchParams(location.search);
 
-const user_id = searchParams.get("user_id");
-const subject = searchParams.get("subject");
-const replies_code = searchParams.get("replies_code");
+    const user_id = searchParams.get("user_id");
+    const subject = searchParams.get("subject");
+    const replies_code = searchParams.get("replies_code");
 
     const femail = searchParams.get("femail");
     const auemail = searchParams.get("auemail");
 
     useEffect(() => {
         const fetchData = async () => {
-        
-            
+
+
 
 
             try {
-            const token = sessionStorage.getItem("authToken");
+                const token = sessionStorage.getItem("authToken");
 
-const response = await axios.get(
-  `https://tracsdev.apttechsol.com/api/IntroMessageReply-plans?user_id=${user_id}&replies_code=${replies_code}&subject=${encodeURIComponent(subject)}`,
-  {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  }
-);
+                const response = await axios.get(
+                    `https://tracsdev.apttechsol.com/api/IntroMessageReply-plans?user_id=${user_id}&replies_code=${replies_code}&subject=${encodeURIComponent(subject)}`,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    }
+                );
 
 
                 setData(response.data);
@@ -182,12 +182,12 @@ const response = await axios.get(
                 setSignature(response.data?.signature?.name);
                 setTemplate1(response.data?.templates || []);
                 setUserDetails(response.data?.data?.usersData || []);
-console.log("userId :", user_id, "subject :",subject ,"messageCode:" ,replies_code) 
+                console.log("userId :", user_id, "subject :", subject, "messageCode:", replies_code)
                 if (response.data?.data?.sentMailsfirst?.body) {
                     let clean = cleanHTML(response.data.data.sentMailsfirst.body);
                     setMessageBody(clean);
                 }
-console.log("Fetched From URL Params:", { user_id, subject, replies_code });
+                console.log("Fetched From URL Params:", { user_id, subject, replies_code });
 
                 console.log("API response:", response.data);
             } catch (err) {
@@ -198,7 +198,7 @@ console.log("Fetched From URL Params:", { user_id, subject, replies_code });
         fetchData();
     }, [subject, user_id, replies_code]);
 
-   
+
 
     const stripHtmlTags = (html) => {
         const div = document.createElement("div");
@@ -211,27 +211,27 @@ console.log("Fetched From URL Params:", { user_id, subject, replies_code });
 
     const [selectedRecipientEmails, setSelectedRecipientEmails] = useState([]);
 
-const payload = {
-     // If token required, else empty
-  user_id: data.userInfo?.id,
-  sent_mail_history_id: data.sentMailsfirst?.id,
-  replies_code:data.sentMailsfirst?.replies_code,
-  temp_id: selectedTemplate || null,
-  subject: sentMail?.subject,
-  selected_emails: JSON.stringify(selectedRecipientEmails), 
-  redirect_to: null,
-  is_bump: data.sentMailsfirst?.is_bump,
-  femail, 
-  contact_check_from_website_url: "1",
-  emails: selectedRecipientEmails,
-  message: messageBody,
-  files: null,
-  source: "api"
-};
 
 
-   const handleSendReply = async () => {
- 
+   const handleSendReply = async (emails) => {
+  const payload = {
+    user_id: data.userInfo?.id,
+    sent_mail_history_id: sentMail?.id,
+    replies_code: sentMail?.replies_code,
+    temp_id: selectedTemplate || null,
+    subject: sentMail?.subject,
+    selected_emails: JSON.stringify(emails),
+    redirect_to: null,
+    is_bump: sentMail?.is_bump,
+    femail,
+    contact_check_from_website_url: "1",
+    emails: emails,
+    message: messageBody,
+    files: null,
+    source: "api",
+  };
+
+  console.log("FINAL PAYLOAD:", payload);
 
   try {
     const response = await axios.post(
@@ -239,67 +239,60 @@ const payload = {
       payload,
       {
         headers: {
-       
-          "Content-Type": "application/json"
-        }
+          "Content-Type": "application/json",
+        },
       }
     );
 
     console.log("Reply Sent Successfully:", response.data);
 
-    // Show success modal
     setModalConfig({
       title: "Reply Sent!",
       text: "Your reply has been sent successfully.",
       icon: successIcon,
-      iconBg: "bg-success-subtle"
+      iconBg: "bg-success-subtle",
     });
+
     modalInstanceRef.current?.show();
 
   } catch (error) {
     console.error("Error sending reply:", error);
 
-    // Show error modal
     setModalConfig({
       title: "Sending Failed",
       text: "Unable to send your reply. Try again.",
       icon: errorIcon,
-      iconBg: "bg-danger-subtle"
+      iconBg: "bg-danger-subtle",
     });
+
     modalInstanceRef.current?.show();
   }
 };
-const handleSubmit = (e) => {
-  e.preventDefault();
 
-  const receivers = [receiver1Ref.current, receiver2Ref.current].filter(
-    cb => cb?.checked
-  );
+    const handleSubmit = (e) => {
+        e.preventDefault();
 
-  // Collect selected emails
-  const emails = [];
-  userDetails.forEach((user, i) => {
-    const checkbox = document.getElementsByName("receivers")[i];
-    if (checkbox?.checked) emails.push(user.email);
-  });
+        // Collect selected emails
+        const emails = [];
+        userDetails.forEach((user, i) => {
+            const checkbox = document.getElementsByName("receivers")[i];
+            if (checkbox?.checked) emails.push(user.email);
+        });
 
-  setSelectedRecipientEmails(emails);
+        if (emails.length === 0) {
+            setModalConfig({
+                title: "Selection Required",
+                text: "Please select at least one receiver.",
+                icon: errorIcon,
+                iconBg: "bg-danger-subtle"
+            });
+            modalInstanceRef.current?.show();
+            return;
+        }
 
-  if (emails.length === 0) {
-    // error modal
-    setModalConfig({
-      title: "Selection Required",
-      text: "Please select at least one receiver.",
-      icon: errorIcon,
-      iconBg: "bg-danger-subtle"
-    });
-    modalInstanceRef.current?.show();
-    return;
-  }
-
-  // Call POST API
-  handleSendReply();
-};
+        // Call POST API with actual selected emails
+        handleSendReply(emails);
+    };
 
 
 
@@ -392,11 +385,11 @@ const handleSubmit = (e) => {
                 <div className="text-center text-muted small mt-4 d-sm-flex justify-content-center">
                     <p className="mb-1 mb-sm-0 me-sm-4">
                         Not Signed into TRACS?
-                  <Link to="/tracsSignIn">      <a href="#" className="fw-medium text-decoration-none">Sign In</a></Link>
+                        <Link to="/tracsSignIn">      <a href="#" className="fw-medium text-decoration-none">Sign In</a></Link>
                     </p>
                     <p className="mb-0">
                         New to TRACS?
-                       <Link to="/faqIem">  <a href="#" className="fw-medium text-decoration-none">Learn more.</a></Link>
+                        <Link to="/faqIem">  <a href="#" className="fw-medium text-decoration-none">Learn more.</a></Link>
                     </p>
                 </div>
 
