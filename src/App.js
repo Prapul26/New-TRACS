@@ -34,6 +34,7 @@ import Help from './Components/Help/Help';
 import TracsContactUS from './Components/TracsContactUs';
 import { HelpCircle } from 'lucide-react';
 import TracsPayment from './Components/TracsPayment';
+import ContactUs from './Components/ContactUs/ContactUs';
 
 
 const App = () => {
@@ -70,8 +71,9 @@ const App = () => {
             <Route path='/register' element={<Register />}/>
             <Route path='/tracsSignIn' element={<TracsSignIn />}/>
             <Route path='/faqIem' element={<FaqIem />}/>
-            <Route path='/contact' element={<TracsContactUS />}/>
+            <Route path='/contactUs' element={<TracsContactUS />}/>
             <Route path='/tracsPayment' element={<TracsPayment />}/>
+            <Route path='/contact' element={<ContactUs />} />
       </Routes>
      </Router>
     </div>

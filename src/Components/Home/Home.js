@@ -34,7 +34,7 @@ const Home = () => {
       setToken(null);
       setIsLoggedIn(false);
       setText(true);
-      navigate("/login");
+      navigate("/tracsSignIn");
     };
 
     // --- Inactivity Tracking ---
@@ -124,9 +124,23 @@ const Home = () => {
         <div className="hoverCards">
           <div className="hover1">
             <div className="hoverCenrterimg">
-              <div className="hoverImg"> <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /><path d="M22 17v-2a4 4 0 0 0-3-3.87" /><path d="M5 11v-1a4 4 0 0 1 4-4h.5" /><path d="M15 7v-1a4 4 0 0 0-4-4h-.5" />
-              </svg></div></div>
+              <div className="hoverImg"> <svg
+  xmlns="http://www.w3.org/2000/svg"
+  className="h-10 w-10"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  strokeWidth="2"
+  strokeLinecap="round"
+  strokeLinejoin="round"
+>
+  <path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+  <circle cx="12" cy="7" r="4" />
+  <path d="M22 17v-2a4 4 0 0 0-3-3.87" />
+  <path d="M5 11v-1a4 4 0 0 1 4-4h.5" />
+  <path d="M15 7v-1a4 4 0 0 0-4-4h-.5" />
+</svg>
+</div></div>
             <h3 class="">Seamless Networking</h3>
             <p class="">Easily manage your contacts, remember key details, and stay connected with the people who matter most.</p>
           </div>

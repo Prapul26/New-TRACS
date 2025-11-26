@@ -5,6 +5,7 @@ import Navbar from '../Navbar/Navbar';
 import './Pricing.css'
 import Footer from '../Footer/Footer';
 import { IoMail } from 'react-icons/io5';
+import { Link } from 'react-router-dom';
 
 // --- Reusable Pricing Card Component ---
 // This component takes props to display a pricing plan
@@ -12,15 +13,16 @@ const PricingCard = ({ plan }) => {
   return (
     <div className="bg-white rounded-xl shadow-lg p-8 relative flex flex-col">
       <div className="flex-grow">
-        <h3 className="text-2xl font-semibold text-gray-900 mb-2">{plan.title}</h3>
-        <p className="text-gray-500 mb-4">{plan.description}</p>
+        <h3 className="text-2xl font-semibold text-gray-900 mb-2"  >{plan.title}</h3>
+       
         <p className="text-sm font-medium text-indigo-600 mb-6">
-          Includes a 14-day free trial.
+         
         </p>
         
         <div className="mb-6">
-          <span className="text-5xl font-bold text-gray-900">${plan.price}</span>
-          <span className="text-lg text-gray-500">/ Annum</span>
+          <span className="text-5xl font-bold text-gray-900" style={{    fontSize: "3rem",fontWeight: "700",color: "#27479e"}}>${plan.price}</span>
+          <span className="text-lg text-gray-500" style={{fontSize: "1.25rem",
+    color:"#6b7280"}}>  {plan.trail}</span>
         </div>
 
         <ul className="space-y-3 text-gray-700 mb-8">
@@ -41,12 +43,12 @@ const PricingCard = ({ plan }) => {
         </ul>
       </div>
       
-      <a 
-        href="#" 
+      <Link
+        to="/tracsPayment" 
         className="w-full text-center bg-indigo-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-indigo-700 transition duration-300"
       >
         Get Started
-      </a>
+      </Link>
     </div>
   );
 };
@@ -72,6 +74,25 @@ export default function App() {
   
   // Data for the pricing plans
   const plans = [
+     {
+      title: "Trail",
+      description: "Perfect for getting started with networking.",
+      price: 0,
+      trail:" / Includes a 14-day free trial.",
+      features: [
+        { name: "Make 5 Introductions Only" },
+        { name: "Manage Previous Introductions" },
+        { name: "Use Our Templates" },
+        { name: "Networking Resources" },
+        { 
+          name: "Allows CRM Integrations", 
+          note: "(Additional Charges for Integration)" 
+        },
+        { name: "Networking Events" },
+        {name :"Can Add Upto 10 Contacts"},
+       
+      ]
+    },
     {
       title: "Basic Package",
       description: "Perfect for getting started with networking.",
@@ -86,6 +107,7 @@ export default function App() {
           note: "(Additional Charges for Integration)" 
         },
         { name: "Networking Events" },
+          {name :"Can Add Upto 100 Contacts"}
       ]
     },
     {
@@ -104,6 +126,7 @@ export default function App() {
         { name: "Networking Events" },
         { name: "Customise your Templates" },
         { name: "Easy Follow Up" },
+          {name :"Can Add Upto 1000 Contacts"}
       ]
     }
   ];
@@ -118,9 +141,10 @@ export default function App() {
         <PricingHeader />
 
         {/* Pricing Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-4xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
           <PricingCard plan={plans[0]} />
           <PricingCard plan={plans[1]} />
+           <PricingCard plan={plans[2]} />
         </div>
 
       </div>
