@@ -22,13 +22,14 @@ const InvoiceRow = ({ id, date, packageName, amount }) => {
       <td className="px-6 py-4 whitespace-nowrap">{amount}</td>
 
       {/* ✅ Replace Download with a Button */}
-      <td className="px-6 py-4 whitespace-nowrap">
+      <td className="px-6 py-4 whitespace-nowrap flex">
         <Link
           to={`/invoice/${id}`}
           className="text-indigo-600 hover:text-indigo-800 font-medium"
         >
-          Invoice
+         <button style={{background:"#10B981" ,color:"white",padding:"8px 18px",borderRadius:"10px"}}>Invoice</button> 
         </Link>
+        <div style={{marginLeft:"10px"}}><button style={{background:"#2563EB" ,color:"white ",padding:"8px 18px",borderRadius:"10px"}}>History Details</button></div>
       </td>
     </tr>
   );
@@ -335,6 +336,8 @@ const navigate=useNavigate();
                                             <th className="px-6 py-3 text-sm font-semibold text-gray-600 uppercase tracking-wider hidden sm:table-cell">Package</th>
                                             <th className="px-6 py-3 text-sm font-semibold text-gray-600 uppercase tracking-wider">Amount</th>
                                             <th className="px-6 py-3 text-sm font-semibold text-gray-600 uppercase tracking-wider">Invoice</th>
+                                            
+                                            
                                         </tr>
                                     </thead>
                 <tbody className="divide-y divide-gray-200">

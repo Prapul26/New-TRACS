@@ -118,7 +118,6 @@ const Sidebar = ({ isSidebarOpen, setSidebarOpen }) => {
 // Single contact row
 const ContactRow = ({ contact, onDelete, onEdit }) => (
   <tr className="divide-x divide-gray-200">
-    <td className="px-6 py-4 whitespace-nowrap">{contact.firstName}</td>
     <td className="px-6 py-4 whitespace-nowrap">{contact.lastName}</td>
     <td className="px-6 py-4 whitespace-nowrap">{contact.email}</td>
     <td className="px-6 py-4 whitespace-nowrap">{contact.groupName}</td>
