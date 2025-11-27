@@ -329,6 +329,11 @@ const navigate=useNavigate();
        
 
         <div className='containerFilter'>
+          <div className="MessageIntroButt">
+           <div><h1>Messages</h1>
+           <p>Your conversations with members</p></div> 
+            <div className='makeIntoButton'> <Link to="/makeIntroduction"><button><div style={{marginRight:"10px",marginTop:"3px"}}><FaPlus color='white' /></div>Make an Introduction</button></Link></div>
+          </div>
           <div className="mb-8">
             <div className="bg-white p-4 rounded-xl shadow-sm border border-slate-200">
               <div className="flex flex-col sm:flex-row gap-4 sm:items-end">
@@ -398,7 +403,6 @@ const navigate=useNavigate();
             </div>
             
           </div>
-           <div className='makeIntoButton'> <Link to="/makeIntroduction"><button>Make a Introduction</button></Link></div>
         </div>
 
 

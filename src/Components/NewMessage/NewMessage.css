@@ -35,8 +35,28 @@
 .makeIntoButton button{
     padding: 14px 24px 14px 24px;
     border-radius: 10px;
-    background-color: rgb(252, 219, 49);
-    color: black;
+    background-color: #2563EB ;
+    font-weight: 600;
+    display: flex;
+    color: rgb(255, 255, 255);
+}
+.makeIntoButton{
+    display: flex;
+}
+.MessageIntroButt{
+    display: flex;
+    background-color: #ffffff;
+    padding: 25px;
+    margin-bottom: 20px;
+    border-radius: 15px;
+    justify-content: space-between;
+}
+.MessageIntroButt h1{
+    font-size: 24px;
+    font-weight: 600;
+}
+.MessageIntroButt p{
+    font-size: 14px !important;
 }
 @media(max-width: 1024px){
 .senderpicHolder{

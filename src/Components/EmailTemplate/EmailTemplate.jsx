@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { IoLogOut, IoPerson } from 'react-icons/io5';
+import { MdDelete, MdModeEdit } from 'react-icons/md';
 import { Link, useNavigate } from 'react-router-dom';
 
 // --- Main App Component ---
@@ -371,9 +372,9 @@ const TemplateListView = ({ templates, onAddNew, onStatusToggle, onDelete, onEdi
                   </td>
 
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                  <a href="#" className="text-blue-600 hover:text-blue-900" onClick={() => onEdit(template)} >Edit</a>
-                  <a href="#" className="text-red-600 hover:text-red-900 ml-4" onClick={() => onDelete(template.id)}>Delete</a>
+                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium flex mt-4">
+                  <a href="#" className="text-green-600 hover:text-blue-900" onClick={() => onEdit(template)} ><MdModeEdit size={25} /></a>
+                  <a href="#" className="text-red-600 hover:text-red-900 ml-4" onClick={() => onDelete(template.id)}><MdDelete size={25}/></a>
                 </td>
               </tr>
             ))}

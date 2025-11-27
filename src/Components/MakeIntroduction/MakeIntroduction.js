@@ -51,38 +51,36 @@ const MakeIntroduction = () => {
       {links.map(link => <SidebarLink key={link.text} {...link} />)}
     </div>
   );
+const Sidebar = ({ isSidebarOpen, setSidebarOpen }) => {
+ const sections = [
+  {
+    title: 'Account Settings',
+    links: [
+      { icon: 'credit-card', text: 'My Membership', to: '/myMembership' },
+      { icon: 'user', text: 'My Profile', to: '/myProfile' },
+      { icon: 'lock', text: 'Change Password', to: '/changePassword' },
+    ],
+  },
+  {
+    title: 'Introductions',
+    links: [
+      { icon: 'inbox', text: 'Introduction Messages', to: '/introductionMessages' },
+      { icon: 'users', text: 'My Contacts', to: '/myContacts' },
+      { icon: 'mail', text: 'Email Templates', to: '/emailTemplate' },
+      { icon: 'pen-square', text: 'Email Signature', to: '/emailSignature' },
+    ],
+  },
+  {
+    title: 'Resources',
+    links: [
+      { icon: 'help-circle', text: 'App Help', to: '/appHelp' },
+      { icon: 'thumbs-up', text: 'Feedback', to: '/feedback' },
+      { icon: 'message-square', text: 'Contact Us', to: '/contact' },
+      { icon: 'book-open', text: 'Networking 101', to: '/network' },
+    ],
+  },
+];
 
-  const Sidebar = ({ isSidebarOpen, setSidebarOpen }) => {
-    const sections = [
-      {
-        title: 'Account Settings',
-        links: [
-          { icon: 'credit-card', text: 'My Membership', to: '/myMembership', to: '/myMembership' },
-          { icon: 'user', text: 'My Profile', to: '/myProfile', to: '/myProfile' },
-          { icon: 'lock', text: 'Change Password', to: '/changePassword', to: '/changePassword' },
-        
-          
-        ],
-      },
-      {
-        title: 'Introductions',
-        links: [
-          { icon: 'inbox', text: 'Introduction Messages', active: true, to: '/dashboard' },
-          { icon: 'users', text: 'My Contacts', to: '/myContacts' },
-          { icon: 'mail', text: 'Email Templates', to: '/emailTemplate' },
-          { icon: 'pen-square', text: 'Email Signature', to: '/emailSignature' },
-        ],
-      },
-      {
-        title: 'Resources',
-        links: [
-          { icon: 'help-circle', text: 'App Help',to:'/appHelp' },
-          { icon: 'thumbs-up', text: 'Feedback' },
-       { icon: 'message-square', text: 'Contact Us',to:'/contact' },
-                { icon: 'book-open', text: 'Networking 101',to:'/network' },
-        ],
-      },
-    ];
 
    return (
         <>  {/* Overlay for mobile */}
@@ -599,17 +597,7 @@ const navigate=useNavigate();
                     <h3 className="text-base sm:text-lg font-semibold text-gray-800">
                       Selected Members (Min 2)
                     </h3>
-                    <button
-                      id="interchangeBtn"
-                      className={`px-3 py-1 bg-yellow-500 text-white text-sm font-medium rounded-full transition ${selectedMembers.length !== 2
-                        ? 'opacity-50 cursor-not-allowed'
-                        : 'hover:bg-yellow-600'
-                        }`}
-                      onClick={interchangeMembers}
-                      disabled={selectedMembers.length !== 2}
-                    >
-                      Interchange
-                    </button>
+                   
 
                   </div>
 
@@ -663,7 +651,19 @@ const navigate=useNavigate();
                     </p>
                   )}
                 </div>
+                 <button
+                      id="interchangeBtn"
+                      className={`px-3 mt-8 py-1 bg-yellow-500 text-white text-sm font-medium rounded-full transition ${selectedMembers.length !== 2
+                        ? 'opacity-50 cursor-not-allowed'
+                        : 'hover:bg-yellow-600'
+                        }`}
+                      onClick={interchangeMembers}
+                      disabled={selectedMembers.length !== 2}
+                    >
+                      Interchange
+                    </button>
               </div>
+              
 
               {/* Right Column: Email Composition */}
               <div className="bg-white p-4 sm:p-6 rounded-xl shadow-lg">
@@ -713,17 +713,17 @@ const navigate=useNavigate();
                         </option>
                       ))}
                     </select>
+                    
                   </div>
-                </div>
-                <button
+                  <button
                   className="w-full sm:w-auto p-2  text-white font-medium rounded-lg hover:bg-green-600 transition"
                   onClick={toggleTemplateModal}
                   style={{ background: "green" }}
                 >
                   + Create New Template
                 </button>
-              </div>
-              {/* Subject */}
+                </div>
+                {/* Subject */}
               <div className="mt-4">
                 <label className="block text-sm font-medium text-gray-700">Subject</label>
                 <input
@@ -736,8 +736,7 @@ const navigate=useNavigate();
                   **Subject structure:** [Introducer Name] connecting [Receiver 1 Name] & [Receiver 2 Name]
                 </p>
               </div>
-
-              {/* Message Body */}
+  {/* Message Body */}
               <div className="mt-6">
                 <label className="block text-sm font-medium text-gray-700">Message Body</label>
                 <textarea
@@ -814,10 +813,18 @@ const navigate=useNavigate();
                 </label>
               </div>
 
-            </div>
-            <div className='dicvd2'>  <div><button id="but2">Cancle</button></div>
+<div className='dicvd2'>  <div><button id="but2">Cancle</button></div>
               <div><button id="but1"  onClick={handleSendIntroduction}>Send Introduction</button> </div>
             </div>
+
+              </div>
+             
+
+            
+
+
+            </div>
+            
           </div> {/* end of Right Column */}
         </div> {/* end of grid */}
       </div> {/* end of page container */}
