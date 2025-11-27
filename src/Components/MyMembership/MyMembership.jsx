@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { IoLogOut, IoPerson } from 'react-icons/io5';
 import { Link, useNavigate } from 'react-router-dom';
+import "./MyMembership.css" 
 
 
 // Sub-component for individual info cards
@@ -285,14 +286,19 @@ const navigate=useNavigate();
                 {/* Current Membership Card */}
                 <main>
                     <section className="bg-white rounded-xl shadow-lg p-6 md:p-8 border border-gray-200">
-  <div className="flex flex-col md:flex-row justify-between md:items-center mb-6">
-    <div>
+  <div className='activeMeme'>
+    <div className="flex flex-col md:flex-row justify-between md:items-center mb-6">
+     <div>
       <h2 className="text-2xl font-bold text-gray-900">Active Membership</h2>
       <span className="inline-block bg-green-100 text-green-800 text-sm font-medium mt-2 px-3 py-1 rounded-full">
         {latestOrder ? "Active" : "No Active Membership"}
       </span>
+     </div>
+  
+     </div>
+   <div><Link to="/pricing"><button style={{background:"#F59E0B",padding:"8px 18px",fontWeight:"600",color:"white",borderRadius:"7px"}}>Pricing Plan</button></Link></div>
     </div>
-  </div>
+  
 
   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
     <InfoCard 
