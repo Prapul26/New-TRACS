@@ -1,0 +1,18 @@
+.HDdiv{
+    display: flex;
+    justify-content: space-between;
+    background-color: white;
+    padding: 30px 30px 30px 30px;
+    border-radius: 20px;
+}
+.HDdiv h1{
+    font-size: 25px;
+    font-weight: 600;
+}
+.HDdiv button{
+    padding: 8px 18px;
+    background-color: #2563EB ;
+    border-radius: 8px;
+    color: white;
+    font-weight: 500;
+}

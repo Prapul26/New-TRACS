@@ -4,6 +4,9 @@ import * as XLSX from "xlsx";
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { IoLogOut, IoPerson } from 'react-icons/io5';
+import { MdDelete, MdModeEdit } from 'react-icons/md';
+import { FaDownload, FaFileImport, FaPlus } from 'react-icons/fa';
+import { RiExportFill } from 'react-icons/ri';
 const Icon = ({ name, className = "w-6 h-6" }) => {
   const icons = {
     'credit-card': <><path d="M2 9a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9Z" /><path d="M2 14h20" /></>,
@@ -676,8 +679,8 @@ const navigate=useNavigate();
           <header className="mb-8">
             <h1 className="text-3xl font-bold text-gray-900 mb-4">My Contacts</h1>
             <div className="flex flex-wrap items-center gap-4">
-              <button className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition-transform transform hover:scale-105" onClick={handleDownloadTemplate}>
-                <i className="fas fa-download mr-2"></i>Download Template
+              <button className="bg-#F59E0B-600 hover:bg-#F59E0B-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition-transform transform hover:scale-105 flex" onClick={handleDownloadTemplate} style={{background:"#F59E0B "}}>
+                <div><FaDownload /></div><i className="fas fa-download mr-2"></i>Download Template
               </button>
               <div className="relative">
                 <input type="file" id="file-upload" className="hidden" accept=".xlsx, .xls" onChange={handleFileChange} />
@@ -689,13 +692,14 @@ const navigate=useNavigate();
                   {fileName || 'Choose File'}
                 </label>
               </div>
-              <button onClick={handleImport} className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition-transform transform hover:scale-105">
-                <i className="fas fa-file-import mr-2"></i>Import
+              <button onClick={handleImport} className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold flex py-2 px-4 rounded-lg shadow-md transition-transform transform hover:scale-105" style={{background:"#2563EB"}}>
+                <div style={{marginTop:"0px"}}><RiExportFill size={20}/></div><i className="fas fa-file-import mr-2"></i>Import
               </button>
               <button
                 onClick={() => setShowForm(!showForm)}
-                className="bg-gray-800 hover:bg-gray-900 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition-transform transform hover:scale-105 ml-auto"
+                className="bg-gray-800 hover:bg-gray-900 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition-transform transform hover:scale-105 ml-auto flex"
               >
+                <div style={{marginTop:"3px"}}><FaPlus /></div>
                 <i className={`fas ${showForm ? 'fa-minus-circle' : 'fa-plus-circle'} mr-2`}></i>
                 {showForm ? 'Hide Form' : 'Add Contact'}
               </button>
@@ -741,9 +745,12 @@ const navigate=useNavigate();
                       <td className="px-6 py-4 whitespace-nowrap">
                         {new Date(contact.created_at).toISOString().split("T")[0]}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                        <a href="#" className="text-blue-600 hover:text-blue-900" onClick={() => handleEdit(contact)}>Edit</a>
-                        <a href="#" className="text-red-600 hover:text-red-900 ml-4" onClick={() => handleDelete(contact.id)}>Delete</a>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium flex">
+                         <div onClick={() => handleEdit(contact)}><MdModeEdit size={22} color='green' style={{marginRight:"10px"}}/></div>
+                         <div  onClick={() => handleDelete(contact.id)}><MdDelete size={22} color='red'/></div>
+                       
+                      
+                      
                       </td>
 
                     </tr>

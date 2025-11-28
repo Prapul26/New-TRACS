@@ -74,9 +74,21 @@
     justify-content: center;padding: 30px;
     border-radius: 50%;
 }
+.hoverimg{
+     height: 70px;
+    width: 70px;
+     color:#2563eb;
+    background-color: #DBEAFE;
+      margin-bottom: 40px;
+     display: flex;      
+             /* ✅ add this */align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    align-items: center;     
+}
 .hoverImg2{
-    height: 40px;
-    width: 40px;
+    height: 70px;
+    width: 70px;
     margin-bottom: 40px;
      display: flex;              /* ✅ add this */
     align-items: center;        /* ✅ center vertically */
@@ -84,12 +96,12 @@
     color:#16A34A;
     background-color: #DCFCE7;
     align-items: center;
-    justify-content: center;padding: 30px;
+    justify-content: center;
     border-radius: 50%;
 }
 .hoverImg3{
-    height: 40px;
-    width: 40px;
+    height: 70px;
+    width: 70px;
     margin-bottom: 40px;
      display: flex;              /* ✅ add this */
     align-items: center;        /* ✅ center vertically */
@@ -97,7 +109,7 @@
     color:#9333EA;
     background-color: #F3E8FF;
     align-items: center;
-    justify-content: center;padding: 30px;
+    justify-content: center;
     border-radius: 50%;
 }
 

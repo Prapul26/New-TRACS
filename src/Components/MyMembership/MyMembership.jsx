@@ -30,7 +30,7 @@ const InvoiceRow = ({ id, date, packageName, amount }) => {
         >
          <button style={{background:"#10B981" ,color:"white",padding:"8px 18px",borderRadius:"10px"}}>Invoice</button> 
         </Link>
-        <div style={{marginLeft:"10px"}}><button style={{background:"#2563EB" ,color:"white ",padding:"8px 18px",borderRadius:"10px"}}>History Details</button></div>
+        <div style={{marginLeft:"10px"}}><Link to={`/historyDetails/${id}`}><button style={{background:"#2563EB" ,color:"white ",padding:"8px 18px",borderRadius:"10px"}}>History Details</button></Link></div>
       </td>
     </tr>
   );
