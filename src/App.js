@@ -36,6 +36,7 @@ import { HelpCircle } from 'lucide-react';
 import TracsPayment from './Components/TracsPayment';
 import ContactUs from './Components/ContactUs/ContactUs';
 import HistoryDetails from './Components/HistoryDetails/HistoryDetails';
+import ForgotPassword from './Components/ForgotPassword/ForgotPassword';
 
 
 const App = () => {
@@ -76,6 +77,7 @@ const App = () => {
             <Route path='/tracsPayment' element={<TracsPayment />}/>
             <Route path='/contact' element={<ContactUs />} />
             <Route path="/historyDetails/:id" element={<HistoryDetails />}/>
+            <Route path='/forgotPassword' element={<ForgotPassword />}/>
       </Routes>
      </Router>
     </div>

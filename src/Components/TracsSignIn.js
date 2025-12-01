@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Header from './Heaader/Header';
 import Navbar from './Navbar/Navbar';
 import Footer from './Footer/Footer';
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import axios from 'axios';
 
 // Main component for the entire application
@@ -243,9 +243,9 @@ useEffect(() => {
                         
                         {/* Forgot Password Link */}
                         <div className="text-right text-sm">
-                          <a href="#" className="font-medium text-blue-600 hover:underline">
+                          <Link to="/forgotPassword" className="font-medium text-blue-600 hover:underline">
                             Forgot Password?
-                          </a>
+                          </Link>
                         </div>
 
                         {/* Sign In Button */}
